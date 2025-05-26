@@ -1,3 +1,26 @@
+{% if section.settings.enable_section %}
+<section class="conection-section">
+    <div class="container">
+        <div class="row">
+            {% for block in section.blocks %}
+            <div class="col-md-4">
+                <div class="conection_box conection_box_{{ forloop.index }}">
+                    <div class="conection_img">
+                        <img src="{{ block.settings.icon_img | img_url: 'original' }}" alt="">
+                    </div>
+                    <div class="conection_txt">
+                        <a href="{{ block.settings.text_url }}">
+                            <h6>{{ block.settings.title }}</h6>
+                            <p>{{ block.settings.main_text }}</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
 
 {% schema %}
   {

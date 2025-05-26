@@ -1,0 +1,49 @@
+{% if section.settings.enable_section %}
+<section class="brand-section">
+    <div class="container">
+        <div class="brand_slider col-xl-10 col-lg-11  m-auto">
+          {% for block in section.blocks %}
+          <div class="slide_div">
+              {% include 'responsive-image' with
+                  image: block.settings.brand_img,
+                  image.alt: shop.name,
+                  max_width: 200,
+                  max_height: 200
+              %}
+          </div>
+          {% endfor %}
+        <div>
+    </div>
+</section>
+{% endif %}
+{% schema %}
+  {
+    "name": "Brands Section",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable_section",
+            "label": "Enable Section?"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "brand_slider",
+            "name": "Brand Slide",
+            "settings":[
+                {
+                    "type": "image_picker",
+                    "id": "brand_img",
+                    "label": "Brand Image"
+                }
+            ]
+        }
+    ],
+    "presets": [
+      {
+        "name": "Brands section",
+        "category": "Index"
+      }
+    ]
+  }
+{% endschema %}

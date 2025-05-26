@@ -1,0 +1,13 @@
+<section class="banner_deal">
+    <img class="d-md-block d-none" src="{{ section.settings.desk_img | img_url: 'master' }}" alt="{{ shop.name }}">
+	<img class="d-md-none d-block" src="{{ section.settings.mob_img | img_url: 'master' }}" alt="{{ shop.name }}">
+  
+  	{% if section.settings.title_txt != blank %}
+    <div class="inner_div">
+        <h2>{{ section.settings.title_txt }}</h2>
+        {% if section.settings.sub_title != blank %}
+        <p>{{ section.settings.sub_title }}</p>
+        {% endif %}
+  	</div>
+  	{% endif %}
+</section>

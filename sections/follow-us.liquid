@@ -1,0 +1,66 @@
+{% if section.settings.enable_section %}
+<section class="follow-us">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-8 m-auto">
+                <div class="title-div">
+                    <h3>{{ section.settings.title }}</h3>
+                    <p>{{ section.settings.sub_title }}</p>
+                    <ul class="social_ul">
+                        {% for block in section.blocks %}
+                        <li>
+                            <a href="{{ block.settings.social_url }}">
+                                <img src="{{ block.settings.icon_img | img_url:'original' }}" alt="">
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% schema %}
+  {
+    "name": "follow Us",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable_section",
+            "label": "Enable Section?"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        },
+         {
+            "type": "textarea",
+            "id": "sub_title",
+            "label": "SubTitle"
+        }
+        
+    ],
+    "blocks": [
+        {
+            "type": "social_icon",
+            "name": "Social Icon",
+            "limit": 5,
+            "settings":[
+                {
+                    "type": "image_picker",
+                    "id": "icon_img",
+                    "label": "Social Icon"
+                },
+                {
+                    "type": "url",
+                    "id": "social_url",
+                    "label": "Url"
+                }
+                
+            ]
+        }
+    ]
+  }
+{% endschema %}

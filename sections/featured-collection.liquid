@@ -1,0 +1,104 @@
+{%- comment -%}
+  This is a required section for the Shopify Theme Store.
+  It is available in the "Featured Collection" section in the theme editor.
+
+  Theme Store required settings
+  - Collection
+
+  Theme Store optional settings
+  - Heading: title of the featured collection section
+{%- endcomment -%}
+<section class="featured-product">
+  <div class="container">
+        <div class="title_div">
+          {% if section.settings.title != blank %}
+          <h3 class="featured-collection__title">{{ section.settings.title | escape }}</h3>
+          {% endif %}
+    	</div>
+  {%- assign collection = collections[section.settings.collection] -%}
+{% if collection  != blank %}
+	 <div class="row">
+            {% for product in collection.products limit:section.settings.limit %}
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="product_box">
+                   <div class="badge-save "> <div class="d-flex justify-content-end">{% if product.compare_at_price  > product.price %}<div class="left-div"> <strike><p class="cmp-p mb-0">{{product.compare_at_price |money }}</p></strike><p class="cmp-label mb-0">REGULAR</p></div>{% endif %}<div class="right-div"><p class="sale-p mb-0">{{product.price|money}}</p><p class="sale-label mb-0">SALE</p></div></div>
+                  {% if product.compare_at_price  > product.price %}  <label>SAVE<span class="price mb-0 save-prc"> {{product.compare_at_price  | minus:product.price |money}}</span></label>{% else %}<label></label>{% endif %}
+                    </div>
+                    <div class="product_img_box">
+                    
+                        {% include 'responsive-image' with
+                            image: product.featured_image,
+                            image.alt: product.title,
+                            max_width: 400,
+                            max_height: 400
+                        %}
+                     
+                           <a href="{{product.url}}" class="product_overlay">
+                            <span class="btn_product" ><i class="fa fa-eye" aria-hidden="true"></i></span>
+                            <form action="/cart/add" method="post">
+                                        <input type="hidden" name="id" value="{{ product.variants.first.id }}"/>
+                                        <input id="quantity" min="1" name="quantity" style="display:none" type="number" value="1"/>
+                                  <button class="btn_product" title="Add to Cart" {% if product.available %} {% else %}disabled {% endif %}><i class="fa fa-shopping-cart" aria-hidden="true"></i></button>
+                           </form>
+                            </a>
+                    </div>
+                    <div class="product_info">
+                        <a href="{{ product.url }}">
+                            <h6>{{ product.title }}</h6>
+                          
+                          {% if  product.metafields.global.subtitle != blank %}
+                            <span class="store-item-subtitle">{{product.metafields.global.subtitle}}</span>
+                            {% endif %}
+                        </a>
+                      
+                      {% comment %}
+                          <div class="d-flex align-items-center flex-wrap">
+                          {%- if product.variants.first.compare_at_price > product.variants.first.price -%}
+                            <p class="text-secondary mr-2"><small><strike>{{ product.variants.first.compare_at_price | money }}</strike></small> </p>
+                          {%- endif -%}
+                            <p class="mr-2">{{ product.variants.first.price | money }}</p> {%- if product.variants.first.compare_at_price > product.variants.first.price -%}
+                            <p class="text-secondary "><small>(Save {{product.variants.first.compare_at_price | minus :product.variants.first.price |money}} )</small></p>
+                          {% endif %}
+                          </div> 
+                      {% endcomment %}
+                      
+                  </div>
+                </div>
+            </div>
+       
+            {% endfor %}
+        </div>
+  {% endif %}
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Featured collection",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "Featured collection"
+      },
+      {
+        "id": "collection",
+        "type": "collection",
+        "label": "Collection"
+      },
+		{
+    "type":"number",
+    "id":"limit",
+    "label":"Product Limit",
+    "default":8
+      }
+    ],
+    "presets": [
+      {
+        "name": "Featured collection",
+        "category": "Collection"
+      }
+    ]
+  }
+{% endschema %}

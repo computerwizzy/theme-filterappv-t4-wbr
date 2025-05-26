@@ -1,0 +1,108 @@
+{% if section.settings.enable_sec %}
+<section class="product-deal-page deal-2-section">
+  <div class="container">
+    <div class="discription_main_div">
+      <div class="discription_div">
+          {% if section.settings.content_txt != blank  %}
+              {{ section.settings.content_txt }}
+          {% else %}
+              {{ page.content }}
+          {% endif %}
+      </div>
+      <div class="discription_img_div">
+         <img src="{{ section.settings.dis_img | img_url: 'original' }}" alt="{{ shop.name }}">
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="title_div">
+      <h3>{{ section.settings.title_txt }}</h3>
+    </div>
+    <div class="product_main">
+      {% for block in section.blocks %}
+      {% if block.type == 'product-deal' %}
+      <div class="product_box_deal">
+        <h4>{{ block.settings.title_txt }}</h4>
+        <a href="{{ block.settings.url_link }}">
+          <div class="prod_img_box">
+              <img src="{{ block.settings.img_box | img_url: 'original' }}" alt="{{ block.settings.title_txt }}">
+          </div>
+        </a>
+        <p class="content_p">{{ block.settings.content_txt }}</p>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+    <div class="btn_div">
+      <a class="btn_body" href="{{ section.settings.btn_link }}">View Full Store</a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Product Deal",
+    "settings": [
+		{
+			"type": "checkbox",
+			"id": "enable_sec",
+			"label": "Enable Section?"
+		},
+		{
+			"type": "image_picker",
+			"id": "dis_img",
+			"label": "Discription Image"
+		},
+		{
+			"type": "textarea",
+			"id": "content_txt",
+			"label": "Discription Page"
+		},
+		{
+			"type": "text",
+			"id": "title_txt",
+			"label": "Title"
+		},
+		{
+			"type": "url",
+			"id": "btn_link",
+			"label": "Button Url"
+		}
+	],
+	"blocks":[
+		{
+			"type": "product-deal",
+			"name": "Product Box",
+			"settings":[
+				{
+					"type": "textarea",
+					"id": "title_txt",
+					"label": "Title"
+				},
+				{
+					"type": "image_picker",
+					"id": "img_box",
+					"label": "Image"
+				},
+				{
+					"type": "textarea",
+					"id": "content_txt",
+					"label": "Content Text"
+				},
+				{
+					"type": "url",
+					"id": "url_link",
+					"label": "Url"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

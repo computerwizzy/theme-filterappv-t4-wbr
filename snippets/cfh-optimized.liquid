@@ -1,0 +1,162 @@
+<script>
+
+
+  window['addEventListener'] = (function(){
+    var original = this['addEventListener'];
+    return function() {
+      if (arguments[0] == 'load' && arguments[1] && arguments[1].name == 'asyncLoad') {
+        console.log("Delaying asyncLoad in after page load !",arguments); 
+        var asynfunction= arguments;
+        let SuperAppLoader= setInterval(()=>{
+                                        if( window.islazyload){
+
+          clearInterval(SuperAppLoader);
+          if(asynfunction&& asynfunction[1]){
+            console.log(asynfunction)
+            asynfunction[1]();
+          }
+
+
+        }
+        console.log('wating asyncloader');
+      },100);
+
+    }  
+
+    else {
+      return original.apply(this, arguments);
+    }
+  }
+                                }.bind(window))();
+</script>
+
+{% capture wayout%}
+let SuperInter = setInterval(function(){
+if(window.islazyload){  
+clearInterval(SuperInter);
+first.parentNode.insertBefore(script, first);
+} 
+console.log("wating SuperInter");
+},100);
+{% endcapture%}
+
+{{ cfh | replace:'first.parentNode.insertBefore(script, first);':wayout |replace : ',"881107978569053"','' }}
+          
+<script>
+
+/*  
+* ginit.js? asyncLoad 
+* */
+      String.prototype.includes = function (str) {
+  var returnValue = false;
+
+  if (this.indexOf(str) !== -1) {
+    returnValue = true;
+  }
+
+  return returnValue;
+}
+
+		function debounce(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
+};
+
+
+     var loadDeferredStyles = function() {
+        console.warn('deferred Styles Loaded');
+        var addStylesNode = document.getElementById("deferred-styles");
+        var replacement = document.createElement("div");
+        if(addStylesNode){
+        replacement.innerHTML = addStylesNode.textContent;
+        document.body.appendChild(replacement);
+        addStylesNode.parentElement.removeChild(addStylesNode);
+        }
+
+
+        //setTimeout(function(){loadDeferredscripts();},3000);
+      };
+     var loadDeferredscripts = function() {
+        console.warn('loading scripts');
+
+     $('[type="text/javascript/defer"]').each(function(){
+
+
+                 if(jQuery(this).attr('src')){
+              var ss = document.createElement("script");
+              ss.src = jQuery(this).attr('src');
+              ss.type = "text/javascript";
+              ss.defer= true;
+			        ss.async=true;
+      if(jQuery(this).attr('onload')){
+                      jQuery(ss).attr('onload',jQuery(this).attr('onload'));
+                      }     
+
+             document.getElementsByTagName("head")[0].appendChild(ss);
+                 }
+          });
+     $('[type="text/javascript/inlinedefer"]').each(function(){
+
+        window.eval(this.innerHTML);
+
+     });
+
+
+      }
+	    window.islazyloaded=false;
+      	window.islazyloadstyle=false;
+          function l_lazyLoop(){
+
+        if(window.lazySizes){
+    		lazySizes.init();
+        }else{
+        setTimeout(function(){
+        l_lazyLoop();
+        },100);
+        }
+      }
+
+
+  function extralazyloop(){
+  setInterval(function(){
+          $('.xlazyload').addClass('lazyload').removeClass('xlazyload');
+  },200);
+
+  }
+
+       var loadscriptsz= debounce(function (){
+          if(!window.islazyload)
+          {
+            window.islazyload=true;
+            loadDeferredscripts();loadDeferredStyles();
+       //l_lazyLoop();
+extralazyloop();
+          }
+        },500); 
+
+
+
+        window.onmousemove=function(){
+         loadscriptsz();
+        };
+        window.ontouchstart=function(){
+          loadscriptsz(); 
+        };
+        window.onmouseover=function(){
+          loadscriptsz();
+        };
+
+        var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+          webkitRequestAnimationFrame || msRequestAnimationFrame;
+      if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
+    </script>

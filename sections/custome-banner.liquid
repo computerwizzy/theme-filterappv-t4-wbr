@@ -1,0 +1,123 @@
+{% if section.settings.enable_section %}
+<section class="custome-banner">
+    <div class="container">
+        <div class="row">
+            {%  for block in section.blocks limit: 1 %}
+            <div class="col-md-3">
+                <div class="img_box">
+                    <img src="{{ block.settings.bg_img | img_url: 'original' }}" alt="">
+                    <div class="content_box">
+                        <h5>{{ block.settings.title }}</h5>
+                        <a class="btn_banner" href="{{ block.settings.btn_url }}">{{ block.settings.btn_text }}</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="col-md-6">
+                <div class="video_box">
+                    <img src="{{ section.settings.video_bg_img | img_url:'original' }}" alt="">
+                    <div class="content_box">
+                        <h4>{{ section.settings.head_video }}</h4>
+                        <button class="btn_banner"  data-toggle="modal" data-target="#video-model"><i class="fa fa-play" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+            </div>
+            {%  for block in section.blocks offset: 1 %}
+            <div class="col-md-3">
+                <div class="img_box">
+                    <img src="{{ block.settings.bg_img | img_url: 'original' }}" alt="">
+                    <div class="content_box">
+                        <h5>{{ block.settings.title }}</h5>
+                        <a class="btn_banner" href="{{ block.settings.btn_url }}">{{ block.settings.btn_text }}</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% comment %} model code {% endcomment %}
+<div class="modal fade" id="video-model" tabindex="-1" role="dialog" aria-labelledby="video-modelTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <video controls>
+            <source src="{{ section.settings.video_url }}" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% schema %}
+  {
+    "name": "Custome Banner",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable_section",
+            "label": "Enable Section?"
+        },
+        {
+            "type": "header",
+            "content": "Video Block"
+        },
+        {
+            "type": "image_picker",
+            "id": "video_bg_img",
+            "label": "Image"
+        },
+        {
+            "type": "text",
+            "id": "head_video",
+            "label": "Title"
+        },
+        {
+            "type": "url",
+            "id": "video_url",
+            "label": "Video link"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "side_block",
+            "name": "Banner Image & Text",
+            "settings":[
+                {
+                    "type": "image_picker",
+                    "id": "bg_img",
+                    "label": "Image"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title"
+                },
+                {
+                    "type": "text",
+                    "id": "btn_text",
+                    "label": "Button Text"
+                },
+                {
+                    "type": "url",
+                    "id": "btn_url",
+                    "label": "Button Url"
+                }
+                
+            ]
+        }
+    ],
+    "presets": [
+      {
+        "name": "Custome Banner",
+        "category": "Index"
+      }
+    ]
+  }
+{% endschema %}

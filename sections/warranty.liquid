@@ -1,0 +1,112 @@
+{% if section.settings.enable_section %}
+<section class="warranty-section">
+    <div class="container">
+        <div class="row">
+          <div class="col-12">
+             <div class="note-div">
+                <p class="mb-0">Please note that this claim is for RE only. RE means you purchased Nexen tires after purchasing your vehicle.</p>
+                <p >Please click here if your Nexen tires came equipped with your vehicle.</p>
+
+                <p>Please read instructions carefully and provide all supporting document to avoid delays with claim process</p>
+                <ul>
+                    <li>Image size must be less than 3MB</li>
+                    <li>Image must be in jpg, png, gif format</li>
+                    <li>Image must clearly show required info (see sample images)</li>
+                    <li>Completed form must be pdf, png, jpeg, gif format</li>
+                    <li>You must be provided each tire’s sidewall, tread area, DOT, RTD, damaged area if you claim more than 1 tire</li>
+                    <li>Side Wall #2 (Back) image is not required if tire is still installed on vehicle.</li>
+                    <li>If you want to claim more than 1 tire, provide number of each picture like #1 sidewall and #1 damaged area, #2 sidewall and #2 damaged area etc.</li>
+                </ul>
+             </div>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-12 content_div">
+                <h4>{{ section.settings.title_txt }}</h4>
+                <a class="btn_body" href="{{ section.settings.btn_url }}">{{ section.settings.btn_text }}</a>
+            </div>
+            <div class="col-12 content_div_2">
+                <h4>{{ section.settings.title_txt_1 }}</h4>
+                <div class="row">
+                    {% for block in section.blocks %}
+                    <div class="col-md-4">
+                        <div class="main_content_box">
+                            <h6>{{ block.settings.title_con }}</h6>
+                            <div class="image_content">
+                                <img src="{{ block.settings.defat_img | img_url:'original' }}" alt="">
+                            </div>
+                            <input  type="file">
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-12 form_div">
+                <label>Comments</label>
+                <textarea class="form_in" name="" rows="8"></textarea>
+                <button class="btn_body" type="submit">Submit</button>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% schema %}
+  {
+    "name": "Warranty",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable_section",
+            "label": "Enable Section?"
+        },
+        {
+            "type": "header",
+            "content": "Step 1"
+        },
+        {
+            "type": "textarea",
+            "id": "title_txt",
+            "label": "Title"
+        },
+        {
+            "type": "text",
+            "id": "btn_text",
+            "label": "Button Text"
+        },
+        {
+            "type": "url",
+            "id": "btn_url",
+            "label": "Button Url"
+        },
+        {
+            "type": "header",
+            "content": "Step 2"
+        },
+        {
+            "type": "textarea",
+            "id": "title_txt_1",
+            "label": "Title"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "warranty",
+            "name": "Warranty Box",
+            "limit": 5,
+            "settings":[
+                {
+                    "type":"text",
+                    "id": "title_con",
+                    "label": "Warranty Title"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "defat_img",
+                    "label": "Image"
+                }
+                
+            ]
+        }
+    ]
+  }
+{% endschema %}

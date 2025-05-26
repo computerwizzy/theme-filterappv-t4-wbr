@@ -1,0 +1,41 @@
+
+<section data-section-id="{{ section.id }}" class="section-content">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 text-center my-3">
+       {% if section.settings.featured_image != blank %}
+		<img src="{{section.settings.featured_image |img_url:'master'}}" class="img-fluid  text-center m-auto">
+        <h5 class="my-md-3 my-2">{{section.settings.title}}</h5>
+        <a href="/" class="my-md-3 my-2 btn btn_banner mx-auto">GO TO HOME PAGE</a>
+        {% else %}
+        <h1 class="my-4">{{ 'general.404.title' | t }}</h1>
+        <p class="mb-0">{{ 'general.404.subtext_html' | t }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% schema %}
+  {
+    "name": "404 Template",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Content"
+      },
+      {
+        "type": "image_picker",
+        "id": "featured_image",
+        "label": "Image"
+      },
+	  {
+"type":"text",
+"id":"title",
+"label":"Title",
+"default":"Oops! The Page you requested was not found!"
+		}
+    ]
+  }
+{% endschema %}

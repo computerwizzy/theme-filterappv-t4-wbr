@@ -1,0 +1,59 @@
+<style>
+  .desktop-menu{
+  	display:none!important;
+  }  
+  .main-header{
+  	display:none!important;
+  }  
+</style>
+<br>
+{% if section.settings.enable_sec %}
+{% include 'visualizer' %}
+{% endif %}
+{% schema %}
+{
+  "name": "Visualizer",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Heading",
+      "id": "heading",
+      "default": "Find Wheels & Tires | Build a Package"
+    },
+    {
+      "type": "text",
+      "label": "Autosync Key",
+      "id": "autosyncKey",
+      "default": "7tSXMHHIXWVmVAqeln0Z"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Default",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
+
+{% assign heading = section.settings.heading %}
+{% assign autosyncKey = section.settings.autosyncKey %}
+
+<center><h4>{{ heading }}</h4></center>
+<div id="autosync-visualizer"></div>
+<div style="width: 100%;">
+  <script src="https://vvs.autosyncstudio.com/js/Autosync.js"></script>
+  <script>
+    // <![CDATA[
+    var autosync = new Autosync({
+      /* Required */
+      id: 'autosync-visualizer',
+      key: '{{ autosyncKey }}',
+            
+      /* Rest of the Autosync configuration remains unchanged */
+      // ...
+    });
+    // ]]>
+  </script>
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="b80c28c5-baee-4fc0-a8e6-31cc239e039a"></script>
+</div>

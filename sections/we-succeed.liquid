@@ -1,0 +1,79 @@
+{% if section.settings.enable_section %}
+<section class="suceed-section">
+    <div class="container-fluid">
+        <div class="row m-0 align-items-center">
+            <div class="col-md-6 pl-0">
+                <div class="img-div">
+                    {% include 'responsive-image' with
+                        image: section.settings.suceed_img,
+                        image.alt:  section.settings.title,
+                        max_width: 800,
+                        max_height: 500
+                    %}
+                </div>
+            </div>
+            <div class="col-md-6 content_div pr-0">
+                <h3>{{ section.settings.title }}</h3>
+                <p>{{ section.settings.content_text }}</p>
+            </div>
+        </div>
+        <div class="row m-0">
+            {% for block in section.blocks limit:4 %}
+            <div class="col-md-3 p-0">
+                <div class="img_div_suceed">
+                    {% include 'responsive-image' with
+                        image: block.settings.succeed_img,
+                        image.alt:  shop.name,
+                        max_width: 500,
+                        max_height: 500
+                    %}
+                </div>
+            </div>
+            {% endfor %}
+        <div>
+    </div>
+</section>
+{% endif %}
+{% schema %}
+  {
+    "name": "We Succeed",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable_section",
+            "label": "Enable Section?"
+        },
+        {
+        
+            "type": "image_picker",
+            "id": "suceed_img",
+            "label": "Image"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        },
+        {
+            "type": "textarea",
+            "id": "content_text",
+            "label": "Content Text"
+        }
+        
+    ],
+    "blocks": [
+        {
+            "type": "suceed_box",
+            "name": "Suceed Box",
+            "limit": 4,
+            "settings":[
+                {
+                    "type": "image_picker",
+                    "id": "succeed_img",
+                    "label": "Image"
+                }
+            ]
+        }
+    ]
+  }
+{% endschema %}

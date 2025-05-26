@@ -1,0 +1,901 @@
+<div class="container-fluid" id="grad1">
+    <div class="row justify-content-center text-center mt-0">
+      	<div class="col-12 title_div"> 
+            <p class="tag_line">{{ section.settings.tag_line }}</p>
+            <h3>{{ section.settings.title }}</h3>
+            {% if section.settings.enable_btn %}
+            <div class="btn_container text-center mt-md-5 mt-3">
+            <a href="{{section.settings.button_url}}" target="_blank" class="btn_banner m-auto">{{section.settings.button_label}}</a>
+            </div>
+            {% endif %}
+      	</div>
+      	{% if settings.quiz--show-on != 'model' %}
+      {% if section.blocks.size > 0 %}
+        <div class="col-12 text-center p-0 mb-2">
+            <div class="card px-0 pt-4 pb-0 mb-3">
+                <div class="row m-0">
+                    <div class="col-md-12 mx-0">
+                        <form id="msform"> 
+                          <fieldset id="question-1">
+                                <div class="form-card">
+                                  <h4 class="fs-title">{{ section.settings.f_title }}</h4>
+                                  <div class="main_wrapper">
+                                    {% for block in section.blocks %}
+                                      {% if block.type == 'item_type' %}
+                                      <div class="cc-selector">                                    
+                                        <input id="item_type" type="radio" name="item_type" value="{{block.settings.tag_item_type}}" />
+                                        <label class="drinkcard-cc" for="Dodge">
+                                          {% include 'responsive-image' with
+                                              image: block.settings.item_img,
+                                              image.alt: block.settings.tag_item_type,
+                                              max_width: 300,
+                                              max_height: 300
+                                          %}
+                                          <span class="title_box">{{block.settings.item_type}}</span>
+                                          </label>
+                                      </div>
+                                      {% endif %}
+                                    {% endfor %}
+                                  </div>
+                                </div> 
+                          </fieldset>
+                          
+                          <fieldset id="question-2-tires">
+                             <div class="form-card">
+                                  <h4 class="fs-title">{{ section.settings.question-2-tire }}</h4>
+ 								    <div class="main_wrapper flex-wrap">
+                                    {% for block in section.blocks %}
+                                      {% if block.type == 'diameter' %}
+                                      <div class="cc-selector">                                    
+                                        <input id="diameter" type="radio" data-id="2" name="diameter" value="{{block.settings.tag_item_diameter}}" />
+                                        <label class="drinkcard-cc" for="Dodge">
+
+                                          <span class="title_box">{{block.settings.item_diameter}}</span>
+                                          </label>
+                                      </div>
+                                      {% endif %}
+                                    {% endfor %}
+                                  </div>
+                                <input id="prev-que-2-tire" data-id="2" type="button" name="previous" class="prev btn_body" value="Back" /> 
+                           
+                             </div>             
+                          </fieldset>
+                          <fieldset id="question-2-wheels">
+                                  <div class="form-card">
+                                  <h4 class="fs-title">{{ section.settings.question-2-wheel  }}</h4>
+                                 <div class="main_wrapper flex-wrap">
+                                    {% for block in section.blocks %}
+                                      {% if block.type == 'diameter' %}
+                                      <div class="cc-selector">                                    
+                                        <input id="diameter" type="radio" data-id="2" name="diameter" value="{{block.settings.tag_item_diameter}}" />
+                                        <label class="drinkcard-cc" for="Dodge">
+
+                                          <span class="title_box">{{block.settings.item_diameter}}</span>
+                                          </label>
+                                      </div>
+                                      {% endif %}
+                                    {% endfor %}
+                                  </div>
+                                </div> 
+                              
+                             <input id="prev-que-2-wheels"  data-id="2" type="button" name="previous" class="prev  btn_body" value="Back" /> 
+                            
+                          </fieldset>                          
+                          <fieldset id="question-2-packages">
+                             <div class="form-card">
+                                  <h4 class="fs-title">{{ section.settings.question-2-package }}</h4>
+ 									       <div class="main_wrapper">
+                                    {% for block in section.blocks %}
+                                      {% if block.type == 'brad' %}
+                                      <div class="cc-selector">                                    
+                                        <input id="tyre_type" type="radio" data-id="2"  name="tyre_type" value="{{block.settings.tag_brand}}" />
+                                        <label class="drinkcard-cc" for="Dodge">
+                                          {% include 'responsive-image' with
+                                              image: block.settings.brand_img,
+                                              image.alt: block.settings.tag_brand,
+                                              max_width: 300,
+                                              max_height: 300
+                                          %}
+                                          <span class="title_box">{{block.settings.brand}}</span>
+                                          </label>
+                                      </div>
+                                      {% endif %}
+                                    {% endfor %}
+                                  </div>
+                                                          
+                                <input id="prev-que-2-package" data-id="2" type="button" name="previous" class="prev btn_body" value="Back" /> 
+                           
+                             </div>             
+                           
+                          </fieldset>
+                          
+                          
+                          <fieldset id="question-3-tires">
+                             <div class="form-card">
+                                  <h4 class="fs-title">{{ section.settings.question-3-tire }}</h4>
+                               	<div class="main_wrapper flex-wrap">
+                                    {% for block in section.blocks %}
+                                      {% if block.type == 'height' %}
+                                      <div class="cc-selector">                                    
+                                        <input id="height" type="radio" name="height" data-id="3" value="{{block.settings.tag_item_height}}" />
+                                        <label class="drinkcard-cc" for="Dodge">
+
+                                          <span class="title_box">{{block.settings.item_height}}</span>
+                                          </label>
+                                      </div>
+                                      {% endif %}
+                                    {% endfor %}
+                                  </div>  
+                                </div> 
+                              
+                             <input id="prev-que-3-tire" data-id="3" type="button" name="previous" class="prev  btn_body" value="Back" /> 
+                            
+                          </fieldset>                          
+                          <fieldset id="question-3-wheels">
+                                   <div class="form-card">
+                                    <h4 class="fs-title">{{ section.settings.question-3-wheel  }}</h4>
+                                    <div class="main_wrapper flex-wrap">
+                                    {% for block in section.blocks %}
+                                      {% if block.type == 'width' %}
+                                      <div class="cc-selector">                                    
+                                        <input id="width" type="radio" data-id="3" name="width" value="{{block.settings.tag_item_width}}" />
+                                        <label class="drinkcard-cc" for="Dodge">
+
+                                          <span class="title_box">{{block.settings.item_width}}</span>
+                                          </label>
+                                      </div>
+                                      {% endif %}
+                                    {% endfor %}
+                                  </div>
+                          
+                                </div> 
+                             <input id="prev-que-3-wheel" data-id="3" type="button" name="previous" class="prev btn_body" value="Back" /> 
+                            
+                          </fieldset>                        
+                          <fieldset id="question-3-packages">
+                                    <div class="form-card">
+                                  <h4 class="fs-title">{{ section.settings.question-3-package }}</h4>
+                                     <div class="main_wrapper">
+                                   {% for block in section.blocks %}
+                                     {% if block.type == 'year' %}
+                                         <div class="cc-selector year_div d-none" data-brand="{{ block.settings.type }}">                                    
+                                           <input type="radio" name="btn_year"  data-id="3" value="{{block.settings.tag_year | upcase }}" />
+                                           <label class="drinkcard-cc" for="Dodge">
+                                             {% include 'responsive-image' with
+                                                image: block.settings.year_img,
+                                                image.alt: block.settings.year,
+                                                max_width: 300,
+                                                max_height: 300
+                                            %}
+                                            <span class="title_box">{{block.settings.year}}</span>
+                                          </label>
+                                         </div>
+                                     {% endif %}
+                                   {% endfor %}
+                                  </div>
+                             
+                                </div> 
+                              
+                             <input id="prev-que-3-package" data-id="3" type="button" name="previous" class="prev  btn_body" value="Back" />
+                      
+                          </fieldset>
+                          
+                          
+                           <fieldset id="question-4-tires">
+                                <div class="form-card">
+                                  <h4 class="fs-title">{{ section.settings.question-4-tire }}</h4>
+                                      <div class="main_wrapper flex-wrap">
+                                    {% for block in section.blocks %}
+                                      {% if block.type == 'width' %}
+                                      <div class="cc-selector">                                    
+                                        <input id="width" type="radio" data-id="4" name="width" value="{{block.settings.tag_item_width}}" />
+                                        <label class="drinkcard-cc" for="Dodge">
+
+                                          <span class="title_box">{{block.settings.item_width}}</span>
+                                          </label>
+                                      </div>
+                                      {% endif %}
+                                    {% endfor %}
+                                  </div>
+                          
+                              
+                                </div> 
+                              
+                             <input id="prev-que-4-tire" data-id="4" type="button" name="previous" class="prev  btn_body" value="Back" /> <input style="display:none;" id="diameter_next" type="button" name="next" class="next action-button" value="Next" disabled/>
+                          
+                          </fieldset>
+                           <fieldset id="question-4-wheels">
+                             <div class="form-card">
+                                    <h4 class="fs-title">{{ section.settings.question-4-wheel }}</h4>
+                                 <div class="main_wrapper  flex-wrap">
+                                     {% for block in section.blocks %}
+                                       {% if block.type == 'bolt_pattern' %}
+                                       
+                                      <div class="cc-selector">                                    
+                                        <input id="bolt_pattern" type="radio" name="bolt_pattern" data-id="4" value="{{block.settings.tag_bolt_pattern | replace:'.',"-"}}" />
+                                        <label class="drinkcard-cc" for="Dodge">
+
+                                          <span class="title_box">{{block.settings.item_bolt_pattern}}</span>
+                                          </label>
+                                      </div>
+                                     
+                                       {% endif %}
+                                   {% endfor %}
+                                  </div>
+                                </div> 
+                              <input id="prev-que-4-wheel" data-id="4"  type="button" name="previous" class="prev btn_body" value="Back" /> 
+                          </fieldset>                          
+                           <fieldset id="question-4-packages">
+                             <div class="form-card">
+                                  <h4 class="fs-title">{{ section.settings.question-4-package }}</h4>
+                                 <div class="main_wrapper">
+                                     {% for block in section.blocks %}
+                                       {% if block.type == 'model' %}
+                                       <div class="cc-selector model_div d-none" data-brand="{{ block.settings.type }}">
+                                         <input type="radio" name="model_div" data-id="4"  value="{{ block.settings.model | replace:' ','' }}" />
+                                         <label class="drinkcard-cc" for="Dodge">
+                                           {% include 'responsive-image' with
+                                                image: block.settings.model_img,
+                                                image.alt: block.settings.model,
+                                                max_width: 300,
+                                                max_height: 300
+                                            %}
+                                            <span class="title_box">{{block.settings.model}}</span>
+                                          </label>
+                                       </div>
+                                       {% endif %}
+                                   {% endfor %}
+                                  </div>
+                                </div> 
+                              
+                             <input id="prev-que-4-package" data-id="4" type="button" name="previous" class="prev  btn_body" value="Back" /> <input style="display:none;" id="diameter_next" type="button" name="next" class="next action-button" value="Next" disabled/>
+                          
+                          </fieldset>
+                          
+                          <fieldset id="question-5-tires">
+                            
+                            <div class="form-card">
+                                  <h4 class="fs-title">{{ section.settings.question-5-tire  }}</h4>
+                                  <div class="main_wrapper">
+                                    {% for block in section.blocks %}
+                                      {% if block.type == 'brand-tire' %}
+                                      <div class="cc-selector">                                    
+                                        <input id="tyre_type" type="radio" data-id="5" name="tyre_type" value="{{block.settings.tag_brand}}" />
+                                        <label class="drinkcard-cc" for="Dodge">
+                                          {% include 'responsive-image' with
+                                              image: block.settings.brand_img,
+                                              image.alt: block.settings.tag_brand,
+                                              max_width: 300,
+                                              max_height: 300
+                                          %}
+                                          <span class="title_box">{{block.settings.brand}}</span>
+                                          </label>
+                                      </div>
+                                      {% endif %}
+                                    {% endfor %}
+                                  </div>
+                                </div> 
+                              
+                             <input id="prev-que-5-tire"  data-id="5" type="button" name="previous" class="prev  btn_body" value="Back" /> 
+                            
+                          </fieldset>
+                            <fieldset id="question-5-wheels">
+                           
+                              <div class="form-card re_loader">
+                              <h4 class="fs-title text-center">Your Products!</h4> <br><br>
+                              <div class="row justify-content-center">
+                                <div class="col-3 l_d-flex"> 
+                                  <div class="loader"></div>
+                                </div>
+                                <p>Loading...</p>
+                              </div>
+                            </div>                             
+                           <input id="prev-que-5-wheels" data-id="5" type="button" name="previous" class="prev  btn_body" value="Back" />                          
+                              
+                          </fieldset> 
+                          <fieldset id="question-5-packages">
+                            
+                             <div class="form-card"> <h4 class="fs-title">{{ section.settings.question-5-package }}</h4>
+                              
+                           <div class="main_wrapper">    
+                                  {% for block in section.blocks %}
+                                  {% if block.type == 'ring' %}
+                                  <div class="cc-selector ring_div">
+                                    <input type="radio" name="btn_ring" data-id="5" value="{{ block.settings.tag_ring }}" />
+                                    <label class="drinkcard-cc" for="toyota">
+                                      {% include 'responsive-image' with
+                                      image: block.settings.ring_img,
+                                      image.alt: block.settings.ring,
+                                      max_width: 300,
+                                      max_height: 300
+                                      %}
+                                      <span class="title_box">{{block.settings.ring}}</span>
+                                    </label>
+                                  </div>
+                                  {% endif %}
+                                  {% endfor %}
+                                </div>
+                               </div>
+                            <input id="prev-que-5-package" data-id="5" type="button" name="previous" class="prev  btn_body" value="Back" />
+                                </fieldset>
+                          
+                                 <fieldset id="question-6-packages">    
+                                  <div class="form-card re_loader">
+                              <h4 class="fs-title text-center">Your Products!</h4> <br><br>
+                              <div class="row justify-content-center">
+                                <div class="col-3 l_d-flex"> 
+                                  <div class="loader"></div>
+                                </div>
+                                <p>Loading...</p>
+                              </div>
+                            </div>
+                           </fieldset> 
+    
+                          <fieldset id="question-6-tires">
+                            <div class="form-card re_loader">
+                              <h4 class="fs-title text-center">Your Products!</h4> <br><br>
+                              <div class="row justify-content-center">
+                                <div class="col-3 l_d-flex"> 
+                                  <div class="loader"></div>
+                                </div>
+                                <p>Loading...</p>
+                              </div>
+                            </div>
+                          </fieldset>                                               
+
+                                               
+                          {% comment %}
+                          	<fieldset>
+                                <div class="form-card">
+                                  <h4 class="fs-title">{{ section.settings.s_title }}</h4>
+                                  <div class="main_wrapper flex-wrap">
+                                    {% for block in section.blocks %}
+                                      {% if block.type == 'height' %}
+                                      <div class="cc-selector">                                    
+                                        <input id="height" type="radio" name="height" value="{{block.settings.tag_item_height}}" />
+                                        <label class="drinkcard-cc" for="Dodge">
+
+                                          <span class="title_box">{{block.settings.item_height}}</span>
+                                          </label>
+                                      </div>
+                                      {% endif %}
+                                    {% endfor %}
+                                  </div>
+                                </div> 
+                              
+                             <input id="pre_btn_height" type="button" name="previous" class="previous btn_body" value="Back" /> <input style="display:none;" id="height_next" type="button" name="next" class="next action-button" value="Next" disabled/>
+                            
+                          </fieldset>
+                            <fieldset>
+                                <div class="form-card">
+                                  <h4 class="fs-title">{{ section.settings.t_title }}</h4>
+                                  <div class="main_wrapper flex-wrap">
+                                    {% for block in section.blocks %}
+                                      {% if block.type == 'width' %}
+                                      <div class="cc-selector">                                    
+                                        <input id="width" type="radio" name="width" value="{{block.settings.tag_item_width}}" />
+                                        <label class="drinkcard-cc" for="Dodge">
+
+                                          <span class="title_box">{{block.settings.item_width}}</span>
+                                          </label>
+                                      </div>
+                                      {% endif %}
+                                    {% endfor %}
+                                  </div>
+                                </div> 
+                              
+                             <input id="pre_btn_width" type="button" name="previous" class="previous btn_body" value="Back" /> <input style="display:none;" id="width_next" type="button" name="next" class="next action-button" value="Next" disabled/>
+                            
+                          </fieldset>
+                            <fieldset>
+                                <div class="form-card">
+                                  <h4 class="fs-title">{{ section.settings.fourth_title }}</h4>
+                                  <div class="main_wrapper flex-wrap">
+                                    {% for block in section.blocks %}
+                                      {% if block.type == 'diameter' %}
+                                      <div class="cc-selector">                                    
+                                        <input id="diameter" type="radio" name="diameter" value="{{block.settings.tag_item_diameter}}" />
+                                        <label class="drinkcard-cc" for="Dodge">
+
+                                          <span class="title_box">{{block.settings.item_diameter}}</span>
+                                          </label>
+                                      </div>
+                                      {% endif %}
+                                    {% endfor %}
+                                  </div>
+                                </div> 
+                              
+                             <input id="pre_btn_diameter" type="button" name="previous" class="previous btn_body" value="Back" /> <input style="display:none;" id="diameter_next" type="button" name="next" class="next action-button" value="Next" disabled/>
+                            
+                          </fieldset>
+                            <fieldset>
+                                <div class="form-card">
+                                  <h4 class="fs-title">{{ section.settings.fifth_title }}</h4>
+                                  <div class="main_wrapper">
+                                    {% for block in section.blocks %}
+                                      {% if block.type == 'brad' %}
+                                      <div class="cc-selector">                                    
+                                        <input id="tyre_type" type="radio" name="tyre_type" value="{{block.settings.tag_brand}}" />
+                                        <label class="drinkcard-cc" for="Dodge">
+                                          {% include 'responsive-image' with
+                                              image: block.settings.brand_img,
+                                              image.alt: block.settings.tag_brand,
+                                              max_width: 300,
+                                              max_height: 300
+                                          %}
+                                          <span class="title_box">{{block.settings.brand}}</span>
+                                          </label>
+                                      </div>
+                                      {% endif %}
+                                    {% endfor %}
+                                  </div>
+                                </div> 
+                              
+                             <input id="pre_btn" type="button" name="previous" class="previous btn_body" value="Back" /> <input style="display:none;" id="brand_next" type="button" name="next" class="next action-button" value="Next" disabled/>
+                            
+                          </fieldset>
+                            <fieldset>
+                                <div class="form-card">
+                                    <h4 class="fs-title">{{ section.settings.six_title }}</h4>
+                                 <div class="main_wrapper">
+                                   {% for block in section.blocks %}
+                                     {% if block.type == 'year' %}
+                                         <div class="cc-selector year_div d-none" data-brand="{{ block.settings.type }}">                                    
+                                           <input type="radio" name="btn_year" value="{{block.settings.tag_year | upcase }}" />
+                                           <label class="drinkcard-cc" for="Dodge">
+                                             {% include 'responsive-image' with
+                                                image: block.settings.year_img,
+                                                image.alt: block.settings.year,
+                                                max_width: 300,
+                                                max_height: 300
+                                            %}
+                                            <span class="title_box">{{block.settings.year}}</span>
+                                          </label>
+                                         </div>
+                                     {% endif %}
+                                   {% endfor %}
+                                  </div>
+                                </div> 
+                              <input id="pre_btn" type="button" name="previous" class="previous btn_body" value="Back" /> <input style="display:none;" id="year_btn" type="button" name="next" class="next action-button" value="Next" disabled/>
+                            </fieldset>
+                         	<fieldset>
+                                <div class="form-card">
+                                    <h4 class="fs-title">{{ section.settings.seven_title }}</h4>
+                                 <div class="main_wrapper">
+                                     {% for block in section.blocks %}
+                                       {% if block.type == 'model' %}
+                                       <div class="cc-selector model_div d-none" data-brand="{{ block.settings.type }}">
+                                         <input type="radio" name="model_div" value="{{ block.settings.model | replace:' ','' }}" />
+                                         <label class="drinkcard-cc" for="Dodge">
+                                           {% include 'responsive-image' with
+                                                image: block.settings.model_img,
+                                                image.alt: block.settings.model,
+                                                max_width: 300,
+                                                max_height: 300
+                                            %}
+                                            <span class="title_box">{{block.settings.model}}</span>
+                                          </label>
+                                       </div>
+                                       {% endif %}
+                                   {% endfor %}
+                                  </div>
+                                </div> 
+                              <input id="cheack_pre" type="button" name="previous" class="previous btn_body" value="Back" /> <input id="model_btn" type="button" name="next" class="next action-button" style="display:none;" value="Next" disabled />
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-card">
+                                    <h4 class="fs-title">{{ section.settings.eight_title }}</h4>                                   
+                                   <div class="main_wrapper">                                   
+                                     {% for block in section.blocks %}
+                                       {% if block.type == 'ring' %}
+                                       <div class="cc-selector ring_div">
+                                      <input type="radio" name="btn_ring" value="{{ block.settings.tag_ring }}" />
+                                        <label class="drinkcard-cc" for="toyota">
+                                            {% include 'responsive-image' with
+                                                image: block.settings.ring_img,
+                                                image.alt: block.settings.ring,
+                                                max_width: 300,
+                                                max_height: 300
+                                            %}
+                                         <span class="title_box">{{block.settings.ring}}</span> 
+                                        </label>
+                                    </div>
+                                       {% endif %}
+                                   {% endfor %}
+                                  </div>                                   
+                              </div> <input type="button" name="previous" class="previous btn_body" value="Back" /> <input  style="display:none;" id="finish_btn" type="button" name="make_payment" class="next action-button" value="Finish" disabled/>
+                          </fieldset>
+                             <fieldset id="final-step">
+                            <div class="form-card re_loader">
+                              <h4 class="fs-title text-center">Your Products!</h4> <br><br>
+                              <div class="row justify-content-center">
+                                <div class="col-3 l_d-flex"> 
+                                  <div class="loader"></div>
+                                </div>
+                                <p>Loading...</p>
+                              </div>
+                            </div>
+                          </fieldset>
+                          {% endcomment %}
+                          
+                      </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+      {% endif %}
+      	{% comment %}{% else %}
+      <button type="button" class="btn btn-primary btn_model" data-toggle="modal" data-target=".bs-example-modal-lg"> Start Wheel Quiz </button>
+
+      <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-content">
+
+            <div class="col-12 text-center p-0 mt-3 mb-2">
+              <div class="card px-0 pt-4 pb-0 mt-3 mb-3">
+                <div class="row">
+                  <div class="col-md-12 mx-0">
+                    <form id="msform">
+                      <fieldset>
+                        <div class="form-card">
+                          <h2 class="fs-title">{{ section.settings.f_title }}</h2>
+                          <div class="main_wrapper">
+                            {% for block in section.blocks %}
+                            {% if block.type == 'brad' %}
+                            <div class="cc-selector">                                    
+                              <input id="tyre_type" type="radio" name="tyre_type" value="{{block.settings.tag_brand}}" />
+                              <label class="drinkcard-cc" for="Dodge">
+                                {% include 'responsive-image' with
+                                    image: block.settings.brand_img,
+                                    image.alt: block.settings.brand,
+                                    max_width: 300,
+                                    max_height: 300
+                                %}
+                                <span class="title_box">{{block.settings.brand}}</span>
+                              </label>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                          </div>
+                        </div> 
+
+                        <input style="display:none;" id="brand_next" type="button" name="next" class="next action-button" value="Next" disabled/>
+
+                      </fieldset>
+                      <fieldset>
+                        <div class="form-card">
+                          <h2 class="fs-title">{{ section.settings.s_title }}</h2>
+                          <div class="main_wrapper">
+                            {% for block in section.blocks %}
+                            {% if block.type == 'year' %}
+                            <div class="cc-selector year_div d-none" data-brand="{{ block.settings.type }}">                                    
+                              <input type="radio" name="btn_year" value="{{block.settings.tag_year}}" />
+                              <label class="drinkcard-cc" for="Dodge">
+                                  {% include 'responsive-image' with
+                                      image: block.settings.year_img,
+                                      image.alt: block.settings.year,
+                                      max_width: 300,
+                                      max_height: 300
+                                  %}
+                                
+                                  <span class="title_box">{{block.settings.year}}</span>
+                              </label>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                          </div>
+                        </div> 
+                        <input id="pre_btn" type="button" name="previous" class="previous btn_body" value="Back" /> <input style="display:none;" id="year_btn" type="button" name="next" class="next action-button" value="Next" disabled/>
+                      </fieldset>
+
+                      <fieldset>
+                        <div class="form-card">
+                          <h2 class="fs-title">{{ section.settings.t_title }}</h2>
+                          <div class="main_wrapper">
+                            {% for block in section.blocks %}
+                            {% if block.type == 'model' %}
+                            <div class="cc-selector model_div d-none" data-brand="{{ block.settings.type }}">
+                              <input type="radio" name="model_div" value="{{ block.settings.model }}" />
+                              <label class="drinkcard-cc" for="Dodge">
+                                  {% include 'responsive-image' with
+                                      image: block.settings.model_img,
+                                      image.alt: block.settings.model,
+                                      max_width: 300,
+                                      max_height: 300
+                                  %}
+                                  <span class="title_box">{{block.settings.model}}</span>
+                              </label>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                          </div>
+                        </div> 
+                        <input id="cheack_pre" type="button" name="previous" class="previous btn_body" value="Back" /> <input id="model_btn" type="button" name="next" class="next action-button" style="display:none;" value="Next" disabled />
+                      </fieldset>
+                      <fieldset>
+                        <div class="form-card">
+                          <h2 class="fs-title">{{ section.settings.fourth_title }}</h2>  
+                          <div class="main_wrapper">                                   
+                            {% for block in section.blocks %}
+                            {% if block.type == 'ring' %}
+                            <div class="cc-selector ring_div">
+                              <input type="radio" name="btn_ring" value="{{ block.settings.tag_ring }}" />
+                              <label class="drinkcard-cc" for="toyota">
+                                {% include 'responsive-image' with
+                                      image: block.settings.ring_img,
+                                      image.alt: block.settings.ring,
+                                      max_width: 300,
+                                      max_height: 300
+                                  %}
+                                  <span class="title_box">{{block.settings.ring}}</span>
+                              </label>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                          </div>                                   
+                        </div> <input type="button" name="previous" class="previous btn_body" value="Back" /> <input style="display:none;" id="finish_btn" type="button" name="make_payment" class="next action-button" value="Finish" disabled/>
+                      </fieldset>
+                      <fieldset>
+                        <div class="form-card re_loader">
+                          <h2 class="fs-title text-center">Your Products!</h2> <br><br>
+                          <div class="row justify-content-center">
+                            <div class="col-3 l_d-flex"> 
+                              <div class="loader"></div>
+                            </div>
+                            <p>Loading...</p>
+                          </div>
+                        </div>
+                      </fieldset>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+              </div>
+            </div>
+          </div>
+      
+      {% endcomment %}
+      {% endif %}
+    </div>
+</div>
+
+<script>
+//quiz section
+            $(document).ready(function(){
+              console.log("all json==>", Shopify);
+              var CreateURL = window.location.href; 
+                var current_fs, next_fs, previous_fs; //fieldsets
+                var opacity;
+                
+
+                  function next(val,next_val){
+                    current_fs = val;
+                    next_fs = next_val;
+                
+                    //Add Class Active
+                    // $("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+                
+                    //show the next fieldset
+                    next_fs.show();
+                    //hide the current fieldset with style
+                    current_fs.animate({opacity: 0}, {
+                      step: function(now) {
+                        // for making fielset appear animation
+                        opacity = 1 - now;
+                
+                        current_fs.css({
+                          'display': 'none',
+                          'position': 'relative'
+                        });
+                        next_fs.css({'opacity': opacity});
+                      },
+                      duration: 500
+                    });
+                  }
+              
+      
+              $(".prev").click(function(){
+                
+                var i=$(this).data("id"); 
+                console.log(i);
+                var v=localStorage.getItem("Item_type");
+                if(i != 2 ){
+                current_fs = $("#question-"+i+"-"+v);
+                i=i-1;
+                	previous_fs =$("#question-"+i+"-"+v);
+                }else{
+                current_fs = $("#question-"+i+"-"+v);
+                i=i-1;
+              	previous_fs =$("#question-"+i);
+                
+                }
+                   previous_fs.show();
+                   current_fs.animate({opacity: 0}, {
+                step: function(now) {
+           
+                opacity = 1 - now;
+                
+                current_fs.css({
+                'display': 'none',
+                'position': 'relative'
+                });
+                previous_fs.css({'opacity': opacity});
+                },
+                duration: 500
+                });
+             
+                
+              });
+                $('.radio-group .radio').click(function(){
+                $(this).parent().find('.radio').removeClass('selected');
+                $(this).addClass('selected');
+                });
+                
+                $(".submit").click(function(){
+                return false;
+                })
+                var brand,year, model,ring,item_type,height,width,diameter,bolt_pattern;
+                var currant,next_val;
+              //question 1
+                $("input[name='item_type']").click(function(){
+                item_type=$("input[name='item_type']:checked").val();
+				localStorage.setItem("Item_type", item_type ); 
+                
+                  currant = $("#question-1");
+                	next_val = $("#question-2-"+item_type);
+                  
+                next(currant,next_val);
+                
+               
+              });
+        //Question-2 
+                $("input[name='height']").click(function(){
+                var v=localStorage.getItem("Item_type");
+                var i=$(this).data("id");
+                  currant = $("#question-"+i+"-"+v);
+                  i++;
+                next_val = $("#question-"+i+"-"+v);
+                next(currant,next_val);
+                height=$("input[name='height']:checked").val();
+                localStorage.setItem("height", height );
+                
+              });
+          //Question-3
+              $("input[name='width']").click(function(){
+                   var v=localStorage.getItem("Item_type");
+                var i=$(this).data("id");
+                currant = $("#question-"+i+"-"+v);
+                i++;
+                next_val = $("#question-"+i+"-"+v);
+             
+                next(currant,next_val);
+                width=$("input[name='width']:checked").val();
+                localStorage.setItem("width", width );
+					
+              });
+              //Question-4
+                $("input[name='diameter']").click(function(){
+                 var v=localStorage.getItem("Item_type");
+                  var i=$(this).data("id");
+                currant = $("#question-"+i+"-"+v);
+                  i++;
+                next_val = $("#question-"+i+"-"+v);
+                  next(currant,next_val);
+              diameter=$("input[name='diameter']:checked").val();
+              localStorage.setItem("diameter", diameter );
+                  
+              });
+              $("input[name='bolt_pattern']").click(function(){
+                bolt_pattern = $("input[name='bolt_pattern']:checked").val();
+                   var v=localStorage.getItem("Item_type");
+                var i=$(this).data("id");
+                currant = $("#question-"+i+"-"+v);
+                i++;
+                next_val = $("#question-"+i+"-"+v);
+                next(currant,next_val);
+                localStorage.setItem("bolt_pattern", bolt_pattern );  
+                  var Shopify = Shopify || {};
+                  Shopify.shop
+                  {% if content_for_header contains "previewBarInjector.init();" %}
+                  window.location.href = 'https://wheelsbelowretail.com/collections/result/'+ item_type  + '+' + diameter + '+' + width + '+' + bolt_pattern;
+                  {% elsif content_for_header contains "Shopify.designMode" %}
+                  var demo ='https://'+localStorage.getItem("Shopify_store_url")+'/admin/themes/'+localStorage.getItem("Shopify_store_id")+'/editor?previewPath=%2Fcollections%2Fresult%2F'+ item_type +'%2B' + diameter +'%2B' + width +'%2B'+ bolt_pattern +'%2B';
+                  window.open(demo, '_blank');
+
+                  {% else %}
+
+                  window.location.href = 'https://wheelsbelowretail.com/collections/result/'+ item_type  + '+' + diameter + '+' + width + '+' + bolt_pattern;
+                  {% endif %}     
+                      
+                  
+              
+              });
+              //Question-5
+              $("input[name='tyre_type']").click(function(){
+                  brand = $("input[name='tyre_type']:checked").val();
+                   var v=localStorage.getItem("Item_type");
+                var i=$(this).data("id");
+                currant = $("#question-"+i+"-"+v);
+                i++;
+                next_val = $("#question-"+i+"-"+v);
+                next(currant,next_val);
+                localStorage.setItem("Brand", brand );   
+                   
+                if(v == "tires"){
+                  var Shopify = Shopify || {};
+                  Shopify.shop
+                  {% if content_for_header contains "previewBarInjector.init();" %}
+
+                  window.location.href = 'https://wheelsbelowretail.com/collections/result/'+ item_type + '+' + diameter + '+' + height + '+' + width + '+' + brand;
+                  {% elsif content_for_header contains "Shopify.designMode" %}
+                  var demo ='https://'+localStorage.getItem("Shopify_store_url")+'/admin/themes/'+localStorage.getItem("Shopify_store_id")+'/editor?previewPath=%2Fcollections%2Fresult%2F'+ item_type +'%2B' + diameter  + '%2B' + height  +'%2B'+ width  +'%2B'  + brand +'%2B';
+                  window.open(demo, '_blank');
+
+                  {% else %}
+
+                  window.location.href = 'https://wheelsbelowretail.com/collections/result/' + item_type + '+' + diameter + '+' + height + '+' + width + '+' + brand;
+                  {% endif %}     
+                }
+             });
+              
+            
+                  $("input[name='btn_year']").click(function(){
+                    var v=localStorage.getItem("Item_type");
+                    var i=$(this).data("id")
+                    currant = $("#question-"+i+"-"+v);
+                    i++;
+                    next_val = $("#question-"+i+"-"+v);
+                    next(currant,next_val);
+                     year = $("input[name='btn_year']:checked").val();
+                     localStorage.setItem("Year", year );
+                  
+                  
+                  });
+                  
+                  $("input[name='model_div']").click(function(){
+                    var v=localStorage.getItem("Item_type");
+                    var i=$(this).data("id")
+                    currant = $("#question-"+i+"-"+v);
+                    i++;
+                    next_val = $("#question-"+i+"-"+v);
+                    next(currant,next_val);
+                    console.log(v+'->id'+i);
+                     model = $("input[name='model_div']:checked").val();
+                   
+                      localStorage.setItem("Model", model );
+                  
+                  });
+                  $("input[name='btn_ring']").click(function(){
+                    var v=localStorage.getItem("Item_type");
+                    var i=$(this).data("id")
+                    currant = $("#question-"+i+"-"+v);
+                    i++;
+                    next_val = $("#question-"+i+"-"+v);
+                    next(currant,next_val);
+                    ring = $("input[name='btn_ring']:checked").val();
+                   localStorage.setItem("Ring", ring );
+                   
+             
+                  var Shopify = Shopify || {};
+                  Shopify.shop
+                  {% if content_for_header contains "previewBarInjector.init();" %}
+                  window.location.href = 'https://wheelsbelowretail.com/collections/result/'+ item_type  + '+' + brand + '+' + year + '+' + model + '+' + ring ;
+                  {% elsif content_for_header contains "Shopify.designMode" %}
+                  var demo ='https://'+localStorage.getItem("Shopify_store_url")+'/admin/themes/'+localStorage.getItem("Shopify_store_id")+'/editor?previewPath=%2Fcollections%2Fresult%2F'+ item_type +'%2B' + brand +'%2B' + year +'%2B'+ model +'%2B' + ring +'%2B';
+                  window.open(demo, '_blank');
+
+                  {% else %}
+
+                  window.location.href = 'https://wheelsbelowretail.com/collections/result/'+ item_type  + '+' + brand + '+' + year + '+' + model + '+' + ring ;
+                  {% endif %}     
+                  
+                      
+                   
+                  });
+            
+                });
+</script>

@@ -1,0 +1,12 @@
+<ul class="product-list">
+  {% for product in products %}
+    <li>
+      <a href="{{ product.url }}">
+        <img class="img-fluid" src="{{ product.image | img_url: product.image_size }}" alt="{{ product.title | escape }}">
+      </a>
+      <h3>{{ product.title }}</h3>
+      <p>{{ product.description }}</p>
+      <p>Price: {{ product.price }}</p>
+    </li>
+  {% endfor %}
+</ul>

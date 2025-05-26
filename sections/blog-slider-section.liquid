@@ -1,0 +1,77 @@
+{% if section.settings.enable_section %}
+    <section class="blog-section">
+        <div class="container">
+            <div class="row ">
+                <div class="col-lg-3">
+                    <div class="title-div">
+                        <h3>{{ section.settings.title }}</h3>
+                        <p>{{ section.settings.content_txt }}</p>
+                        <a href="{{ section.settings.link_url }}">{{ section.settings.link_title }}</a>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="blog_slider">
+                        {% for article in blogs['news'].articles %}
+                        <div class="blog-box">
+                            <div class="img-box">
+                                {% include 'responsive-image' with
+                                    image: article.image,
+                                    image.alt:  article.title,
+                                    max_width: 1000,
+                                    max_height: 1000
+                                %}
+                            </div>
+                            <div class="blog_content">
+                                <p class="date-line">{{ article.published_at | time_tag: format: 'month_day_year' }}</p>
+                                <a href="{{ article.url }}"><h5>{{ article.title }}</h5></a>
+                                <p>{{ article.content | strip_html | truncate: 100 }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </section>
+{% endif %}
+{% schema %}
+  {
+    "name": "Blog Section",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable_section",
+            "label": "Enable Section?"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        },
+        {
+            "type": "textarea",
+            "id": "content_txt",
+            "label": "Content"
+        },
+        {
+            "type": "text",
+            "id": "link_title",
+            "label": "Link Title"
+        },
+        {
+            "type": "url",
+            "id": "link_url",
+            "label": "Url"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "blog_slider",
+            "name": "Blog",
+            "settings":[
+                
+            ]
+        }
+    ]
+  }
+{% endschema %}

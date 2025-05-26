@@ -1,0 +1,9 @@
+* text eol=crlf
+*.otf -text
+*.png -text
+*.eot -text
+*.ttf -text
+*.woff -text
+*.woff2 -text
+*.gif -text
+*.jpg -text

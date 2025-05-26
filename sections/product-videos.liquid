@@ -1,0 +1,163 @@
+{% if section.settings.show_videos %}
+<section class="related-videos">
+    <div class="container ">     
+                <div class="row m-auto">
+                    <div class="col-md-12 title_div">
+                            <h3 class="text-center">{{section.settings.title}}</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for block in section.blocks %}
+                        {% if block.type == "short_description" and block.settings.enable %}
+                            {% if block.settings.sub_title != blank and product.handle == block.settings.product %}
+                                    <div class="col-md-12">
+                                        <div class="subtitle">
+                                            <h5 class="text-center">{{block.settings.sub_title}}</h5>
+                                        </div>
+                                    </div>
+                            {% endif %}
+                            {% if block.settings.short_description != blank and product.handle == block.settings.product %}
+                                    <div class="col-md-12">
+                                        <div class="short_description text-center">
+                                            {{block.settings.short_description}}
+                                        </div>
+                                    </div>
+                            {% endif %}
+                            
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="row">
+                    {% for block in section.blocks %}
+                        {% if block.type == "related_video" and block.settings.enable %}
+                            {% if block.settings.video_url != blank and block.settings.video_type == "custom" %}
+                                <div class="col-md-4 col-sm-6 col-12 mb-md-3 mb-3 vid_div">
+                                    <video>
+                                        <source src="{{block.settings.video_url}}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                            {% elsif block.settings.video_url != blank and block.settings.video_type == "youtube" %}
+                                <div class="col-md-4 col-sm-6 col-12 mb-md-3 mb-3 youtube_div ">
+                                    <iframe src="{{ block.settings.video_url}}"  frameborder="0"></iframe>
+                                </div>
+                            {% endif %} 
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="row">
+                    {% if section.settings.enable_seemore != blank %}
+                            <div class="seemorevideos-container my-md-4 my-3">
+                                <div class="see-more-videos">
+                                    <a href="{{section.settings.seemore_url}}" target="_blank">
+                                        <img src="https://cdn.shopify.com/s/files/1/0065/0048/3116/files/youtube-icon-grey.png?v=1592293730">
+                                        <div class="see-more-videos-text">
+                                            <p class="mb-0">{{section.settings.seemore_label}}</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                    {% endif %}
+                </div>
+    </div>
+</section>
+{% endif %}
+{% schema %}
+{
+"name": "Product Videos",
+"settings":[
+ {
+"type":"checkbox",
+"id":"show_videos",
+"label":"Show Videos"
+ },
+{
+"type":"text",
+"label":"Title",
+"id":"title",
+"default":"Related Videos"
+},
+ {
+"type":"checkbox",
+"id":"enable_seemore",
+"label":"Show See More"
+ },
+ {
+"type":"text",
+"label":"See More Label",
+"id":"seemore_label",
+"default":"SEE MORE VIDEOS"
+},
+{
+"type":"text",
+"label":"See More Url",
+"id":"seemore_url"
+}
+],
+"blocks":[
+{
+      "type":"related_video",
+      "name":"Related Video",
+      "settings":[
+        {
+        "type":"product",
+        "label":"Choose Product",
+        "id":"product"
+        },
+        {
+            "type":"checkbox",
+            "id":"enable",
+            "label":"Enable Video?"
+        },
+	    {
+          "type": "select",
+          "id": "video_type",
+          "label": "Video Type",
+          "options": [
+            {
+              "value": "custom",
+              "label": "Custom"
+            },
+            {
+              "value": "youtube",
+              "label": "Youtube"
+            }
+          ]
+        },
+       	{
+          "type":"url",
+          "label":"Video Url ",
+          "id":"video_url"
+        }
+	    ]
+  },
+  {
+      "type":"short_description",
+      "name":"Short Description",
+  	  "settings":[
+                {
+                "type":"product",
+                "id":"product",
+                "label":"Choose Product"
+                },
+                {
+                "type":"checkbox",
+                "label":"Enable",
+                "id":"enable",
+                "default":true
+                },
+                {
+                "type":"text",
+                "id":"sub_title",
+                "label":"Sub Title"
+                },
+				{
+        		"type":"richtext",
+                "id":"short_description",
+                "label":"Short Description"
+				}
+			]
+}
+]
+}
+{% endschema %}

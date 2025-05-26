@@ -1,0 +1,52 @@
+<section class="shop-banner-section">
+  {% if section.settings.enable_banner %}
+    <div class="col-12 banner-div align-items-center">
+      {% if section.settings.bg_image != blank %}
+        {% comment %}
+        <img class="banner-img" src="{{ section.settings.bg_image | img_url: '1920x' }}" alt="{{ collection.title }}">
+        {% endcomment  %}
+        {% include 'responsive-image' with
+          image: section.settings.bg_image,
+          image.alt: collection.title,
+          image_class: "banner-img",
+          max_width: 1600,
+          max_height: 1600
+        %}
+      {% endif %}
+      <div class="container">
+        <div class="row banner-content">
+          <div class="col-12 text-center">
+            <h2 class="text-uppercase">{{ collection.title }}</h2>
+            <ul class="bredcume-ul list-unstyled mb-0 mt-2">
+              <li><a href="/">Home</a></li>
+              <li><a href="/collections">Shop</a></li>
+              <li><a href="#">{{ collection.title }}</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+   
+  <p class="text-center bg-light text-uppercase font-weight-bold">{{ collection.metafields.custom.subtitle.value }}</p>
+      
+</section>
+
+{% schema %}
+{
+  "name": "Banner collection",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "Background image"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_banner",
+      "label": "Enable Banner",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

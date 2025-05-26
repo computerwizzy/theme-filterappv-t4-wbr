@@ -1,0 +1,62 @@
+{% assign addons = product.metafields.details.addons | split:',' %}
+
+<div class="add-ons-row no-padding my-3">
+
+  {% if addons != blank %}
+
+  <div class="col-md-12  no-padding">
+    {% assign addOnsDetail = '' %}
+    {% for addon in addons %}
+    {% if forloop.first %}
+    {% assign addOnsDetail = addOnsDetail | append: addon  %}
+    {% else %}
+    {% assign addOnsDetail = addOnsDetail | append : ' and ' | append: addon  %}
+    {% endif %}
+    {% endfor %}
+    <p class="note-label"><b>ADD ONS :</b> Add our Glitter Lip Kit essentials to your look</p>
+  </div>
+
+
+  <div class="row m-0">
+    {% for addon in addons %}
+    {% assign addOnProduct = all_products[addon] %}
+    <div
+      class="col-xs-6 col-sm-6 col-sm-6 col-md-6 check-div {% if addOnProduct.available == false %}disabled{% endif %}"
+      style="padding-left:0;" data-queue>
+      <input {% if addOnProduct.available == false %}disabled{% endif %} id="check_1" type="checkbox" name="addons-id"
+        value="{{ addOnProduct.variants.first.id }}">
+      <div class="check-box-div">
+        <div class="label-div">
+          <label class="label-check" for="check_1"></label>
+        </div>
+        <div class="img-label-div">
+          <div class="img-div">
+            <img class="img-responsive" data-orig="{{ addOnProduct.featured_image | img_url:'300x' }}"
+              src="{{ addOnProduct.featured_image | img_url:'300x' }}" alt="{{ addOnProduct.title }}">
+            <div class="overlay-div">
+              <p><b>{{ addOnProduct.price | money }}</b></p>
+            </div>
+          </div>
+          <div class="img-label">
+            <p>{{ addOnProduct.title }} </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="col-12 col-sm-12 col-md-9 col-lg-10  no-padding reword-main-div">
+    <div class="row align-items-center">
+      <div class="col-4 col-md-3 col-lg-3 reword-img-div">
+        <img src="https://cdn.shopify.com/s/files/1/1990/5397/files/Icon-dolla-dolla.png?1185" alt="">
+      </div>
+      <div class="col-8 col-md-8 col-lg-9 reword-text-div">
+        <p style="text-transform: capitalize;">Earn 100 Points with our Stay Golden Miles Reward Program.</p>
+        <a href="/account/login">Sign Up</a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>

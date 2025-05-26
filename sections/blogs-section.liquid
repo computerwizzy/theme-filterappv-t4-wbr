@@ -1,0 +1,80 @@
+<section class="blogs-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 col-lg-9 col-md-9">
+                <div class="row">
+                    {% for article in blogs["News"].articles %}
+                        <div class="col-lg-4  blog-main-div">
+                            <div class="blog_box">
+                                <div class="blog_img_div">
+                                    {% include 'responsive-image' with
+                                        image: article.image,
+                                        image.alt:  article.title,
+                                        image_class: "blog-img",
+                                        max_width: 400,
+                                        max_height: 400
+                                    %}
+                                </div>
+                                <div class="blog_content_div">
+                                    <p>{{ article.published_at | time_tag: format: 'month_day_year' }}</p>
+                                    <h5 class="blog-title"><a href="{{ article.url }}">{{ article.title }}</a>
+                                    </h5>
+                                    <div class="blog-content">
+                                        {{ article.content | strip_html | truncate: 100 }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 mt-xl-0 mt-lg-0 mt-md-0 mt-4">
+                <div class="blog-popular-post">
+                    <div class="row">
+                        {% if section.settings.title_text %}
+                        <div class="col-12 text-left">
+                            <h3>{{ section.settings.title_text }}</h3>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        {% for article in blogs.news.articles  %}
+                        <div class="col-12 pop-blogs">
+                             <div class="blog_img_div">
+                                {% include 'responsive-image' with
+                                    image: article.image,
+                                    image.alt:  article.title,
+                                    image_class: "blog-img",
+                                    max_width: 400,
+                                    max_height: 400
+                                %}
+                             </div>
+                             <p><small>{{ article.published_at | time_tag: format: 'month_day_year' }}</small></p>
+                            <h5 class="mb-0"><a href="#">{{ article.title }}</a></h5>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+{% schema %}
+{
+"name": "blog section",
+"settings": [
+
+{
+"type": "header",
+"content": "Popular Post"
+},
+{
+"type":"text",
+"id": "title_text",
+"label":"Text"
+}
+]
+}
+{% endschema %}

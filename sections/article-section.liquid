@@ -1,0 +1,72 @@
+<section class="article-section">
+    <div class="container">
+        <div class="row pt-5">
+            <div class="col-xl-9 col-lg-9 col-md-9">
+                <div class="col-12 pl-xl-0 pl-lg-0 pl-md-0  blog-main-div">
+                    <div class="blog_box">
+                        <div class="blog_img_div">
+                            {% comment %}
+                            <img class="blog-img" src="{{ article.image | img_url:'original' }}" alt="{{ article.title }}">
+                            {% endcomment %}
+                            {% include 'responsive-image' with
+                                image: article.image,
+                                image.alt: article.title,
+                                image_class: "blog-img",
+                                max_width: 1000,
+                                max_height: 1000
+                            %}
+                        </div>
+                        <div class="blog_content_div">
+                            <p>{{ article.published_at | time_tag: format: 'month_day_year' }}</p>
+                            <h4 class="blog-title"><a href="{{ article.url }}">{{ article.title }}</a>
+                            </h4>
+                            <div class="blog-content">
+                                {{ article.content }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-3 p-xl-0 p-lg-0 p-md-0 mt-xl-0 mt-lg-0 mt-md-0 mt-4">
+                <div class="blog-popular-post">
+                    <div class="row">
+                        {% if section.settings.title_text %}
+                        <div class="col-12 text-left">
+                            <h3>{{ section.settings.title_text }}</h3>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        {% for article in blogs.news.articles  %}
+                        <div class="col-12 pop-blogs">
+                             <div class="blog_img_div">
+                                <img class="blog-img" src="{{ article.image | img_url:'original' }}" alt="">
+                             </div>
+                             <p><small>{{ article.published_at | time_tag: format: 'month_day_year' }}</small></p>
+                            <h5 class="mb-0"><a href="#">{{ article.title }}</a></h5>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+{% schema %}
+{
+"name": "blog section",
+"settings": [
+{
+"type": "header",
+"content": "Popular Post"
+},
+{
+"type":"text",
+"id": "title_text",
+"label":"Text"
+}
+]
+}
+{% endschema %}

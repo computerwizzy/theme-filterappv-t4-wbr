@@ -1,0 +1,71 @@
+{% if section.settings.enable_section %}
+{% if template contains "contact" %}
+<script src="{{'modernizr.min.js' | asset_url}}" defer="defer"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false"></script>
+{% endif %}
+<div class="container">
+<div class="row mb-md-5 my-3">
+<div class="col-md-10 py-2 m-auto">
+    <div id="map_container"></div>
+    <div id="map"></div>
+</div>
+</div>
+</div>	
+<script>
+       var map;
+                
+                function initialize() {
+                    var myLatlng = new google.maps.LatLng(53.3333,-3.08333);
+                  var imagePath = 'http://m.schuepfen.ch/icons/helveticons/black/60/Pin-location.png'
+                    var mapOptions = {
+                        zoom: 11,
+                        center: myLatlng,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    }
+        
+                var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+                //Callout Content
+                  var contentString = 'Some address here..';
+                //Set window width + content
+                    var infowindow = new google.maps.InfoWindow({
+                    content: contentString,
+                    maxWidth: 500
+                    });
+        
+                    //Add Marker
+                    var marker = new google.maps.Marker({
+                        position: myLatlng,
+                        map: map,
+                        icon: imagePath,
+                        title: 'image title'
+                    });
+            
+                    google.maps.event.addListener(marker, 'click', function() {
+                        infowindow.open(map,marker);
+                    });
+        
+                    //Resize Function
+                    google.maps.event.addDomListener(window, "resize", function() {
+                        var center = map.getCenter();
+                        google.maps.event.trigger(map, "resize");
+                        map.setCenter(center);
+                    });
+                }
+                if(map != ""){        
+                    google.maps.event.addDomListener(window, 'load', initialize);
+                }
+</script>
+{% endif %}
+{% schema %}
+    {
+      "name": "Location Map",
+      "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable_section",
+            "label": "Enable Section?"
+        }
+
+      ]
+    }
+{% endschema %}    

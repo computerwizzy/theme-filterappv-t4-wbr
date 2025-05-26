@@ -1,0 +1,40 @@
+{% if section.settings.enable_section %}
+<section class="banner-section">
+    <img src="{{ section.settings.bg_img | img_url:'original' }}" alt="">
+    {% include 'responsive-image' with
+        image: section.settings.bg_img,
+        image.alt:  section.settings.title,
+        max_width: 1600,
+        max_height: 1600
+    %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12 banner-content">
+                <h2>{{ section.settings.title }}</h2>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% schema %}
+  {
+    "name": "Banner Section",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable_section",
+            "label": "Enable Section?"
+        },
+        {
+            "type": "image_picker",
+            "id": "bg_img",
+            "label": "Background Image"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,111 @@
+{% if section.settings.enable %}
+<section class="featured_brands_section">
+<div class="container">
+<div class="featured-brands">
+<div class="title_div">
+<p class="tag_line">{{section.settings.tag_line}}</p>
+    <h3 class="text-center">{{section.settings.title}}</h3>
+</div>
+    <div class="row featured_brands_slider">
+        {% for block in section.blocks %}
+            {% if block.settings.enable %}
+                <div class="featured_main">
+                    {% if block.settings.brand_url1 != blank and block.settings.brand_image_1 != blank  %}
+                        <div class="featured_item">
+                            <a href="{{block.settings.brand_url1}}">
+                            {% include 'responsive-image' with
+                                image: block.settings.brand_image_1,
+                                image.alt: shop.name,
+                                image_class: "img-fluid",
+                                max_width: 200,
+                                max_height: 200
+                            %}
+                            </a>
+                        </div>
+                    {% endif %}
+                    {% if block.settings.brand_url2 != blank and block.settings.brand_image_2 != blank  %}
+                        <div class="featured_item">
+                            <a href="{{block.settings.brand_url2}}"> 
+                            {% include 'responsive-image' with
+                                image: block.settings.brand_image_2,
+                                image.alt: shop.name,
+                                image_class: "img-fluid",
+                                max_width: 200,
+                                max_height: 200
+                            %}
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+    
+        {% endfor %}
+    </div>
+</div>
+</div>
+</section>
+{% endif %}
+{% schema %}
+  {
+    "name": "Featured Brands",
+    "settings": [
+    {
+        "type":"checkbox",
+        "label":"Enable",
+        "id":"enable",
+        "default":true
+    },
+    {
+        "type":"text",
+        "id":"tag_line",
+        "label":"Tag Line",
+        "default":"SUPPLIERS"
+    },
+    {
+        "type":"text",
+        "id":"title",
+        "label":"Title",
+        "default":"FEATURED BRANDS"
+    }
+    ],
+    "blocks":[
+{
+    "type":"brand-image",
+"name":"Brand Image",
+"settings":[
+    {
+        "type":"checkbox",
+        "label":"Enable",
+        "id":"enable"
+    },
+    {
+        "type":"image_picker",
+        "label":"Brand Image 1",
+        "id":"brand_image_1"
+    },
+    {
+        "type":"url",
+        "label":"Brand Url 1",
+        "id":"brand_url1"
+    },
+    {
+        "type":"image_picker",
+        "label":"Brand Image 2",
+        "id":"brand_image_2"
+    },
+    {
+        "type":"url",
+        "label":"Brand Url 2",
+        "id":"brand_url2"
+    }
+]
+}
+ ],
+ "presets": [
+    {
+      "name": "Featured Brands",
+      "category": "Index"
+	}
+]
+  }
+{% endschema %}

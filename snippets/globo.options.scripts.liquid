@@ -1,0 +1,81 @@
+<script>
+  var Globo = Globo || {}
+  Globo.Options = Globo.Options || {}
+  Globo.Options.url = "https://option.globosoftware.net"
+  Globo.Options.themeInfo = {"id":125411492002,"name":"online<-wheelsbelowretail","role":"main","theme_store_id":null,"theme_name":"Starter theme","theme_version":"2.0.0"}
+  {% raw %}
+  Globo.Options.shop = {
+    id : 8968,
+    url : 'rines-and-wheels.myshopify.com',
+    settings: {"general":[],"display":{"show_tooltip":true},"price":{"seperator":"|","label_addon":"(+ {{addon}})","show_for_input":true,"show_for_option":true,"show_addon_message":true,"add_addon_to_product_price":true,"hide_additional_payment_button":false,"show_discount_box_on_cart":true,"taxable":true},"translation":{"selection_will_add":"Selection will add {{addon}} to the price","custom_product_name":"{{product_title}} - Selections","discount_label":"Discount","discount_placeholder":"Enter a discount code","discount_apply_button":"Apply","discount_applied":"Discount Applied","discount_not_exist":"Enter a valid discount code","discount_not_valid":"Discount code is not valid for the items in your cart"}},
+    pricing: {
+      features: {
+        fileUpload: 2,
+        removeCopyright: false
+      }
+    }
+  }
+  {% endraw %}
+  
+  Globo.Options.money_format = "{{ shop.money_format | replace: '"', "'" }}";
+  {% if product %}
+    Globo.Options.product = {{ product | json }}
+    Globo.Options.product.collections = {{ product.collections | map: 'id' | json }}
+  {% endif %}
+  {% if customer %}
+    Globo.Options.customer = {
+      id: '{{ customer.id }}',
+      name: '{{ customer.name }}',
+      email: '{{ customer.email }}'
+    }
+  {% endif %}
+  {% if cart %}
+    Globo.Options.cart = {{ cart | json }}
+  {% endif %}
+  Globo.Options.page = {
+    title: document.title,
+    href: window.location.href,
+    type: '{{request.page_type}}'
+  }
+  
+  Globo.Options.options = []
+</script>
+<script src="{{ 'globo.options.data.min.js' | asset_url }}"></script>
+<style>
+  [data-gpo-is-enabled="true"][data-gpo-cart-hide-additional-payment-button="true"] [data-shopify="dynamic-checkout-cart"] {
+    display: none !important;
+  }
+  [data-gpo-is-enabled="true"][data-gpo-product-hide-additional-payment-button="true"] [data-shopify="payment-button"] {
+    display: none !important;
+  }
+  [data-gpo-is-enabled="true"] .shopify-payment-button .shopify-payment-button__button--unbranded {
+    display: none !important;
+  }
+  button.gpo-original-shopify-button, input.gpo-original-shopify-button, input#addToCart.gpo-original-shopify-button, a.gpo-original-shopify-button, .gpo-original-shopify-button {
+    display: none !important;
+  }
+  .gpo-original-checkout-button {
+    display: none !important;
+  }
+  button.gpo-clone-checkout-button, input.gpo-clone-checkout-button, a.gpo-clone-checkout-button {
+    cursor: pointer !important;
+  }
+  .cart-flyout a.gpo-clone-checkout-button, #mini-cart form.cart a.gpo-clone-checkout-button {
+    display: block !important;
+  }
+  .gpo-original-atc-button {
+    display: none !important;
+  }
+  .gpo-original-payment-button {
+    display: none !important;
+  }
+  .gpo-hidden {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+</style>
+{% capture GPO_appScript %}{{ 'globo.options.index.min.js' | asset_url }}{% endcapture %}
+{% assign GPO_assetsPath = GPO_appScript | split: 'globo.options.index.min.js' | first %}
+<script>Globo.Options.__webpack_public_path__ = "{{ GPO_assetsPath }}globo.options."</script>
+<script src="{{GPO_appScript}}" async></script>

@@ -1,0 +1,637 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+{% if section.settings.enable_sec %}
+<section class="slider">
+<div class="banner">
+<!-- <img class="background-img" src="{{ section.settings.slide_img | img_url:'master'}}" alt="{{ section.settings.title_txt }}"> -->
+<div class="content">
+  <div class="content-inner">
+  {% if section.settings.logo_img != blank %}
+  <img class="logo-img" src="{{ section.settings.logo_img | img_url:'' }}" alt="{{ section.settings.title_txt }}">
+  {% endif %}
+<div class="title content-title content-title-div mb-4 pt-3">
+  {% if section.settings.title_txt != blank %}
+  <h1 class="text-center title-txt">{{ section.settings.title_txt }}</h1>
+    {% endif %}
+  {% if section.settings.sale_txt != blank %}
+ <h2 class="text-center title-txt sale-txt">{{ section.settings.sale_txt }}</h2>
+     {% endif %}
+  {% if section.settings.disc_txt != blank %}
+  <h2 class="text-center title-txt">{{ section.settings.disc_txt }}</h2>
+     {% endif %}
+  {% if section.settings.price_txt != blank %}
+   <h2 class="text-center title-txt">{{ section.settings.price_txt }} <img src="{{ section.settings.fire_img | img_url:'' }}"></h2>
+ {% endif %}
+    {% if section.settings.check_img != blank %}
+  <img class="check-img" src="{{section.settings.check_img | img_url:'' }}">
+{% endif %}
+<!-- {% if section.settings.enablecount_sec %}
+  <div id="countdown">
+    <ul >
+      <li><span class="date-div" id="days"></span>days</li>
+      <li><span class="date-div" id="hours"></span><p class="date-time-formula">hours</p></li>
+      <li><span class="date-div" id="minutes"></span><p class="date-time-formula">minutes</p></li>
+      <li><span class="date-div" id="seconds"></span><p class="date-time-formula">seconds</p></li>
+    </ul>
+  </div>
+  {% endif %}
+ -->
+{% if section.settings.enablecount_sec %}
+
+    <div id="js-countdown" class="countdown">
+<!--       <div id="js-days" class="number"></div> -->
+      <div id="js-hours" class="number"></div>
+      <div id="js-minutes" class="number"></div>
+      <div id="js-seconds" class="number"></div>
+    </div> 
+
+ {% endif %}
+
+
+
+  
+  <div class="shipping-contant">
+    {{ section.settings.shipping_txt }}
+  </div>
+  {% if section.settings.btn_url != blank %}
+<a href="{{ section.settings.btn_url }}" class="btn_banner deal-btn" tabindex="0">{{ section.settings.btn_txt  }}</a>
+    {% endif %}
+</div>
+  
+
+
+<div class="package-div">
+<div class="container">
+  <div class="row">
+
+  
+    {% for block in section.blocks %}
+      {% if block.type == "brad" %}
+         {% assign page = pages[block.settings.package_page] %}
+       <div class="end-package-main text-center p-2 text-center">
+          <div class="grid-image product-grid-image">
+            <a href=" {% if block.settings.text_link != blank  %} {{ block.settings.text_link }} {% else %} {{ page.url }}{% endif %}" class="grid-image--centered">
+             <div class="inner-div">
+        {{ page.content }}
+             </div>
+            </a>
+          </div>
+<!--           <p class="collection-grid__item-title">
+            <a href="{{ page.url }}" class="collection-item__title">{{ page.title }}</a>
+          </p> -->
+        </div>
+        {% endif %}
+      {% endfor %}
+  </div>
+</div>
+
+  {% if section.settings.enablesocial_sec %}
+  <div class="social-div">
+    <ul>
+      <li><a href="{{ section.settings.icon-text1 }}"><i class="fa-brands {{section.settings.icon_class1}}"></i></a></li>
+       <li><a href="{{  section.settings.icon-text2 }}"><i class="fa-brands {{section.settings.icon_class2}}"></i></a></li>
+       <li><a href="{{ section.settings.icon-text3 }}"><i class="fa-brands {{section.settings.icon_class3}}"></i></a></li>
+    </ul>
+  </div>
+{% endif %}
+  
+</div>
+    
+</div>
+  
+  <div class="deals-year-footer">
+    <div class="container">
+      <div class="row deals-year-footer-row ">
+          <div class="col-md-4 col-sm-12 col-12 text-center p-2">
+            {% if section.settings.footlogo_img != blank %}
+  <div class="footer-logo-div">
+              <img src="{{ section.settings.footlogo_img | img_url:'' }}">
+            </div>
+  {% endif %}
+          </div>
+        <div class="col-md-4 col-sm-6 col-12 text-center p-2">
+  {% if section.settings.footer_txt !=blank %}
+          <div class="footer-address">
+            <p>{{ section.settings.footer_txt }}</p>
+          </div>
+    {% endif %}
+        </div>
+        <div class="col-md-4 col-sm-6 col-12 text-center p-2">
+          <div class="footer-copyright">
+            {% if section.settings.footer_menu != blank %}
+            <ul>
+              {% for link in linklists[section.settings.footer_menu].links %}
+          <li class="py-1"><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
+            </ul>
+              {% endif %}
+  {% if section.settings.widget_details_1 != blank %}
+            <p>{{ section.settings.widget_details_1 }}</p>
+    {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+</section>
+{% endif %}
+
+
+<style>
+  .slider .banner {
+      background-image: url('{{ section.settings.slide_img | image_url}}');
+  }
+
+</style>
+ <style>
+
+.countdown {
+  display: flex;
+      margin: 10px auto 40px;
+  justify-content: center;
+}
+.countdown.remove {
+  animation: hide-countdown 1s cubic-bezier(0, 0.9, 0.56, 1.2) forwards;
+  overflow: hidden;
+}
+
+.countdown .number {
+      padding: 13px;
+    display: block;
+    color: #333;
+    /* height: 10rem; */
+    /* font-size: 10rem; */
+    position: relative;
+    line-height: unset;
+    text-align: center;
+    width: unset;
+      margin: 20px;
+}
+
+  .separator {
+      padding: 13px;
+    display: block;
+    color: #333;
+    /* height: 10rem; */
+    /* font-size: 10rem; */
+    position: relative;
+    line-height: unset;
+    text-align: center;
+    width: unset;
+      margin: 15px;
+}
+.separator {
+  margin: 0;
+  width: 2rem;
+}
+
+.new , .current{
+position: absolute;
+    border-radius: 4px;
+    width: 50px;
+    font-size: 16px;
+    color: #fff;
+    height: 50px;
+    left: 50%;
+    line-height: 50px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    /* width: 100%; */
+    background: red;
+}
+.old {
+position: absolute;
+    border-radius: 4px;
+    width: 40px;
+    font-size: 16px;
+    color: #fff;
+    height: 40px;
+    left: 50%;
+    line-height: 40px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    /* width: 100%; */
+    background: unset;
+}
+/*    .current {
+position: absolute;
+    border-radius: 4px;
+    width: 40px;
+    font-size: 16px;
+    color: #fff;
+    height: 40px;
+    left: 50%;
+    line-height: 40px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    /* width: 100%; */
+    background: red;
+} */
+.new {
+  animation: show-new 0.4s cubic-bezier(0, 0.9, 0.5, 1.2) forwards;
+}
+
+.old {
+  animation: hide-old 2s cubic-bezier(0, 0.9, 0.56, 1.2) forwards;
+}
+
+.countdown section {
+  position: relative;
+}
+
+#js-days:after, #js-hours:after, #js-minutes:after, #js-seconds:after {
+  content: "DAYS";
+    position: absolute;
+    left: 0;
+    right: 0;
+        bottom: -44px;
+    font-size: 14px;
+    color: #fff;
+  font-weight: 300;
+  text-align: center;
+    display: flex;
+    justify-content: center;
+}
+#js-hours:after {
+  content: "HOURS";
+}
+#js-minutes:after {
+  content: "MINUTES";
+}
+#js-seconds:after {
+  content: "SECONDS";
+}
+@keyframes hide-countdown {
+  to {
+    height: 0;
+    overflow: hidden;
+  }
+}
+@keyframes show-new {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(-2rem) scale(0.8) rotateX(-20deg);
+  }
+  100% {
+    transform: translate(-50%, -50%);
+  }
+}
+@keyframes hide-old {
+  0% {
+    transform: translate(-50%, -50%);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) translateY(-5rem) scale(0.5) rotateX(-75deg);
+  }
+}
+  </style>
+  
+
+<!-- <script>
+(function () {
+  const second = 1000,
+    minute = second * 60,
+    hour = minute * 60,
+    day = hour * 24;
+
+  //I'm adding this section so I don't have to keep updating this pen every year :-)
+  //remove this if you don't need it
+  let today = new Date(),
+    dd = String(today.getDate()).padStart(2, "0"),
+    mm = String(today.getMonth() + 1).padStart(2, "0"),
+    yyyy = today.getFullYear(),
+    nextYear = yyyy + 1,
+    dayMonth = "09/30/",
+    birthday = dayMonth + yyyy;
+
+  today = mm + "/" + dd + "/" + yyyy;
+  if (today > birthday) {
+    birthday = dayMonth + nextYear;
+  }
+  //end
+
+  const countDown = new Date(birthday).getTime(),
+    x = setInterval(function () {
+      const now = new Date().getTime(),
+        distance = countDown - now;
+
+      (document.getElementById("days").innerText = Math.floor(distance / day)),
+        (document.getElementById("hours").innerText = Math.floor(
+          (distance % day) / hour
+        )),
+        (document.getElementById("minutes").innerText = Math.floor(
+          (distance % hour) / minute
+        )),
+        (document.getElementById("seconds").innerText = Math.floor(
+          (distance % minute) / second
+        ));
+
+      //do something later when date is reached
+      if (distance < 0) {
+        document.getElementById("headline").innerText = "It's my birthday!";
+        document.getElementById("countdown").style.display = "none";
+        document.getElementById("content").style.display = "block";
+        clearInterval(x);
+      }
+      //seconds
+    }, 0);
+})();
+
+  
+</script>
+   -->
+
+
+
+<script>
+  $(function() {
+
+    var targetDate  = new Date(Date.UTC(2020, 3, 01));
+    var now   = new Date();
+
+    window.days = daysBetween(now, targetDate);
+    var secondsLeft = secondsDifference(now, targetDate);
+    window.hours = Math.floor(secondsLeft / 60 / 60);
+    secondsLeft = secondsLeft - (window.hours * 60 * 60);
+    window.minutes = Math.floor(secondsLeft / 60 );
+    secondsLeft = secondsLeft - (window.minutes * 60);
+    console.log(secondsLeft);
+    window.seconds = Math.floor(secondsLeft);
+
+    startCountdown();
+  });
+  var interval;
+
+  function daysBetween( date1, date2 ) {
+    //Get 1 day in milliseconds
+    var one_day=1000*60*60*24;
+
+    // Convert both dates to milliseconds
+    var date1_ms = date1.getTime();
+    var date2_ms = date2.getTime();
+
+    // Calculate the difference in milliseconds
+    var difference_ms = date2_ms - date1_ms;
+
+    // Convert back to days and return
+    return Math.round(difference_ms/one_day); 
+  }
+
+  function secondsDifference( date1, date2 ) {
+    //Get 1 day in milliseconds
+    var one_day=1000*60*60*24;
+
+    // Convert both dates to milliseconds
+    var date1_ms = date1.getTime();
+    var date2_ms = date2.getTime();
+    var difference_ms = date2_ms - date1_ms;
+    var difference = difference_ms / one_day; 
+    var offset = difference - Math.floor(difference);
+    return offset * (60*60*24);
+  }
+
+
+
+  function startCountdown() {
+    $('#input-container').hide();
+    $('#countdown-container').show();
+
+    displayValue('#js-days', window.days);
+    displayValue('#js-hours', window.hours);
+    displayValue('#js-minutes', window.minutes);
+    displayValue('#js-seconds', window.seconds);
+
+    interval = setInterval(function() {
+      if (window.seconds > 0) {
+        window.seconds--;
+        displayValue('#js-seconds', window.seconds);
+      } else {
+        // Seconds is zero - check the minutes
+        if (window.minutes > 0) {
+          window.minutes--;
+          window.seconds = 59;
+          updateValues('minutes');
+        } else {
+          // Minutes is zero, check the hours
+          if (window.hours > 0)  {
+            window.hours--;
+            window.minutes = 59;
+            window.seconds = 59;
+            updateValues('hours');
+          } else {
+            // Hours is zero
+            window.days--;
+            window.hours = 23;
+            window.minutes = 59;
+            window.seconds = 59;
+            updateValues('days');
+          }
+          // $('#js-countdown').addClass('remove');
+          // $('#js-next-container').addClass('bigger');
+        }
+      }
+    }, 1000);
+  }
+
+
+  function updateValues(context) {
+    if (context === 'days') {
+      displayValue('#js-days', window.days);
+      displayValue('#js-hours', window.hours);
+      displayValue('#js-minutes', window.minutes);
+      displayValue('#js-seconds', window.seconds);
+    } else if (context === 'hours') {
+      displayValue('#js-hours', window.hours);
+      displayValue('#js-minutes', window.minutes);
+      displayValue('#js-seconds', window.seconds);
+    } else if (context === 'minutes') {
+      displayValue('#js-minutes', window.minutes);
+      displayValue('#js-seconds', window.seconds);
+    }
+  }
+
+  function displayValue(target, value) {
+    var newDigit = $('<span></span>');
+    $(newDigit).text(pad(value))
+      .addClass('new');
+    $(target).prepend(newDigit);
+    $(target).find('.current').addClass('old').removeClass('current');
+    setTimeout(function() {
+      $(target).find('.old').remove();
+      $(target).find('.new').addClass('current').removeClass('new');
+    }, 900);
+  }
+
+  function pad(number) {
+    return ("0" + number).slice(-2);
+  }
+</script>
+  
+{% schema %}
+  {
+    "name": "Section name",
+    "settings": [
+      {
+			"type": "checkbox",
+			"id": "enable_sec",
+			"label": "Enable Section?"
+		},
+      {	
+					"type": "image_picker",
+					"id": "slide_img",
+					"label": "background Image"
+				},
+       {	
+					"type": "image_picker",
+					"id": "logo_img",
+					"label": "Logo Image"
+				},
+      {	
+					"type": "text",
+					"id": "title_txt",
+					"label": "Title"
+				},
+       {	
+					"type": "textarea",
+					"id": "sale_txt",
+					"label": "Sale Title"
+				},
+       {	
+					"type": "textarea",
+					"id": "disc_txt",
+					"label": "Discount Title"
+				},
+      {	
+					"type": "textarea",
+					"id": "price_txt",
+					"label": "Price Title"
+				},
+        {	
+					"type": "image_picker",
+					"id": "fire_img",
+					"label": "fire Image"
+				},
+       {	
+					"type": "image_picker",
+					"id": "check_img",
+					"label": "check Image"
+				},
+       {
+			"type": "checkbox",
+			"id": "enablecount_sec",
+			"label": "Enable COUNTDOWN  Section?"
+		},
+            {
+        "type": "header",
+        "content": "Information"
+        },
+        {	
+					"type": "textarea",
+					"id": "shipping_txt",
+					"label": "Shipping info"
+				},
+      {	
+					"type": "text",
+					"id": "btn_txt",
+					"label": "Btn Title"
+				},
+      {	
+					"type": "url",
+					"id": "btn_url",
+					"label": "Btn url"
+				},
+                  {
+            "type": "header",
+            "content": "Social link"
+            },
+       {
+			"type": "checkbox",
+			"id": "enablesocial_sec",
+			"label": "Enable Social  Section?"
+		},
+       {
+                  "type":"text",
+                  "id":"icon_class1",
+                  "label":"Icon Class1"
+                  },
+                        {
+                  "type":"url",
+                  "label": "fb url",
+                  "id": "icon-text1"
+                  },
+      {
+                  "type":"text",
+                  "id":"icon_class2",
+                  "label":"Icon Class2"
+                  },
+                        {
+                  "type":"url",
+                  "label": "intra url",
+                  "id": "icon-text2"
+                  },
+                {
+                  "type":"text",
+                  "id":"icon_class3",
+                  "label":"Icon Class3"
+                  },
+                        {
+                  "type":"url",
+                  "label": "pintress url",
+                  "id": "icon-text3"
+                  },
+              {
+                  "type": "header",
+                  "content": "Page Footer"
+              },
+         {	
+					"type": "image_picker",
+					"id": "footlogo_img",
+					"label": "Footer Logo"
+				},
+          {	
+					"type": "textarea",
+					"id": "footer_txt",
+					"label": "Footer Address"
+				},
+              {	
+					"type": "link_list",
+					"id": "footer_menu",
+					"label": "Footer Navigation"
+				},
+                {	
+                  "type": "textarea",
+                  "id": "widget_details_1",
+                  "label": "Copyright Details"
+                }
+    ],
+         "blocks":[
+		{
+			"type": "brad",
+			"name": "Quiz Wheel Brand",
+			"settings":[
+              		 {
+          "id": "package_page",
+          "type": "page",
+       	  "label": "Select page"
+        },
+                  		 {
+          "id": "text_link",
+          "type": "url",
+       	  "label": "Collection Url"
+        }
+     
+        ]
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

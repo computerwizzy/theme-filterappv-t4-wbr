@@ -1,0 +1,201 @@
+<footer class="footer">
+  <div class="container footer-top  pt-3">
+    <div class="row py-5 justify-content-center text-xl-left text-lg-left text-md-center text-sm-center text-center">
+      <div class="col-12 col-lg-3 col-xl-3 col-md-4 fst-col">
+        <a href="/" >
+       <img src="{{section.settings.widget_logo | img_url:'original'}}" alt="Logo" />
+        </a>
+        <p>
+          {{ section.settings.widget_details_1 }}
+        </p>
+        
+      </div>
+      <div class="col-12 col-lg-3 col-xl-3 col-md-4 mb-xl-0 mb-lg-0 mb-md-0 mb-3 widget_1">
+        <h5 class="">{{ section.settings.widget_title_2 }}</h5>
+        <ul class="list-unstyled mb-0 footer-link">
+          {% for link in linklists[section.settings.widget_nav_2].links %}
+          <li class="py-1"><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
+         
+        </ul>
+      </div>
+      <div class="col-12 col-lg-3 col-xl-3 col-md-4 widget_2">
+        <h5 class="">{{ section.settings.widget_title_3 }}</h5>
+        <ul class="list-unstyled mb-0 footer-link">
+          {% for link in linklists[section.settings.widget_title_3].links %}
+          <li class="py-1"><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
+          
+        </ul>
+      </div>
+      <div class="col-12  col-lg-3 col-xl-3 col-md-4 col-sm-6 widget_3">
+          <div class="news_letter_div">
+              <h5 class="">Newsletter</h5>
+              {% form 'contact' %}
+              <div class="form_fotoer_div">
+                  <input  type="email" name="contact[email]" placeholder="Subscribe">
+                  <button class="btn_news_letter" type="submit"><i class="fa fa-envelope" aria-hidden="true"></i></button>
+              </div>
+              {% endform %}
+          </div>
+          {% if section.settings.enable_social %}
+          <div class="social_links">
+              <p>{{section.settings.social_lable}}</p>
+              <ul class="social_ul">
+                {% if section.settings.enable_fb and section.settings.fb_url != blank %}
+                <li> <a href="{{section.settings.fb_url}}"  target="_blank"><i class="fa fa-facebook"></i></a></li>
+                {% endif %}
+                {% if section.settings.enable_insta and section.settings.insta_url != blank %}
+                <li> <a href="{{section.settings.insta_url}}"  target="_blank"><i class="fa fa-instagram"></i></a></li>
+                {% endif %}
+                {% if section.settings.enable_twitter and section.settings.twitter_url != blank %}
+                <li> <a href="{{section.settings.twitter_url}}" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                {% endif %}
+              </ul>
+          </div>
+          {% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="text-center py-3 footer-btm">
+    <p class="display-3 mb-0">
+     &copy; {{ 'now' | date: '%Y' }}, {{ section.settings.copyright_text }}
+    </p>
+  </div>
+  <center>
+    <style>
+  .methods-of-payment img { padding: 0.2em; }
+  .lt-ie9 .methods-of-payment, .ie8 .methods-of-payment, .oldie .methods-of-payment { display: none; }
+</style>
+<span class="methods-of-payment">
+  <img src="{{ 'amazon_payments' | payment_type_img_url }}" height="40" alt="amazon payments" />
+  <img src="{{ 'apple_pay' | payment_type_img_url }}" height="40" alt="apple pay" />
+  <img src="{{ 'google_pay' | payment_type_img_url }}" height="40" alt="google pay" />
+  <img src="{{ 'american_express' | payment_type_img_url }}" height="40" alt="american express" />
+  <img src="{{ 'diners_club' | payment_type_img_url }}" height="40" alt="diners club" />
+  <img src="{{ 'discover' | payment_type_img_url }}" height="40" alt="discover" />
+  <img src="{{ 'shopify_pay' | payment_type_img_url }}" height="40" alt="shopify_pay" />
+  <img src="{{ 'master' | payment_type_img_url }}" height="40" alt="master" />
+  <img src="{{ 'paypal' | payment_type_img_url }}" height="40" alt="paypal" />
+  <img src="{{ 'visa' | payment_type_img_url }}" height="40" alt="visa" />
+  <img src="{{ 'affirm' | payment_type_img_url }}" height="40" alt="affirm" />
+  <img src="{{ 'paytomorrow' | payment_type_img_url }}" height="40" alt="paytomorrow" />
+  
+</span>
+</footer>
+
+{% schema %}
+{
+"name": "Footer",
+"settings": [
+{
+"type": "header",
+"content": "Footer widget 1"
+},
+{
+"type": "image_picker",
+"id": "widget_logo",
+"label": "Logo"
+},
+{
+"type": "textarea",
+"id": "widget_details_1",
+"label": "Widget Details"
+},
+{
+"type": "header",
+"content": "Footer widget 2"
+},
+{
+"type": "text",
+"id": "widget_title_2",
+"label": "Widget Title"
+},
+{
+"type": "link_list",
+"id": "widget_nav_2",
+"label": "Navigation"
+},
+{
+"type": "header",
+"content": "Footer widget 3"
+},
+{
+"type": "text",
+"id": "widget_title_3",
+"label": "Widget Title"
+},
+{
+"type": "link_list",
+"id": "widget_nav_3",
+"label": "Navigation"
+},
+{
+"type": "header",
+"content": "Footer widget 4"
+},
+{
+"type": "text",
+"id": "widget_title_4",
+"label": "Widget Title"
+},
+{
+"type": "textarea",
+"id": "widget_html",
+"label": "Payment Detail Html"
+},
+{
+"type":"checkbox",
+"label":"Show Social Icon",
+"id":"enable_social",
+"default":true
+},
+
+{
+"type":"text",
+"id":"social_lable",
+"label":"Social Label",
+"default":"Follow Us :"
+},
+{
+"type":"checkbox",
+"id":"enable_fb",
+"label":"Enable Fb",
+"default":true
+},
+{
+"type":"url",
+"id":"fb_url",
+"label":"Fb Url"
+},
+{
+"type":"checkbox",
+"id":"enable_insta",
+"label":"Enable Insta",
+"default":true
+},
+{
+"type":"url",
+"id":"insta_url",
+"label":"Instagram Url"
+},
+{
+"type":"checkbox",
+"id":"enable_twitter",
+"label":"Enable Twitter",
+"default":true
+},
+{
+"type":"url",
+"id":"twitter_url",
+"label":"Twitter Url"
+},
+{
+"type": "text",
+"id": "copyright_text",
+"label": "Copyright Text",
+"default": "© Copyright Wheels Below Retail"
+}
+]
+}
+{% endschema %}

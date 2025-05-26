@@ -1,0 +1,80 @@
+<section class="featured-product">
+    <div class="container">
+        <div class="title_div">
+            <p class="tag_line">{{ section.settings.tag_line }}</p>
+            <h3>{{ section.settings.title }}</h3>
+        </div>
+        <div class="row">
+            {% for product in collections["forgiato-wheels"].products  limit:section.settings.limit %}
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="product_box">
+                    <div class="product_img_box">
+                        {% include 'responsive-image' with
+                            image: product.featured_image,
+                            image.alt: product.title,
+                            max_width: 400,
+                            max_height: 400
+                        %}
+                        {% comment %} <div class="product_overlay">
+                            <form action="/cart/add" method="post">
+                                    <input type="hidden" name="id" value="{{ product.variants.first.id }}"/>
+                                    <input id="quantity" min="1" name="quantity" style="display:none" type="number" value="1"/>
+                                <a href="{{ product.url }}" class="btn_product" title="Show Details"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                <button class="btn_product" title="Add to Cart"><i class="fa fa-shopping-bag" aria-hidden="true"></i></button>
+                            </form>
+                        </div> {% endcomment %}
+                           <a href="{{product.url}}" class="product_overlay">
+                            <span class="btn_product" ><i class="fa fa-eye" aria-hidden="true"></i></span>
+                            <form action="/cart/add" method="post">
+                                        <input type="hidden" name="id" value="{{ product.variants.first.id }}"/>
+                                        <input id="quantity" min="1" name="quantity" style="display:none" type="number" value="1"/>
+                                  <button class="btn_product" title="Add to Cart" {% if product.available %} {% else %}disabled {% endif %}><i class="fa fa-shopping-bag" aria-hidden="true"></i></button>
+                           </form>
+                            </a>
+                    </div>
+                    <div class="product_info">
+                        <a href="{{ product.url }}">
+                            <h6>{{ product.title }}</h6>
+                        </a>
+                        <p>{{ product.price | money }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% schema %}
+  {
+    "name": "Featured product",
+    "settings": [
+      {
+          "type": "checkbox",
+          "id": "enable_section",
+          "label": "Enable Section?"
+      },
+      {
+          "type": "text",
+          "id": "tag_line",
+          "label": "Tag Line"
+      },
+      {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+      },
+    {
+    "type":"number",
+    "id":"limit",
+    "label":"Product Limit",
+    "default":8
+      }
+    ],
+    "presets": [
+      {
+        "name": "Featured product",
+        "category": "Index"
+      }
+    ]
+  }
+{% endschema %}

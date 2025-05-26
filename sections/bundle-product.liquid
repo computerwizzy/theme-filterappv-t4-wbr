@@ -1,0 +1,234 @@
+  <section class="bundle-product py-5">
+    <div class="container">
+      <div class="row">
+        {% if section.settings.product1 != blank %}
+        <div class="col-md-4">
+          {%  assign product1= all_products[section.settings.product1] %}
+          <a href="{{product1.url}}"> {{product1.title}}</a>
+          <span class="price-color-maroon price-update-{{product1.id}}">{{product1.price|money}}</span>
+          <div class="pt-3">
+            <img src="{{ product1.featured_image | img_url:'original' }}" alt="{{product1.title}}" class="img-fluid">
+          </div>
+        </div>
+        {% endif %}
+        {% if section.settings.product2 != blank %}
+        <div class="col-md-4">
+		{%  assign product2= all_products[section.settings.product2] %}
+          <a href="{{product2.url}}">{{product2.title}}</a>
+          <span class="price-color-maroon price-update-{{product2.id}}">{{product2.price|money}}</span>
+          <div class="pt-3">
+            <img src="{{ product2.featured_image | img_url:'original' }}" alt="{{product2.title}}" class="img-fluid">
+          </div>
+        </div>
+        {% endif %}
+        <div style="display:none" id="vidf" class="variantclass" data-variantid="{{ product1.variants.first.id }}">{{ product1.variants.first.id }}</div>
+        <div style="display:none" id="vids" class="variantclass" data-variantid="{{ product2.variants.first.id }}">{{ product2.variants.first.id }}</div>
+        <div class="col-md-4">
+         {% if product1.variants.size > 1 %}
+                <select class="form-control form_txt " name="id" id="product-select-{{product1.id}}">
+                  {% for variant in product1.variants %}
+                  
+                    <option {% if variant == product1.selected_or_first_available_variant  %} selected="selected" {% endif %}  value="{{ variant.id }}" {% if variant.available %}{% else %}disabled{% endif %}>{{ variant.title }}</option>
+            		
+                  {% endfor %}
+                </select>
+                {% else %}
+                   <input type="hidden" name="id" value="{{ product1.variants.first.id }}" />
+                {% endif %}
+           {% if product2.variants.size > 1 %}
+                <select class="form-control form_txt " name="id" id="product-select-{{product2.id}}">
+                  {% for variant in product2.variants %}
+                  
+                    <option {% if variant == product2.selected_or_first_available_variant  %} selected="selected" {% endif %}  value="{{ variant.id }}" {% if variant.available %}{% else %}disabled{% endif %}>{{ variant.title }}</option>
+            		
+                  {% endfor %}
+                </select>
+                {% else %}
+                   <input type="hidden" name="id" value="{{ product2.variants.first.id }}" />
+                {% endif %}
+<script>
+    {% if product1.variants.size > 1 %}
+    var selectCallback_{{product1.id}} = function(variant, selector) {
+    				if(variant.available){
+                       $(".btn-cart").html("Add to Cart");
+                       $(".btn-cart").attr("disabled",false);
+                       $(".quick-by").attr("disabled",false);
+                    {% if product1.variants.size == 1 or product1.variants.first.title contains 'Default' %}
+                      $('.selector-wrapper').hide();
+                     {% endif %}
+                    if(variant.price){
+                      $('.price-update-{{product1.id}}').html(Shopify.formatMoney(variant.price, "{{shop.money_without_currency }}")); 
+                    console.log("Price",variant.price );
+                      console.log("Product Variant Id",variant.id );
+                      $('.sale-p-{{product1.id}}').html(Shopify.formatMoney(variant.price, "{{shop.money_without_currency }}")); 
+                   	  $("#vidf").text(variant.id);
+                    if(variant.compare_at_price > variant.price)
+                      {
+                      var save=variant.compare_at_price-variant.price;
+                        $(".cmp-price-{{product1.id}}").removeClass("d-none");
+                          $(".save-{{product1.id}}").removeClass("d-none");
+                          $(".badge-save-{{product1.id}}").removeClass("d-none");
+                          $('.save-{{product1.id}}').html("( Save "+Shopify.formatMoney(save, "{{shop.money_without_currency }}")+")"); 
+                         $('.save-prc-{{product1.id}}').html(Shopify.formatMoney(save, "{{shop.money_without_currency }}"));
+                          $('.cmp-price-{{product1.id}}').html("<strike>"+Shopify.formatMoney(variant.compare_at_price, "{{shop.money_without_currency }}")+"</strike>");
+                          $('.cmp-p-{{product1.id}}').html(Shopify.formatMoney(variant.compare_at_price, "{{shop.money_without_currency }}"));
+                      }
+                      else
+                      {
+                           $(".save-{{product1.id}}").addClass("d-none");
+                           $(".badge-save-{{product1.id}}").addClass("d-none");
+                           $(".cmp-price-{{product1.id}}").addClass("d-none");
+                           }
+                                                                  
+                                                                  
+                                                                  }
+                      $(".available-label").html("In stock");
+                        if(variant.featured_image){
+                          $('.product-slider').slick('slickGoTo', variant.featured_image.position-1);
+                        }
+
+                      if (variant) {
+                          var form = jQuery('#' + selector.domIdPrefix).closest('form');
+                          for (var i=0,length=variant.options.length; i<length; i++) {
+                            var radioButton = form.find('.swatch[data-option-index="' + i + '"] :radio[value="' + variant.options[i] +'"]');
+                            if (radioButton.length>0) {
+                              radioButton.get(0).checked = true;
+                            }
+                          }
+                      }
+                  }
+                  else{
+                        $(".available-label").html("Out of stock");
+                        $(".btn-cart").html("Sold out");
+                        $(".btn-cart").attr("disabled",true); 
+                        $(".quick-by").attr("disabled",true);
+             		 }
+     };
+  jQuery(function($) {
+    new Shopify.OptionSelectors("product-select-{{product1.id}}", { 
+      product: {{ product1 | json }},
+      history: true,
+     onVariantSelected: selectCallback_{{product1.id}}
+    });
+ 
+  });
+                      {% endif %}
+
+</script>
+        
+        	  <script>
+                 {% if product2.variants.size > 1 %}
+    var selectCallback_{{product2.id}} = function(variant, selector) {
+// 					$(".variant-description").hide();
+//             		$(".v-"+variant.id).show();
+//     console.log(variant);
+    				if(variant.available){
+                       $(".btn-cart").html("Add to Cart");
+                       $(".btn-cart").attr("disabled",false);
+                       $(".quick-by").attr("disabled",false);
+                    {% if product2.variants.size == 1 or product2.variants.first.title contains 'Default' %}
+                      $('.selector-wrapper').hide();
+                     {% endif %}
+                    $("#vids").text(variant.id);
+                      if(variant.price){
+                      $('.price-update-{{product2.id}}').html(Shopify.formatMoney(variant.price, "{{shop.money_without_currency }}")); 
+                      $('.sale-p-{{product2.id}}').html(Shopify.formatMoney(variant.price, "{{shop.money_without_currency }}")); 
+                   
+                    if(variant.compare_at_price > variant.price)
+                      {
+                      var save=variant.compare_at_price-variant.price;
+                        $(".cmp-price-{{product2.id}}").removeClass("d-none");
+                          $(".save-{{product2.id}}").removeClass("d-none");
+                          $(".badge-save-{{product2.id}}").removeClass("d-none");
+                          $('.save-{{product2.id}}').html("( Save "+Shopify.formatMoney(save, "{{shop.money_without_currency }}")+")"); 
+                         $('.save-prc-{{product2.id}}').html(Shopify.formatMoney(save, "{{shop.money_without_currency }}"));
+                          $('.cmp-price-{{product2.id}}').html("<strike>"+Shopify.formatMoney(variant.compare_at_price, "{{shop.money_without_currency }}")+"</strike>");
+                          $('.cmp-p-{{product2.id}}').html(Shopify.formatMoney(variant.compare_at_price, "{{shop.money_without_currency }}"));
+
+                      }
+                      else
+                      {
+                      $(".save-{{product2.id}}").addClass("d-none");
+                      $(".badge-save-{{product2.id}}").addClass("d-none");
+                      $(".cmp-price-{{product2.id}}").addClass("d-none");
+                      }
+                                                                  
+                                                                  
+                                                                  }
+                      $(".available-label").html("In stock");
+                        if(variant.featured_image){
+                          $('.product-slider').slick('slickGoTo', variant.featured_image.position-1);
+                        }
+
+                      if (variant) {
+                          var form = jQuery('#' + selector.domIdPrefix).closest('form');
+                          for (var i=0,length=variant.options.length; i<length; i++) {
+                            var radioButton = form.find('.swatch[data-option-index="' + i + '"] :radio[value="' + variant.options[i] +'"]');
+                            if (radioButton.length>0) {
+                              radioButton.get(0).checked = true;
+                            }
+                          }
+                      }
+                  }
+                  else
+                  {
+                    $(".available-label").html("Out of stock");
+                    $(".btn-cart").html("Sold out");
+                    $(".btn-cart").attr("disabled",true); 
+                    $(".quick-by").attr("disabled",true);
+              }                             
+     };
+  jQuery(function($) {
+    new Shopify.OptionSelectors("product-select-{{product2.id}}", { 
+      product: {{ product2 | json }},
+      history: true,
+     onVariantSelected: selectCallback_{{product2.id}}
+    });
+ 
+  });
+                      {% endif %}
+
+          </script>
+                                   
+      <button  class="addtocart_btn btn-cart">Add To Cart</button>
+         
+              </div>
+        
+      </div>
+    </div>
+  </section>
+{% schema %}
+  {
+    "name": "Bundle Product",
+    "settings": [
+		{
+        "type":"text",
+        "label":"Title",
+        "id":"title",
+        "default":"Wheel & Tire Package"
+        },
+		{
+        "type":"product",
+        "id":"product1",
+        "label":"product1"
+			},
+		{
+        "type":"product",
+        "id":"product2",
+        "label":"product2"
+	    }
+	],
+    "presets":[
+       {
+        "name": "Bundle",
+        "category": "Bundle"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

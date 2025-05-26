@@ -1,0 +1,22 @@
+{% include 'rapid-search-foc-wrapper-condition' %}
+  
+{% if  focIsEnabled == true %}
+  {% section 'rapid-search-collection-template' %}
+{% endif %}
+  
+  
+  
+{% if  focIsEnabled == true %}
+  <div id="rps-generated" style="display: none !important;" >
+{% endif %}
+
+{% comment %}{% section 'banner-collection' %}{% endcomment %}
+{% comment %}{% section 'collection-shop-section-wheels' %}{% endcomment %}
+{% comment %}{% section 'blog-slider-section' %}{% endcomment %}
+{% section 'conection-section' %}
+
+
+{% if  focIsEnabled == true %}
+  <!-- rps-generated-div --></div>
+{% endif %}
+  

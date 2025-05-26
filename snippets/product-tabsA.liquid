@@ -1,0 +1,107 @@
+  <div class="row product-tabs my-3">
+      <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 m-auto">
+        <ul class="nav nav-tabs" role="tablist">  
+            {% if section.settings.show_product_description %}
+                {% assign size_class="col text-center p-0" %}
+                <li class="nav-item tab-li {{size_class}} "> 
+                    <a class="nav-link active" id="description-tab" data-toggle="tab" href="#{{section.settings.description_tab_title| strip | handleize }}" role="tab" >
+                        {{section.settings.description_tab_title}}
+                    </a> 
+                </li>
+            {% endif %}          
+            {% for block in section.blocks %}
+                {% if block.type == "tabs" %}
+                        {% if block.settings.product == product.handle and block.settings.enable %}
+                        {% assign size_class="col text-center p-0" %}
+                            <li class="nav-item tab-li {{size_class}} "> 
+                                <a class="nav-link text-center" id="{{block.settings.tab_title | strip | handleize }}" data-toggle="tab" href="#guarantee{{forloop.index}}" role="tab" >
+                                {{ block.settings.tab_title }}
+                                </a> 
+                            </li>                           
+                        {% endif %}
+                {% elsif block.type == "video_tab" %}
+                        {% assign size_class="col text-center p-0"  %}
+                       {% if block.settings.product == product.handle and block.settings.enable %}
+                            <li class="nav-item tab-li {{size_class}}"> 
+                                <a class="nav-link text-center " id="video-tab" data-toggle="tab" href="#video" role="tab" >
+                                {{ block.settings.video_label }}
+                                </a> 
+                            </li>
+                        {% endif %}
+                {% endif %}
+            {% endfor %}
+            {% if section.settings.show_review %}
+                        {% assign size_class="col text-center p-0" %}
+                <li class="nav-item tab-li {{size_class}}"> 
+                    <a class="nav-link " id="reviewe-tab" data-toggle="tab" href="#{{section.settings.review_tab_title| strip | handleize }}" role="tab" >
+                        {{section.settings.review_tab_title}}
+                    </a> 
+                </li>
+            {% endif %}          
+        </ul>
+        <div class="tab-content">
+          {% if section.settings.show_product_description %}
+          <div class="tab-pane pad active" id="{{section.settings.description_tab_title| strip | handleize }}" role="tabpanel">
+                <div class="container">
+                    <div class="col-md-12  py-md-4 py-3">
+                        <div data-station-tabs-app data-station-tabs-product="{{ product.handle }}">{{product.description}}</div>
+                       {{ shop.metafields.global.return_shipping }}
+                    </div>	
+                </div>
+          </div>
+          {% endif %}
+        {% for block in section.blocks %}
+            {% if block.type == "tabs" %}
+               {% if block.settings.product == product.handle and block.settings.enable %}
+                    <div class="tab-pane pad" id="guarantee{{forloop.index}}" role="tabpanel">
+                        <div>
+                            <div class="container ">
+                                <div class="col-md-12  py-md-4 py-3">
+                                    {% if block.settings.tab_description != blank %}
+                                        {{block.settings.tab_description}}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% elsif block.type == "video_tab" %}
+                   {% if block.settings.product == product.handle and block.settings.enable %}
+                    <div class="tab-pane pad " id="video" role="tabpanel">
+                        <div>
+                            {% if block.settings.video_url != blank %}
+                                {% assign size_class_vid = "col-md-8 m-auto  py-md-4 py-3" %}
+                            {% endif %}
+                            <div class="row">
+                                    {% if block.settings.video_url != blank and block.settings.video_type == "custom"%}
+                                        <div class="{{size_class_vid}} vid_div">
+                                        <video>
+                                            <source src="{{block.settings.video_url}}" type="video/mp4">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                        </div>
+                                    {% elsif block.settings.video_url != blank and block.settings.video_type == "youtube"%}
+                                        <div class="{{size_class_vid}} youtube_div">
+                                        <iframe src="{{ block.settings.video_url}}"  frameborder="0"></iframe>
+                                        </div>
+                                    {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% endfor %}      
+        {% if section.settings.show_review  %}
+            <div class="tab-pane pad" id="{{section.settings.review_tab_title | strip | handleize }}" role="tabpanel">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12  py-md-4 py-3">
+                            <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        </div>
+      </div>
+    </div>

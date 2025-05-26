@@ -1,0 +1,77 @@
+{% if section.settings.enable_section %}
+<section class="our-missiion">
+    <div class="container-fluid">
+        <div class="row m-0 align-items-center">
+            <div class="col-md-6 join-us">
+                <h3>{{ section.settings.title_join }}</h3>
+                <p>{{ section.settings.text_line }}</p>
+                <a class="btn_banner" href="{{ section.settings.btn_url }}">{{ section.settings.btn_text }}</a>
+            </div>
+            <div class="col-md-6 our-mission-main_div p-0 lazyload" data-bgset="{% include 'responsive-bg-image', image: section.settings.bg_img %}" >
+                <div class="our-mission-div">
+                    <h3>{{ section.settings.title_mission }}</h3>
+                    <p>{{ section.settings.text_line_mission }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% schema %}
+  {
+    "name": "Our Mission",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable_section",
+            "label": "Enable Section?"
+        },
+        {
+            "type": "header",
+            "content": "Join Us"
+        },
+        {
+			"type": "text",
+			"id": "title_join",
+			"label": "Title"
+		},
+        {
+        
+            "type": "textarea",
+            "id": "text_line",
+            "label": "Text Content"
+        },
+        {
+        
+            "type": "text",
+            "id": "btn_text",
+            "label": "Button Text"
+        },
+        {
+            "type": "url",
+            "id": "btn_url",
+            "label": "Button Url"
+        },
+        {
+            "type": "header",
+            "content": "Our Mission"
+        },
+        {
+			"type": "image_picker",
+			"id": "bg_img",
+			"label": "Backgrund Image"
+		},
+        {
+			"type": "text",
+			"id": "title_mission",
+			"label": "Title"
+		},
+        {
+        
+            "type": "textarea",
+            "id": "text_line_mission",
+            "label": "Text Content"
+        }
+    ]
+  }
+{% endschema %}

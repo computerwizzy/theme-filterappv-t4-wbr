@@ -1,0 +1,115 @@
+{% if section.settings.enable_section %}
+    <section class="for-making">
+        <div class="container">
+            <div class="row">
+                <div class="col-12"> 
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        {% for block in section.blocks %}
+                            {% if block.type == 'tab_head' %}
+                                <li class="nav-item">
+                                    <a class="nav-link {% if forloop.first %} active {% endif %}" id="tab-{{ forloop.index }}" data-toggle="tab" href="#content-{{ forloop.index }}" role="tab" aria-controls="content-{{ forloop.index }}" aria-selected="true">{{ block.settings.tab_heading_txt }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                        
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="content-1" role="tabpanel" aria-labelledby="tab-1">
+                            <div class="main-row">
+                                {% for block in section.blocks %}
+                                    {% if block.type == 'tab_content_1' %}
+                                        <div class="content_div">
+                                            <a href="{{ block.settings.contnt_url }}">{{ block.settings.tab_content_txt }} <span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="content-2" role="tabpanel" aria-labelledby="tab-2">
+                            <div class="main-row">
+                                {% for block in section.blocks %}
+                                    {% if block.type == 'tab_content_2' %}
+                                        <div class="content_div">
+                                            <a href="{{ block.settings.contnt_url }}">{{ block.settings.tab_content_txt }} <span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span></a>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button class="btn_body view-more">View More &nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                    <button class="btn_body view-less">View Less &nbsp;<i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}
+{% schema %}
+  {
+    "name": "For Making",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable_section",
+            "label": "Enable Section?"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "tab_head",
+            "name": "Tab Heading",
+            "settings":[
+                {
+                    "type":"text",
+                    "id": "tab_heading_txt",
+                    "label": "Tab Title"
+                }
+            ]
+        },
+        {
+            "type": "tab_content_1",
+            "name": "Content Featured Makes",
+            "settings":[
+                {
+                    "type":"text",
+                    "id": "tab_content_txt",
+                    "label": "Tab Title"
+                },
+                {
+                    "type": "url",
+                    "id": "contnt_url",
+                    "label": "Url"
+                }
+
+            ]
+        },
+        {
+            "type": "tab_content_2",
+            "name": "Content Featured Models",
+            "settings":[
+                {
+                    "type":"text",
+                    "id": "tab_content_txt",
+                    "label": "Tab Title"
+                },
+                {
+                    "type": "url",
+                    "id": "contnt_url",
+                    "label": "Url"
+                }
+
+            ]
+        }
+
+    ],
+    "presets": [
+      {
+        "name": "For Making",
+        "category": "Index"
+      }
+    ]
+  }
+{% endschema %}

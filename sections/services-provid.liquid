@@ -1,0 +1,71 @@
+{% if section.settings.enable_section %}
+<section class="service_provide">
+    <div class="container-fluid">
+       <div class="row">
+            {% for block in section.blocks %}
+            <div class="col-md-4 main_box"> 
+              <img src="{{ block.settings.bg_img | img_url:'original' }}" class="desk-image">
+                <div><img src="{{ block.settings.bg_img | img_url:'original' }}" class="mobile-image img-fluid"> 
+              </div>
+              <div class="service_provid_box">
+                    <h5>{{ block.settings.title_txt }}</h5>
+                    <p>{{ block.settings.service_content }}</p>
+                    <a class="btn_body" href="{{ block.settings.btn_url }}">{{ block.settings.btn_txt }}</a>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% schema %}
+  {
+    "name": "Services Provide",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable_section",
+            "label": "Enable Section?"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "text_content",
+            "name": "Service",
+            "settings":[
+                {
+                    "type": "image_picker",
+                    "id": "bg_img",
+                    "label": "Background Image"
+                },
+                {
+                    "type": "text",
+                    "id": "title_txt",
+                    "label": "Title"
+                },
+                {
+                    "type": "textarea",
+                    "id": "service_content",
+                    "label": "Content"
+                },
+                {
+                    "type": "text",
+                    "id": "btn_txt",
+                    "label": "Button Text"
+                },
+                {
+                    "type": "url",
+                    "id": "btn_url",
+                    "label": "Button url"
+                }
+            ]
+        }
+    ],
+    "presets": [
+      {
+        "name": "Services Provide",
+        "category": "Index"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,42 @@
+{%- if recommendations.products_count > 0 -%}
+<section class="related-product-section product-section">
+  <div class="container">
+    <div class="col-12 text-left pb-4 px-0">
+      <h3 class="text-uppercase">Related Products</h3>
+    </div>
+    <div class="row">
+      <div class="related-product-slider col-12 p-0">
+        {%- for product in recommendations.products -%}
+        <div class="text-center pro-item">
+          <div class="product-box">
+            <div class="product-img-box">
+              <a href="{{ product.url }}"><img src="{{ product.featured_image | img_url:'400x' }}"
+                  alt="{{ product.title }}">
+                <div class="hover-div">
+                  <a class="outline-btn" href="{{ product.url }}">View Now</a>
+                </div>
+              </a>
+            </div>
+            <div class="product-content">
+              <a href="{{ product.url }}" class="text-purple">
+                <h5>{{ product.title }}</h5>
+              </a>
+              <p class="price-text mb-3">{{ product.price | money }}</p>
+              <button type="submit" class="outline-btn m-auto">Add to cart</button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% schema %}
+{
+"name": "Related Product",
+"settings": [
+]
+}
+{% endschema %}

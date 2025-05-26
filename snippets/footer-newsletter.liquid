@@ -1,0 +1,55 @@
+{% comment %}
+<form id="mailchimp_form" action="{{ section.settings.mailchimp_url }}">
+    <input type="email" placeholder="Email Address" value="" name="EMAIL"
+        class="required email text-center input-join p-2 mb-4" id="mce-EMAIL">
+    <input type="submit" value="SUBSCRIBE" name="submit" class="subscribe-btn text-uppercase"
+        id="mc-embedded-subscribe">
+    <div style="position: absolute; left: -5000px;" aria-hidden="true">
+        <input type="text" name="b_c7405f962e5f7d406e3c4cb95_2e2c649c52" tabindex="-1" value="">
+    </div>
+</form>
+
+<p class="form_success" style="display: none"> Subscribed successfully !</p>
+<p class="form_error" style="display: none"> Error!</p>
+{% endcomment %}
+<div class="news_letter">
+    <div class="container">
+        <div class="row">
+            <div class="col-11 m-auto bg-orange shadow">
+                <div class="row px-2 py-4 align-items-center">
+                    <div class="col-12 col-lg-6 col-xl-6 col-md-6 mb-xl-0 mb-lg-0 mb-md-0 mb-3 text-xl-left text-lg-left text-md-left  text-center">
+                        {% if  section.settings.section_title != blank %}
+                            <h5 class="mb-0">{{section.settings.section_title}}</h5>
+                        {% endif %}
+                        {% if  section.settings.section_title != subtitle %}    
+                        <p class="mb-0">
+                            {{section.settings.subtitle}}
+                        </p>
+                        {% endif %}
+                    </div>
+                    <div class="col-12 col-lg-6 col-xl-6 col-md-6">
+                        {% form 'customer' %}
+                            {{ form.errors | default_errors }}
+                            {% if form.posted_successfully? %}
+                                <p class="text-center">{{ 'general.newsletter_form.confirmation' | t }}</p>
+                            {% else %}
+                                <div class="col-12">
+                                    <div class="input-group">
+                                    <input type="hidden" name="contact[tags]" value="newsletter">
+                                        <input type="email" class="form-control" placeholder="Email-Address" 
+                                            aria-label="Recipient's username" aria-describedby="button-addon2" />
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                       {% endform %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

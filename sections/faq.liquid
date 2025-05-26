@@ -1,0 +1,81 @@
+{% if section.settings.enable_section %}
+<section class="faq-section my-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-8 col-lg-10 col-md-11 m-auto">
+        <div class="title mb-4 pt-3">
+          <h1 class="text-center">FAQs</h1>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="accordion" id="accordionExample">
+              {% for block in section.blocks %}
+              <div class="card">
+                <div class="card-header" id="heading-{{ block.id}}">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne-{{ block.id }}" aria-expanded="true" aria-controls="collapseOne-{{ block.id }}">
+                      <b>{{ block.settings.qusestion_text }}</b>
+                    </button>
+                  </h2>
+                </div>
+            
+                <div id="collapseOne-{{ block.id }}" class="collapse {% if forloop.first %} show {% endif %}" aria-labelledby="heading-{{ block.id}}" data-parent="#accordionExample">
+                  <div class="card-body">
+                    {{ block.settings.ans_text }}
+                    <a class="button-all banner-btn mt-3" href="{{ block.settings.btn_url }}">{{ block.settings.btn_text }}</a>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% schema %}
+{
+"name": "FAQs Section",
+  "settings": [
+      {
+        "type": "header",
+        "content": "FAQs" 
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_section", 
+        "label": "Enable Section" 
+      }
+  ],
+  "blocks":[{
+    "type": "text",
+    "name": "FAQs",
+    "settings": [
+        {
+          "type":"text",
+          "id": "qusestion_text",
+          "label": "Question"
+        },
+        {
+          "type":"textarea",
+          "id": "ans_text",
+          "label": "Answer"
+        },
+        {
+          "type":"text",
+          "id": "btn_text",
+          "label": "Button Text",
+          "default": "Shop Now"
+        },
+        {
+          "type":"url",
+          "id": "btn_url",
+          "label": "Button Url"
+        }
+    ]
+  }]
+}
+{% endschema %}

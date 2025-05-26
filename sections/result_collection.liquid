@@ -1,0 +1,943 @@
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+{%- assign paginationAmount = 60 -%}
+{%- if cart.attributes.pagination != blank -%}
+
+  {%- comment -%} If we do, use this value for the pagination instead {%- endcomment -%}
+  {%- assign paginationAmount = cart.attributes.pagination | default:60 | abs -%}
+
+{%- endif -%}
+
+
+
+{% paginate collection.products by paginationAmount %}
+<section class="collection-shop-section product-section">
+  <div class="container">
+    <div class="row mb-4 align-items-center" >
+      <div class="col-lg-3 text-center">
+        <p class="mb-0">{{paginate.current_offset | plus : 1}} - {% if   paginate.page_size > collection.all_products_count %}{{ collection.all_products_count }} {% else %}  {{paginate.page_size}} {% endif %}  of {{ collection.all_products_count }} results </p>
+      </div>
+      <div class="col-lg-9">
+        <div class="row">
+          <div class="col-xl-9 col-lg-9 text-right">
+            <div class="row">
+              <div class="col-12 follter-main_item-dv">
+                {% if section.settings.show_item_widget %}
+                <div class="filter-item_div">
+                  <label>{{section.settings.show_items_label}} </label>
+                  <ul class="fillter-item-ul">
+                    {% for block in section.blocks %}
+                    {% if block.type == "show_items" and block.settings.enable %}
+                    <li class="position-relative">
+                        <input type="radio" value={{block.settings.item_show}} name="pagination_value"  class="pagination-count"  {% if paginationAmount == block.settings.item_show %}checked{% endif %}>
+                        <label class="radio_container">{{block.settings.item_show}}</label>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                  </ul>
+                </div>
+                {% endif %}
+                <div class="fillter-div">
+                  {% include 'sortby-collection' %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3">
+              <ul class="grid-fillter text-center mb-0 my-lg-0 my-md-2 my-sm-2 my-2">
+                <li>
+                    <a  class="view-product border-0" data-class="col-xl-12 col-lg-12 col-md-12 col-sm-12"> <img src="https://cdn.shopify.com/s/files/1/0065/0048/3116/files/da5df19b.png?v=1590374137" alt="{{shop.name}}"></a>
+                </li>
+                <li>
+                  <a  class="view-product border-0" data-class="col-xl-4 col-lg-4 col-md-4 col-sm-4"><img src="https://cdn.shopify.com/s/files/1/0065/0048/3116/files/53339a30.png?v=1590374137" alt="{{shop.name}}"></a>
+                </li>
+                <li>
+                  <a class="view-product border-0"  data-class="col-xl-3 col-lg-3 col-md-4 col-sm-4"><img src="https://cdn.shopify.com/s/files/1/0065/0048/3116/files/c53e9406.png?v=1590374136" alt="{{shop.name}}"></a>
+                </li>
+              </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-3 my-2">
+        
+        <div id="fillter_main" class="fillter_div_main">
+            <div class="accordion" id="accordionExample">
+                {% if current_tags %}
+                <div class="card">
+                    <div class="card-header" id="headingFilter">
+                        <h2 class="mb-0">
+                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFilter"><i class="fa fa-plus"></i>Active Filters</button>									
+                        </h2>
+                    </div>
+                    <div id="collapseFilter" class="collapse show" aria-labelledby="headingFilter" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="tags">
+                               
+                            </div>
+                        <span class="badge py-3">
+                        {% if collection %}
+                        <a href="/collections/{{collection.handle}}">Clear All Selections</a>
+                        {% else %}
+                        <a href="/collections/all">Clear All Selections</a>
+                        {% endif %}</span>
+                        
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% if section.settings.show_diameter_widget %}
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h2 class="mb-0">
+                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne"><i class="fa fa-plus"></i>{{section.settings.diameter_label}}</button>									
+                        </h2>
+                    </div>
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                        <div class="card-body">
+                            {% for block in section.blocks  %}
+                                {% if block.type == "diameter" and block.settings.enable %}
+                                    <div class="radio_div">{{block.settings.diameter_value}}"
+                                    {%- capture rdvalue -%}
+                                    {{ block.settings.diameter_value}}-diameter
+                                    {%- endcapture -%}
+                                        <input type="radio"  value="{{rdvalue}}" name="diameter" {% if current_tags contains rdvalue %}checked{% endif %} class="coll-filter">
+                                        <span class="checkmark"></span>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if section.settings.show_height_widget %}
+                <div class="card">
+                    <div class="card-header" id="headingHeight">
+                        <h2 class="mb-0">
+                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseHeight"><i class="fa fa-plus"></i>{{section.settings.height_label}}</button>
+                        </h2>
+                    </div>
+                    <div id="collapseHeight" class="collapse show" aria-labelledby="headingHeight" data-parent="#accordionExample">
+                        <div class="card-body">
+                            {% for block in section.blocks %}
+                            {% if block.type == "height" and block.settings.enable %}
+                            {%- capture rdvalue1 -%}
+                                   {{ block.settings.height_value}}-height
+                                    {%- endcapture -%}
+                                <div class="checkbox_div">{{block.settings.height_value}}"
+                                <input type="checkbox"  name="height" value="{{rdvalue1}}" class="coll-filter" {% if current_tags contains rdvalue1 %}checked{% endif %}>
+                                <span class="checkmark"></span>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if section.settings.show_width_widget %}
+                <div class="card">
+                    <div class="card-header" id="headingTwo">
+                        <h2 class="mb-0">
+                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"><i class="fa fa-plus"></i>{{section.settings.width_label}}</button>
+                        </h2>
+                    </div>
+                    <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="search-div">
+                              <input type="text" placeholder="Search" class="search-width" >
+                              <button class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                            {% for block in section.blocks %}
+                            {% if block.type == "width" and block.settings.enable %}
+                            {%- capture rdvalue1 -%}
+                                   {{ block.settings.width_value}}-width
+                                    {%- endcapture -%}
+                                <div class="checkbox_div">{{block.settings.width_value}}"
+                                <input type="checkbox"  name="width" value="{{rdvalue1}}" class="coll-filter" {% if current_tags contains rdvalue1 %}checked{% endif %}>
+                                <span class="checkmark"></span>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+     
+                {% if section.settings.show_color_widget %}
+                <div class="card">
+                    <div class="card-header" id="headingThree">
+                        <h2 class="mb-0">
+                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree"><i class="fa fa-plus"></i> {{section.settings.color_label}}</button>                     
+                        </h2>
+                    </div>
+                    <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordionExample">
+                        <div class="card-body">
+                            {% for block in section.blocks %}
+                            {% if block.type == "color" and block.settings.enable %}
+                            <div class="checkbox_div">{{block.settings.color_value}}
+                                <input type="checkbox"  name="color" value="{{block.settings.color_value}}" class="coll-filter" {% if current_tags contains block.settings.color_value %}checked{% endif %}>
+                                <span class="checkmark"></span>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% if section.settings.show_type_widget %}
+                <div class="card">
+                    <div class="card-header" id="headingFour">
+                        <h2 class="mb-0">
+                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour"><i class="fa fa-plus"></i> {{section.settings.type_label}}</button>                     
+                        </h2>
+                    </div>
+                    <div id="collapseFour" class="collapse show" aria-labelledby="headingFour" data-parent="#accordionExample">
+                        <div class="card-body">
+                            {% for block in section.blocks %}
+                            {% if block.type == "tiertype" and block.settings.enable %}
+                            <div class="checkbox_div">{{block.settings.type_value}}
+                                <input type="checkbox"  name="type" value="{{block.settings.type_value}}" class="coll-filter" {% if current_tags contains block.settings.type_value %}checked{% endif %}>
+                                <span class="checkmark"></span>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+           {% if section.settings.show_price_widget %}
+                <div class="card">
+                    <div class="card-header" id="headingfive">
+                        <h2 class="mb-0">
+                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapsefive"><i class="fa fa-plus"></i>{{section.settings.price_label}}</button>                     
+                        </h2>
+                    </div>
+                    <div id="collapsefive" class="collapse show" aria-labelledby="headingfive" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="price-filltr">
+                              <input type="text" placeholder="$ Min">
+                              <input type="text" placeholder="$ Max">
+                              <button class="price-btn">GO</button>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            {% endif %}    
+            {% if section.settings.show_treadwear_widget %}
+                <div class="card">
+                    <div class="card-header" id="headingSix">
+                        <h2 class="mb-0">
+                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSix"><i class="fa fa-plus"></i> {{section.settings.treadwear_label}}</button>                     
+                        </h2>
+                    </div>
+                    <div id="collapseSix" class="collapse show" aria-labelledby="headingSix" data-parent="#accordionExample">
+                        <div class="card-body">
+                            {% for block in section.blocks %}
+                            {% if block.type == "treadwear" and block.settings.enable %}
+                            <div class="checkbox_div">{{block.settings.treadwear_value}}
+                                <input type="checkbox"  name="treadwear" value="{{block.settings.treadwear_value}}" class="coll-filter" {% if current_tags contains block.settings.treadwear_value %}checked{% endif %}>
+                                <span class="checkmark"></span>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if section.settings.show_traction_widget %}
+                <div class="card">
+                    <div class="card-header" id="headingSeven">
+                        <h2 class="mb-0">
+                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseSeven"><i class="fa fa-plus"></i> {{section.settings.traction_label}}</button>                     
+                        </h2>
+                    </div>
+                    <div id="collapseSeven" class="collapse show" aria-labelledby="headingSeven" data-parent="#accordionExample">
+                        <div class="card-body">
+                            {% for block in section.blocks %}
+                            {% if block.type == "traction" and block.settings.enable %}
+                            <div class="checkbox_div">{{block.settings.traction_value}}
+                                <input type="checkbox"  name="traction" value="{{block.settings.traction_value}}" class="coll-filter" {% if current_tags contains block.settings.traction_value %}checked{% endif %}>
+                                <span class="checkmark"></span>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if section.settings.show_speed_rating_widget %}
+                <div class="card">
+                    <div class="card-header" id="headingEight">
+                        <h2 class="mb-0">
+                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseEight"><i class="fa fa-plus"></i> {{section.settings.speed_rating_label}}</button>                     
+                        </h2>
+                    </div>
+                    <div id="collapseEight" class="collapse show" aria-labelledby="headingEight" data-parent="#accordionExample">
+                        <div class="card-body">
+                            {% for block in section.blocks %}
+                            {% if block.type == "speedrating" and block.settings.enable %}
+                            <div class="checkbox_div">{{block.settings.speed_rating_value}}
+                                <input type="checkbox"  name="speedrating" value="{{block.settings.speed_rating_value}}" class="coll-filter" {% if current_tags contains block.settings.speed_rating_value %}checked{% endif %}>
+                                <span class="checkmark"></span>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if section.settings.show_load_range_widget %}
+                <div class="card">
+                    <div class="card-header" id="headingRange">
+                        <h2 class="mb-0">
+                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseRange"><i class="fa fa-plus"></i> {{section.settings.load_range_label}}</button>                     
+                        </h2>
+                    </div>
+                    <div id="collapseRange" class="collapse show" aria-labelledby="headingRange" data-parent="#accordionExample">
+                        <div class="card-body">
+                            {% for block in section.blocks %}
+                            {% if block.type == "loadrange" and block.settings.enable %}
+                            <div class="checkbox_div">{{block.settings.load_range_value}}
+                                <input type="checkbox"  name="loadrange" value="{{block.settings.load_range_value}}" class="coll-filter" {% if current_tags contains block.settings.load_range_value %}checked{% endif %}>
+                                <span class="checkmark"></span>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+       
+            {% if section.settings.show_load_index_widget %}
+                <div class="card">
+                    <div class="card-header" id="headingNine">
+                        <h2 class="mb-0">
+                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseNine"><i class="fa fa-plus"></i> {{section.settings.load_index_label}}</button>                     
+                        </h2>
+                    </div>
+                    <div id="collapseNine" class="collapse show" aria-labelledby="headingNine" data-parent="#accordionExample">
+                        <div class="card-body">
+                            {% for block in section.blocks %}
+                            {% if block.type == "loadindex" and block.settings.enable %}
+                            <div class="checkbox_div">{{block.settings.load_index_value}}
+                                <input type="checkbox"  name="loadindex" value="{{block.settings.load_index_value}}" class="coll-filter" {% if current_tags contains block.settings.load_index_value %}checked{% endif %}>
+                                <span class="checkmark"></span>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if section.settings.show_brand_widget %}
+                <div class="card">
+                    <div class="card-header" id="headingTen">
+                        <h2 class="mb-0">
+                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTen"><i class="fa fa-plus"></i> {{section.settings.brand_label}}</button>                     
+                        </h2>
+                    </div>
+                    <div id="collapseTen" class="collapse show" aria-labelledby="headingTen" data-parent="#accordionExample">
+                        <div class="card-body">
+                            {% for block in section.blocks %}
+                            {% if block.type == "brand" and block.settings.enable %}
+                            <div class="checkbox_div">{{block.settings.brand_value}}
+                                <input type="checkbox"  name="brand" value="{{block.settings.brand_value}}" class="coll-filter" {% if current_tags contains block.settings.brand_value %}checked{% endif %}>
+                                <span class="checkmark"></span>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if section.settings.show_modal_widget %}
+                <div class="card">
+                    <div class="card-header" id="headingModal">
+                        <h2 class="mb-0">
+                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseModal"><i class="fa fa-plus"></i> {{section.settings.modal_label}}</button>                     
+                        </h2>
+                    </div>
+                    <div id="collapseModal" class="collapse show" aria-labelledby="headingModal" data-parent="#accordionExample">
+                        <div class="card-body">
+                            {% for block in section.blocks %}
+                            {% if block.type == "modal" and block.settings.enable %}
+                            <div class="checkbox_div">{{block.settings.modal_value}}
+                                <input type="checkbox"  name="modal" value="{{block.settings.modal_value}}" class="coll-filter" {% if current_tags contains block.settings.modal_value %}checked{% endif %}>
+                                <span class="checkmark"></span>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if section.settings.show_keyword_widget %}
+                <div class="card">
+                    <div class="card-header" id="headingModal">
+                        <h2 class="mb-0">
+                            <button type="button" class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseKeyword"><i class="fa fa-plus"></i> {{section.settings.keyword_label}}</button>                     
+                        </h2>
+                    </div>
+                    <div id="collapseKeyword" class="collapse show" aria-labelledby="headingKeyword" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <div class="search-div">
+                              <input type="text" name="keyword" placeholder="Search" class="coll-filter" >
+                              <button class="search-btn"><i class="fa fa-search" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+           
+            </div>
+        </div>
+      </div>
+      <div class="col-lg-9 my-2">
+        
+        <div class="row product">
+          {% for product in collection.products %}
+          <div class="product-main col-xl-3 col-lg-3 col-md-4 col-sm-4 col-6  text-center">
+                    <div class="product_box">
+                        <div class="product_img_box">
+                            {% include 'responsive-image' with
+                                image: product.featured_image,
+                                image.alt: product.url,
+                                max_width: 400,
+                                max_height: 400
+                            %}
+                            {% comment %} <div class="product_overlay">
+                                <form action="/cart/add" method="post">
+                                        <input type="hidden" name="id" value="{{ product.variants.first.id }}"/>
+                                        <input id="quantity" min="1" name="quantity" style="display:none" type="number" value="1"/>
+                                    <a href="{{ product.url }}" class="btn_product" title="Show Details"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                                    <button class="btn_product" title="Add to Cart"><i class="fa fa-shopping-bag" aria-hidden="true"></i></button>
+                                </form>
+                            </div> {% endcomment %}
+                            <a href="{{product.url}}" class="product_overlay">
+                            <span class="btn_product" ><i class="fa fa-eye" aria-hidden="true"></i></span>
+                            <form action="/cart/add" method="post">
+                                        <input type="hidden" name="id" value="{{ product.variants.first.id }}"/>
+                                        <input id="quantity" min="1" name="quantity" style="display:none" type="number" value="1"/>
+                                  <button class="btn_product" title="Add to Cart" {% if product.available %} {% else %}disabled {% endif %}><i class="fa fa-shopping-bag" aria-hidden="true"></i></button>
+                           </form>
+                            </a>
+                        </div>
+                        <div class="product_info">
+                            <a href="{{ product.url }}">
+                                <h6>{{ product.title }}</h6>
+                            </a>
+                            <p>{{ product.price | money }}</p>
+                        </div>
+                    </div>
+          </div>
+          {% endfor %}
+          {% if paginate.next %}
+          <div id="more" class="col-12  mt-4">
+            <p><a href="{{ paginate.next.url }}" class="btn-show-more btn_body m-auto">Show More</a></p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endpaginate %}
+
+<script>
+  let triggered = false;
+
+  function ScrollExecute() {
+    let moreButon = $('#more').last();
+    let nextUrl = $(moreButon).find('a').attr("href");
+    if ((($(moreButon).offset().top - $(window).scrollTop()) < 800) && (triggered == false)) {
+      triggered = true;
+      $.ajax({
+          url: nextUrl,
+          type: 'GET',
+          beforeSend: function () {
+            moreButon.remove();
+          }
+        })
+        .done(function (data) {
+          $('.product').append($(data).find('.product').html());
+          triggered = false
+        });
+    }
+  }
+                        var source_array=[];
+                        {% for block in section.blocks %}
+                            {% if block.type == "width" and block.settings.enable %}
+                                    source_array.push('{{block.settings.width_value}}');
+                            {% endif %} 
+                        {% endfor %}
+
+ $( ".search-width" ).autocomplete({
+    source:source_array
+    });
+  $(document).ready(function () {
+    /*$(window).scroll(function(){
+      ScrollExecute();
+    });*/
+   
+    $('body').on('click', '#more a', function (event) {
+      event.preventDefault();
+      ScrollExecute();
+    })
+  });
+</script>
+<script>
+$(document).ready(function(){
+
+ var collFilters = jQuery('.coll-filter');
+ //var radioValue = $("input[name='diameter']:checked").val();
+   // if (radioValue != ""){
+    //newTags.push(radioValue);
+    //}
+     
+  collFilters.change(function() {
+var newTags = [];    
+    collFilters.each(function() {
+      if (jQuery(this).val()) {
+        if ($(this).is(":checked")){
+        newTags.push(jQuery(this).val());
+        }
+      }
+    var name=jQuery(this).attr('name');
+      if(name == 'keyword'){
+        newTags.push(jQuery(this).val());
+      }
+
+    });
+    if (newTags.length) {
+      var query = newTags.join('+');
+      window.location.href = jQuery('{{ 'tag' | link_to_tag: 'tag' }}').attr('href').replace('/' + 'tag', '/' + query);
+    }
+    else {
+      {% if collection.handle %}
+      window.location.href = '/collections/{{ collection.handle }}';
+      {% elsif collection.products.first.type == collection.title %}
+      window.location.href = '{{ collection.title | url_for_type }}';
+      {% elsif collection.products.first.vendor == collection.title %}
+      window.location.href = '{{ collection.title | url_for_vendor }}';
+      {% endif %}
+    }
+  });
+});
+  /* Product Tag Filters - Good for any number of filters on any type of collection pages */
+ 
+</script>
+
+{% schema %}
+{
+"name": "Collection Shop Section",
+"settings": [
+    {
+        "type":"checkbox",
+        "label":"Show Items widget",
+        "id":"show_item_widget",
+        "default":true
+    },
+    {
+    "type":"text",
+    "id":"show_items_label",
+    "label":"Show Items Label",
+    "default":"Show Items :"
+    },
+    {
+        "type":"checkbox",
+        "label":"Show Diameter widget",
+        "id":"show_diameter_widget",
+        "default":true
+    },
+    {
+    "type":"text",
+    "id":"diameter_label",
+    "label":"Diameter Widget Label",
+    "default":"DIAMETER"
+    },
+    {
+        "type":"checkbox",
+        "label":"Show Height widget",
+        "id":"show_height_widget",
+        "default":true
+    },
+    {
+    "type":"text",
+    "id":"height_label",
+    "label":"Height Widget Label",
+    "default":"Height"
+    },
+    {
+        "type":"checkbox",
+        "label":"Show Width widget",
+        "id":"show_width_widget",
+        "default":true
+    },
+    {
+    "type":"text",
+    "id":"width_label",
+    "label":"Width Widget Label",
+    "default":"WIDTH"
+    },
+       {
+        "type":"checkbox",
+        "label":"Show Color widget",
+        "id":"show_color_widget",
+        "default":true
+    },
+    {
+    "type":"text",
+    "id":"color_label",
+    "label":"color Widget Label",
+    "default":"COLOR"
+    },
+    {
+        "type":"checkbox",
+        "label":"Show Type widget",
+        "id":"show_type_widget",
+        "default":true
+    },
+    {
+    "type":"text",
+    "id":"type_label",
+    "label":"Type Widget Label",
+    "default":"TYPE"
+    },
+     {
+        "type":"checkbox",
+        "label":"Show Price widget",
+        "id":"show_price_widget",
+        "default":true
+    },
+    {
+    "type":"text",
+    "id":"price_label",
+    "label":"Price Label",
+    "default":"PRICE"
+    },
+    {
+        "type":"checkbox",
+        "label":"Show Treadwear widget",
+        "id":"show_treadwear_widget",
+        "default":true
+    },
+    {
+    "type":"text",
+    "id":"treadwear_label",
+    "label":"Treadwear Label",
+    "default":"TREADWEAR"
+    },
+    {
+        "type":"checkbox",
+        "label":"Show Traction widget",
+        "id":"show_traction_widget",
+        "default":true
+    },
+    {
+    "type":"text",
+    "id":"traction_label",
+    "label":"Traction Label",
+    "default":"TRACTION"
+    },
+    {
+        "type":"checkbox",
+        "label":"Show Speed Rating widget",
+        "id":"show_speed_rating_widget",
+        "default":true
+    },
+    {
+    "type":"text",
+    "id":"speed_rating_label",
+    "label":"Speed Rating Label",
+    "default":"SPEED RATING"
+    },
+    {
+        "type":"checkbox",
+        "label":"Show Load Range widget",
+        "id":"show_load_range_widget",
+        "default":true
+    },
+    {
+    "type":"text",
+    "id":"load_range_label",
+    "label":"Load Range Label",
+    "default":"LOAD RANGE"
+    },
+    {
+        "type":"checkbox",
+        "label":"Show Load Index widget",
+        "id":"show_load_index_widget",
+        "default":true
+    },
+    {
+    "type":"text",
+    "id":"load_index_label",
+    "label":"Load Index Label",
+    "default":"LOAD INDEX"
+    },
+    {
+        "type":"checkbox",
+        "label":"Show Brand widget",
+        "id":"show_brand_widget",
+        "default":true
+    },
+    {
+    "type":"text",
+    "id":"brand_label",
+    "label":"Brand Label",
+    "default":"BRAND"
+    },
+    {
+        "type":"checkbox",
+        "label":"Show Modal widget",
+        "id":"show_modal_widget",
+        "default":true
+    },
+    {
+    "type":"text",
+    "id":"modal_label",
+    "label":"Modal Label",
+    "default":"MODAL"
+    },
+    {
+        "type":"checkbox",
+        "label":"Show Keyword widget",
+        "id":"show_keyword_widget",
+        "default":true
+    },
+    {
+    "type":"text",
+    "id":"keyword_label",
+    "label":"Keyword Label",
+    "default":"KEYWORD"
+    }
+    ],
+"blocks":[
+    {
+   "type":"show_items",
+   "name":"Show Items",
+    "limit":3,
+   "settings":[
+            {
+            "type":"checkbox",
+            "id":"enable",
+            "label":"Enable",
+            "default":true
+            },
+            {
+            "type":"number",
+            "id":"item_show",
+            "label":"Items to Show"
+            }
+   ]     
+    },
+    {
+    "type":"diameter",
+    "name":"Diameter",
+    "settings":[
+        {
+            "type":"checkbox",
+            "id":"enable",
+            "label":"Enable",
+            "default":true
+            },
+            {
+                "type":"text",
+                "label":"Diameter Value",
+                "id":"diameter_value"
+            } 
+            ]
+        },
+        {
+    "type":"width",
+    "name":"Width",
+    "settings":[
+        {
+            "type":"checkbox",
+            "id":"enable",
+            "label":"Enable",
+            "default":true
+            },
+            {
+                "type":"text",
+                "label":"Width Value",
+                "id":"width_value"
+            } 
+        ]
+
+    },
+    {
+    "type":"height",
+    "name":"Height",
+    "settings":[
+        {
+            "type":"checkbox",
+            "id":"enable",
+            "label":"Enable",
+            "default":true
+            },
+            {
+                "type":"text",
+                "label":"Height Value",
+                "id":"height_value"
+            } 
+            ]
+        },
+   {
+    "type":"color",
+    "name":"Color",
+    "settings":[
+            {
+            "type":"checkbox",
+            "id":"enable",
+            "label":"Enable",
+            "default":true
+            },
+            {
+                "type":"text",
+                "label":"Color Value",
+                "id":"color_value"
+            } 
+        ]
+    },
+  {
+    "type":"tiertype",
+    "name":"Tier Type",
+    "settings":[
+        {
+            "type":"checkbox",
+            "id":"enable",
+            "label":"Enable",
+            "default":true
+            },
+            {
+                "type":"text",
+                "label":"Type Value",
+                "id":"type_value"
+            } 
+            ]
+        },
+  {
+    "type":"treadwear",
+    "name":"Treadwear",
+    "settings":[
+        {
+            "type":"checkbox",
+            "id":"enable",
+            "label":"Enable",
+            "default":true
+            },
+            {
+                "type":"text",
+                "label":"Treadwear Value",
+                "id":"treadwear_value"
+            } 
+            ]
+        },
+    {
+    "type":"traction",
+    "name":"Traction",
+    "settings":[
+        {
+            "type":"checkbox",
+            "id":"enable",
+            "label":"Enable",
+            "default":true
+            },
+            {
+                "type":"text",
+                "label":"Traction Value",
+                "id":"traction_value"
+            } 
+            ]
+        },
+            {
+    "type":"speedrating",
+    "name":"Speed Rating",
+    "settings":[
+        {
+            "type":"checkbox",
+            "id":"enable",
+            "label":"Enable",
+            "default":true
+            },
+            {
+                "type":"text",
+                "label":"Speed Rating Value",
+                "id":"speed_rating_value"
+            } 
+            ]
+        },
+            {
+    "type":"loadrange",
+    "name":"Load Range",
+    "settings":[
+        {
+            "type":"checkbox",
+            "id":"enable",
+            "label":"Enable",
+            "default":true
+            },
+            {
+                "type":"text",
+                "label":"Load Range Value",
+                "id":"load_range_value"
+            } 
+            ]
+        },
+            {
+    "type":"loadindex",
+    "name":"Load Index",
+    "settings":[
+        {
+            "type":"checkbox",
+            "id":"enable",
+            "label":"Enable",
+            "default":true
+            },
+            {
+                "type":"text",
+                "label":"Load Index Value",
+                "id":"load_index_value"
+            } 
+            ]
+        },
+   {
+    "type":"brand",
+    "name":"Brand",
+    "settings":[
+        {
+            "type":"checkbox",
+            "id":"enable",
+            "label":"Enable",
+            "default":true
+            },
+            {
+                "type":"text",
+                "label":"Brand Value",
+                "id":"brand_value"
+            } 
+            ]
+        },
+   {
+    "type":"modal",
+    "name":"Modal",
+    "settings":[
+        {
+            "type":"checkbox",
+            "id":"enable",
+            "label":"Enable",
+            "default":true
+            },
+            {
+                "type":"text",
+                "label":"Modal Value",
+                "id":"modal_value"
+            } 
+            ]
+        }
+]
+}
+{% endschema %}

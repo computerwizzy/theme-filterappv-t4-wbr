@@ -1,0 +1,38 @@
+<div id="html-custom-section">  
+  {%- if section.settings.title != blank -%}
+  <div class="html-custom-title"><h2>{{section.settings.title}}</h2></div>  
+  {%- endif -%}    
+  <div class="html-custom-code">{{section.settings.custom_html}}</div>
+ </div>
+<style> 
+  #html-custom-section{position:relative;}
+  .html-custom-title{text-align:center;}
+  .html-credit{text-align:right;font-size:11px; margin-bottom:20px;font-style:italic;}
+</style>
+ 
+{% schema %}
+  {
+    "name": "HTML",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type":"textarea",
+        "id": "custom_html",
+        "label": "HTML"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom HTML",
+        "category": "HTML",
+        "settings": {
+ 
+        }
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,42 @@
+{% if section.settings.enable_sec %}
+{% include 'banner-deal-2' %}
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Banner Deal 2",
+    "settings": [
+		{
+			"type": "checkbox",
+			"id": "enable_sec",
+			"label": "Enable Section?"
+		},
+		{
+			"type": "image_picker",
+			"id": "desk_img",
+			"label": "Desktop Background"
+		},
+		{
+			"type": "image_picker",
+			"id": "mob_img",
+			"label": "Mobile Background"
+		},
+		{
+			"type": "textarea",
+			"id": "title_txt",
+			"label": "Title"
+		},
+		{
+			"type": "textarea",
+			"id": "sub_title",
+			"label": "Subtitle"
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

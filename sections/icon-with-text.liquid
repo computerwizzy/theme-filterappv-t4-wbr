@@ -1,0 +1,66 @@
+{% if section.settings.enable %}
+<section class="icon-with-text">
+    <div class="container">
+        <div class="row icon-text-main">
+          {% for block in section.blocks %}
+            {% if block.settings.enable %}
+                <div class="col icon-text-item p-2">
+                {% if block.settings.icon_image != blank %}
+                <img src="{{block.settings.icon_image  | img_url:'original'}}"  alt="{{shop.name}}"> 
+                {% endif %}
+                {% if block.settings.title %}
+                <p class="heading mb-0">{{block.settings.title}}</p>
+                {% endif %}
+                {% if block.settings.subheading %}
+                <p class="subheading">{{block.settings.subheading}}</p>
+                {% endif %}
+                </div>
+            {% endif %}
+          {% endfor %}      
+        </div>
+    </div>
+</section>
+{% endif %}
+{% schema %}
+  {
+    "name": "Icon With Text",
+    "max_blocks":5,
+    "settings": [
+    {
+        "type":"checkbox",
+        "label":"Enable",
+        "id":"enable",
+        "default":true
+    }
+
+    ],
+    "blocks":[
+    {
+    "type":"icon-image",
+    "name":"Icon Image",
+    "settings":[
+        {
+        "type":"checkbox",
+        "label":"Enable",
+        "id":"enable"
+        },
+        {
+        "type":"image_picker",
+        "label":"Icon Image ",
+        "id":"icon_image"
+        },
+        {
+        "type":"text",
+        "label":"Title",
+        "id":"title"
+        },
+        {
+        "id":"subheading",
+        "label":"Subheading",
+        "type":"text"
+        }
+]
+}
+ ]
+  }
+{% endschema %}

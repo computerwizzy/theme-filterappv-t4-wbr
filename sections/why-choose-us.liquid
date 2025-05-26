@@ -1,0 +1,104 @@
+{% if section.settings.enable_section %}
+    <section class="why-choose-us">
+        <div class="container">
+            <div class="title_div">
+                <p class="tag_line">{{ section.settings.tag_line }}</p>
+                <h3>{{ section.settings.title }}</h3>
+            </div>
+            <div class="row main_why_choos">
+                <div class="col-lg-4">
+                    {%  for block in section.blocks limit:2 %}
+                    <div class="choose-box">
+                        <div class="circle_div">
+                            {{ block.settings.title_number }}
+                        </div>
+                        <div class="content_box left">
+                            <h5>{{ block.settings.choose_title }}</h5>
+                            <p>{{ block.settings.choose_content }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="col-lg-4 d-lg-block d-none">
+                    <div class="choos_img_box">
+                        {% include 'responsive-image' with
+                            image: section.settings.choose_img,
+                            image.alt:  shop.name,
+                            max_width: 600,
+                            max_height: 600
+                        %}
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    {%  for block in section.blocks offset:2 %}
+                    <div class="choose-box">
+                        <div class="content_box right order-lg-1 order-2">
+                            <h5>{{ block.settings.choose_title }}</h5>
+                            <p>{{ block.settings.choose_content }}</p>
+                        </div>
+                         <div class="circle_div order-lg-2 order-1">
+                            {{ block.settings.title_number }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}
+{% schema %}
+  {
+    "name": "Why Choose Us",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable_section",
+            "label": "Enable Section?"
+        },
+        {
+            "type": "text",
+            "id": "tag_line",
+            "label": "Tag Line"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        },
+        {
+            "type": "image_picker",
+            "id": "choose_img",
+            "label": "Image"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "text_content",
+            "name": "Text Why Choose",
+            "settings":[
+                {
+                    "type": "text",
+                    "id": "title_number",
+                    "label": "Title Number"
+                },
+                {
+                    "type": "text",
+                    "id": "choose_title",
+                    "label": "Title"
+                },
+                {
+                    "type": "textarea",
+                    "id": "choose_content",
+                    "label": "Content"
+                }
+            ]
+        }
+    ],
+    "presets": [
+      {
+        "name": "Why Choose Us",
+        "category": "Index"
+      }
+    ]
+  }
+{% endschema %}

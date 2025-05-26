@@ -1,0 +1,104 @@
+{% if template == 'cart' %}
+    {% assign fpwd_label_settings = shop.metafields.fraps_inline_upsell._shopify_label_settings %}
+
+    {% if fpwd_label_settings %}
+
+        {% capture fpwd_label_settings %}
+            text-decoration: none!important;
+            {% if fpwd_label_settings.font_style != blank %}font-style: {{ fpwd_label_settings.font_style }}!important;{% endif %}
+            {% if fpwd_label_settings.font_weight != blank %}font-weight: {{ fpwd_label_settings.font_weight }}!important;{% endif %}
+            {% if fpwd_label_settings.font_size != blank %}font-size: {{ fpwd_label_settings.font_size }}!important;{% endif %}
+            {% if fpwd_label_settings.font_color != blank %}color: {{ fpwd_label_settings.font_color }}!important;{% endif %}
+            {% if fpwd_label_settings.custom_css != blank %}{{ fpwd_label_settings.custom_css }}{% endif %}
+        {% endcapture %}
+
+        <style type="text/css">
+            .fpwd-inline-upsell-item {
+            {{ fpwd_label_settings }}
+            }
+        </style>
+    {% endif %}
+{% endif %}
+
+{% if shop.metafields.fraps_inline_upsell.status == 'on' %}
+    {% for item in cart.items %}
+        {% unless item.properties._update_inline %}
+            {% assign inline_upsells = shop.metafields.fraps_inline_upsell.items %}
+
+            {% for inline in inline_upsells %}
+                {% assign iu_revenue = 0 %}
+                {% assign inline_upsell = false %}
+                {% assign iu_product_to = false %}
+                {% assign iu_type = inline.type %}
+                {% assign iu_handle = inline.handle %}
+                {% assign iu_id_to = inline.id_to | plus: 0 %}
+                {% assign iu_id_from = inline.id_from | plus: 0 %}
+
+                {% if iu_type == 'r' and item.quantity > 1 %}
+                    {% continue %}
+                {% endif %}
+
+                {% if inline.source == 'v' and iu_id_from == item.variant_id %}
+                    {% assign inline_upsell = inline %}
+                {% endif %}
+
+                {% if inline.source == 'p' and iu_id_from == item.product_id %}
+                    {% assign inline_upsell = inline %}
+                {% endif %}
+
+                {% if inline.source == 'c' %}
+                    {% for collection in item.product.collections %}
+                        {% if collection.id == iu_id_from %}
+                            {% assign inline_upsell = inline %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
+                {% if inline_upsell %}
+                    {% for variant in all_products[inline_upsell.handle].variants %}
+                        {% if variant.id == iu_id_to %}
+                            {% assign iu_product_to = variant %}
+
+                            {% unless variant.available %}
+                            {% assign inline_upsell = false %}
+                            {% assign iu_product_to = false %}
+                            {% endunless %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
+                {% if inline_upsell and iu_product_to %}
+                    {% if inline_upsell.type == 'a' %}
+                        {% assign iu_revenue = iu_product_to.price | times: inline_upsell.qty %}
+                    {% endif %}
+
+                    {% if inline_upsell.type == 'r' %}
+                        {% assign product_price = iu_product_to.price | times: inline_upsell.qty %}
+                        {% assign iu_revenue = product_price | minus: item.line_price %}
+                    {% endif %}
+
+                    {% break %}
+                {% endif %}
+            {% endfor %}
+
+            {% if inline_upsell and iu_product_to %}
+                <script type="application/json"
+                        data-inline_settings
+                        data-index="{{ forloop.index0 }}"
+                        data-key="{{ item.key }}"
+                        data-item_qty="{{ item.quantity }}"
+                        data-variant_id="{{ item.variant_id }}"
+                        data-revenue_uplift="{{ iu_revenue }}">{{ inline_upsell | json }}</script>
+            {% endif %}
+
+            {% if item.properties._iu_campaign_id %}
+                <script type="application/json"
+                        data-inline_properties
+                        data-index="{{ forloop.index0 }}"
+                        data-key="{{ item.key }}"
+                        data-item_qty="{{ item.quantity }}"
+                        data-variant_id="{{ item.variant_id }}">{{ item.properties | json }}</script>
+            {% endif %}
+        {% endunless %}
+    {% endfor %}
+{% endif %}

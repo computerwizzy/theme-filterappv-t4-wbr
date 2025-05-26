@@ -1,0 +1,90 @@
+{% if section.settings.enable_section %}
+<section class="benefits-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 pr-0">
+                <div class="title_div">
+                    <h3>{{ section.settings.title_benefit }}</h3>
+                </div>
+                <div class="benefit-content">
+                    <div class="row">
+                        {% for block in section.blocks limit:4 %}
+                        <div class="col-sm-6">
+                            <div class="benefit_box">
+                                {% include 'responsive-image' with
+                                    image: block.settings.icon_img,
+                                    image.alt:  block.settings.title_box,
+                                    image_class: "benefit_icon",
+                                    max_width: 100,
+                                    max_height: 100
+                                %}
+                                <h6>{{ block.settings.title_box }}</h6>
+                                <p>{{ block.settings.box_content }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 d-lg-block d-none pl-5">
+                <div class="img_div_benefit">
+                    {% include 'responsive-image' with
+                        image: section.settings.benefits_img,
+                        image.alt:  shop.name,
+                        max_width: 700,
+                        max_height: 700
+                    %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "About Benefits",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable_section",
+            "label": "Enable Section?"
+        },
+        {
+            "type": "text",
+            "id": "title_benefit",
+            "label": "Title"
+        },
+        {
+            "type": "image_picker",
+            "id": "benefits_img",
+            "label": "Image"
+        }
+        
+    ],
+    "blocks": [
+        {
+            "type": "benefits_box",
+            "name": "Benefits Box",
+            "limit": 4,
+            "settings":[
+                {
+                    "type": "image_picker",
+                    "id": "icon_img",
+                    "label": "Benefit Icon"
+                },
+                {
+                    "type": "text",
+                    "id": "title_box",
+                    "label": "Title"
+                },
+                {
+                    "type": "textarea",
+                    "id": "box_content",
+                    "label": "Content"
+                }
+            ]
+        }
+    ]
+  }
+{% endschema %}

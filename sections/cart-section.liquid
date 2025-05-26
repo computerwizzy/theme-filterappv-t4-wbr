@@ -1,0 +1,418 @@
+<section class="cart-section">
+    <div class="container">
+        {% if cart.item_count > 0 %}
+        <form action="/cart" method="post" novalidate>
+            <div class="row pb-4 pt-3 btn-shop">
+                <div class="col-12 p-0">
+                   <h3 class="">Shopping Cart</h3>
+                   {% comment %} <p class="">Congrats! You get free standard shipping today!</p> {% endcomment %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-9 ">
+                <div class="cart-main-content">
+                    <div class="row cart-heading m-0">
+                        <div class="col-md-5 col-4 product-head">
+                            <p class=""><b>{{ 'cart.label.product' | t }}</b></p>
+                        </div>
+                        
+                        <div class="col-md-3 col-4 qty-head">
+                            <p class=""><b>{{ 'cart.label.quantity' | t }}</b></p>
+                        </div>
+                        
+
+                        <div class="col-md-2 col-4 total-head">
+                            <p class=""><b>{{ 'cart.label.total' | t }}</b></p>
+                        </div>
+                        <div class="col-md-2 col-4 price-head">
+                            <p class=""><b>remove</b></p>
+                        </div>
+                    </div>
+                    {% for item in cart.items %}<!--data-gpo-cart-line-item-key={{ item.key }}-->
+                    <div class="row m-0">
+                        <div class="col-12 cart-items ">
+                            <div class="col-xl-5 col-lg-5 col-md-5  col-12 cart-product-div pl-0">
+                                <div class="product-image-div">                          
+                                    {% if item.image != blank %}
+                                    <a href="{{ item.url | within: collections.all }}">
+                                        {{ item | img_url: 'original' | img_tag: item.title }}
+                                    </a>
+                                    {% endif %}
+                                </div>
+                                <div class="product-text-div">
+                                    {% comment %}
+                                    <p class="label-name">{{ item.vendor }}</p>
+                                    {% endcomment %}
+                                    <h5 class="pro-name"><a href="{{ item.url }}">{{ item.title }}</a></h5>
+                                        {% assign item_handle = item.title | handle %}
+                                     
+                                        {% for block in section.blocks %}
+                                        
+                                        {% if block.type == "featured_accessories" and all_products[block.settings.main_product].id == item.product_id %}
+                                        <div class="btn-wrap">
+                                        <button type="button" name="add-accessories" class="btn btn_body  add-accessories" data-title="{{block.settings.main_product| handleize }}">Add Tires & Accessories</button>
+                                        
+                                        </div>
+                                        {% endif %}
+                                        {% endfor %}
+                                        <div class="info-div">
+                                    {% unless item.properties == empty %}
+                                   {% assign v = "" %}
+                                    {% for property in item.properties %}
+                                        {% if property.first contains "_" %}  
+                                            {% if v != "" %}
+                                             {% assign v = v | append : "-" %}
+                                            {% endif %}
+                                            {% assign v = v | append : property.last  %}
+                                            
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% endunless %}
+                                   <small> {{v | split: '-' | join: ', '}}</small>
+                                    </div>
+                                </div>
+                                   
+                            </div>
+                        
+                            <div class="col-xl-3 col-lg-3 col-md-3  col-4 cart-main-div">
+                                
+                                <div class="cart-qty-div" data-qtyContainer>
+                                    <button class="minus-qty minus-btn qty-btn qty-btns" data-direction="-1">-</button>
+                                    <input class="quntity-input qty-input text-center" type="text" name="updates[]"
+                                        id="updates_{{ item.key }}" data-qty readonly value="{{ item.quantity }}">
+                                    <button class="plus-qty plus-btn qty-btn qty-btns" data-direction="1">+</button>
+                                    <!-- <button class="minus-qty">-</button>
+                                    <input class="quntity-input" type="text" readonly="readonly" value="1">
+                                    <button class="plus-qty">+</button> -->
+                                </div>
+                            </div>
+                            <div class="col-xl-2 col-lg-2 col-md-2 col-6 cart-total-div text-right">
+                                <p   data-gpo-cart-line-item-total-price>{{ item.line_price | money }}</p>
+                                <small><span class="money" data-gpo-cart-line-item-unit-price data-added-by-gpo>{{ item.original_price | money }}</span> ea.</small>
+                    
+                            </div>
+                                                  <div class="col-xl-2 col-lg-2 col-md-2 col-6 cart-price-div text-center">
+                                <a class="remove-pro"
+                                        href="/cart/change?line={{ forloop.index }}&amp;quantity=0">
+                                        &times;
+                                    </a>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                 
+                    {% endfor %}
+
+                        
+                        <div class="row align-items-center btn-checkout-div">
+                            <div class="col-md-6  ">
+                               <label>Enter Info About Your Vehicle: </label>
+                                <textarea name="note" rows="5" class="w-100 cart-note" placeholder="Please Enter Your Vehicle Year, Make & Model"></textarea>
+                            </div>
+                            <div class="col-md-6 my-md-0 my-3">
+                                <a class="btn_body" href="{{ shop.url }}">Continue Shopping</a>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="col-lg-3">
+                    <div class="order-sammry">
+                        <div class="header_order_sum">
+                            <h5>ORDER SUMMARY</h5>
+                            <p>{{ cart.item_count }} items in your Cart</p>
+                        </div>
+                      
+                        <div class="subtotal_order">
+                            <span class="main_span">Subtotal</span><span class="right_span"    data-gpo-cart-line-item-subtotal-price>{{ cart.total_price | money }}</span>
+                        </div>
+                      
+                        {% comment %} <div class="shipping_order">
+                            <span class="main_span">Shipping Cost</span><span class="right_span">$0.00</span>
+                        </div> {% endcomment %}
+                        <div class="total_order">
+                            <span class="main_span">Total</span><span class="right_span"    data-gpo-cart-line-item-subtotal-price>{{ cart.total_price | money }}</span>
+                 </div>
+                      
+                                                                                    <!--   <p class="line-item-property__field">
+  <label>Choose Shipping</label><br>
+  <select id="choose-shipping" name="properties[Choose Shipping]">
+    <option value="Unmounted fast shipping ( 3-5 Days)">Unmounted fast shipping ( 3-5 Days)</option>
+    <option value="Mounted shipping ( 1-2 Weeks)">Mounted fast shipping ( 1-2 Weeks)</option>
+  </select>
+</p> -->
+                     
+                        <div class=" btn-checkout-div">                                
+                                <button type="submit" name="checkout" class="btn_banner">{{ 'cart.general.checkout' | t }}</button>
+                                <button type="submit" class="btn_body" name="update"> Update </button>
+                                {% comment %} <a class="btn_body" href="{{ shop.url }}">Continue Shopping</a> {% endcomment %}
+                                {% if additional_checkout_buttons %}
+                                     <div class="additional-checkout-buttons">
+                                      {{ content_for_additional_checkout_buttons }}
+                                     </div>
+                               {% endif %} 
+                      </div>
+                    </div>
+                </div>
+             </div>
+            </div>
+        </form>
+        {% else %}
+        <div class="row py-5">
+            <div class="col-12 text-center pt-2">
+                <div class="cart-head mb-5">
+                    <h4 class="empty-line">YOUR SHOPPING CART IS EMPTY</h4>
+                </div>
+            </div>
+
+            <div class="col-12  text-center">
+                <div class="btn-checkout-div text-center">
+                    <a class="btn_body m-auto" href="{{ shop.url }}">Continue Shopping</a>
+                </div>
+                <div class="payment-option pb-2">
+                  
+                    <p class="text-center">{{ 'cart.general.cookies_required' | t }}</p>
+                </div>
+            </div>
+          
+        </div>
+        {% endif %}
+    </div>
+    </div>
+    
+  {% for block in section.blocks %}
+    {% if block.type == "featured_accessories" and block.settings.enable and block.settings.main_product != blank %}
+ 
+  <div class="popup-wrapper popup-wrapper-{{block.settings.main_product| handleize }}">
+    <div class="main_wrap col-md-10 ">
+      
+      <a class="close" href="javascript:void(0);">X</a>
+     <div class="container">
+      <div class="row">
+
+		<div class="col-md-12 m-auto  p-2">
+          <ul class="nav nav-tabs justify-content-between" role="tablist"  id="myTab">
+            <div class="col-md-3 ">
+              <h2 class="accessories-title"> Accessories</h2>
+            </div>
+            <li class="nav-item tab-li"> 
+              <a class="nav-link text-center active" id="seeall" data-toggle="tab" href="#guarantee01-{{forloop.index}}" role="tab" >
+        		{{block.settings.seeall_title}}         
+              </a> 
+            </li>	
+            {% if block.settings.modling_collection != blank %}
+                      
+             <li class="nav-item tab-li"> 
+              <a class="nav-link text-center " id="modlings" data-toggle="tab" href="#guarantee02-{{forloop.index}}" role="tab" >
+              {{block.settings.modling_title}}
+              </a> 
+              </li>
+              {% endif %}
+              {% if block.settings.adhesives_collection != blank %}
+            <li class="nav-item tab-li"> 
+              <a class="nav-link text-center " id="adhesives" data-toggle="tab" href="#guarantee03-{{forloop.index}}" role="tab" >
+             {{block.settings.adhesives_title}}
+              </a> 
+              </li>
+              {% endif %}
+            {% if block.settings.underlay_collection != blank %}
+            <li class="nav-item tab-li"> 
+              <a class="nav-link text-center " id="adhesives" data-toggle="tab" href="#guarantee04-{{forloop.index}}" role="tab" >
+	         {{block.settings.underlay_title}}
+              </a> 
+              </li>
+              {% endif %}
+          </ul>
+          <div class="tab-content" id="myTabContent">
+         		
+            <div class="tab-pane pad active" id="guarantee01-{{forloop.index}}" role="tabpanel">
+              <div class="row">
+                <div class="col-xl-3 col-lg-12 col-md-12  mb-1 d-md-block d-sm-none  d-xs-none d-none">
+                  	{{block.settings.seeall_desc | truncate : 330}} 
+                </div>
+                       {% capture modling %}
+						{% if block.settings.modling_collection != blank %}
+                      		{% assign collection = collections[block.settings.modling_collection] %}
+                      		{% for product in collection.products  limit:6 %}
+                      		<div class="prd-wrap">
+                              {% include 'product-card-accessories' %}
+                      		</div>
+                      		{% endfor %}
+                      		{% endif %}
+                		{% endcapture %}
+                		{% capture adhesives %}
+                	{% if block.settings.adhesives_collection != blank %}
+                      		{% assign collection = collections[block.settings.adhesives_collection] %}
+                      		{% for product in collection.products  limit:6 %}
+                      		<div class="prd-wrap">{% include 'product-card-accessories' %}</div>
+                      		{% endfor %}
+                      		{% endif %}
+                		{% endcapture %}
+                {% capture underlay %}
+                {% if block.settings.underlay_collection != blank %}
+                      		{% assign collection = collections[block.settings.underlay_collection] %}
+                      		{% for product in collection.products  limit:6 %}
+                      		<div class="prd-wrap">{% include 'product-card-accessories' %}</div>
+                      		{% endfor %}
+							{% endif %}
+
+                {% endcapture %}
+                <div class="col-xl-9 col-lg-12 col-md-12">
+            		<div class="slider_wrapper_all ">
+				       		{{modling}}
+                       		{{adhesives}}
+                      		{{underlay}}
+                  	</div>
+                </div>
+              </div>
+            </div>
+	        {% if block.settings.modling_collection != blank %}
+            <div class="tab-pane pad" id="guarantee02-{{forloop.index}}" role="tabpanel">
+
+             <div class="row">
+                <div class="col-xl-3 col-lg-11 col-md-12  d-md-block  d-sm-none  d-xs-none d-none">
+               	{{block.settings.modling_desc | truncate : 330 }} 
+                </div>
+                <div class="col-xl-9 col-lg-12 col-md-12">
+            		<div class="slider_wrapper_modling ">
+				       		{{modling}}
+                   	</div>
+                </div>
+              </div>
+       
+            </div>
+            
+            {% endif %}
+            {% if block.settings.adhesives_collection != blank %}
+            <div class="tab-pane pad" id="guarantee03-{{forloop.index}}" role="tabpanel">
+                  <div class="row">
+                <div class="col-xl-3 col-lg-12 col-md-12 d-md-block  d-sm-none  d-xs-none d-none">
+               	{{block.settings.adhesives_desc | truncate : 330}} 
+                </div>
+                <div class="col-xl-9 col-lg-12 col-md-12">
+            		<div class="slider_wrapper_adhesives ">
+                       		{{adhesives}}
+                  	</div>
+                </div>
+              </div>
+       
+            </div>
+            {% endif %}
+              {% if block.settings.underlay_collection != blank %}   
+            <div class="tab-pane pad" id="guarantee04-{{forloop.index}}" role="tabpanel">
+               <div class="row">
+                <div class="col-xl-3 col-lg-12 col-md-12 d-md-block  d-sm-none d-xs-none d-none">
+               	{{block.settings.underlay_desc | truncate : 330}} 
+                </div>
+                <div class="col-xl-9 col-lg-12 col-md-12">
+            		<div class="slider_wrapper_underlay ">
+				     	{{underlay}}
+                  	</div>
+                </div>
+              </div>
+       
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    </div>
+    {% endif %}
+  {% endfor %}
+  
+</section>
+{% schema %}
+  {
+    "name": "Cart Section",
+    "settings": [
+       
+    ],
+"blocks":[
+		{
+        "type":"featured_accessories",
+        "name":"Featured Accessories",
+        "settings":[
+			{
+				"type":"product",
+                "id":"main_product",
+                "label":"Main Product"
+			},
+          	{
+				"type":"checkbox",
+                "id":"enable",
+                "label":"Enable",
+                "default":true
+			},
+			{
+			"type":"text",
+			"id":"seeall_title",
+            "label":"See All Tab Title",
+            "default":"See All"
+			},
+			{
+			"type":"richtext",
+            "id":"seeall_desc",
+            "label":"See All Description"
+			},
+			{
+			"type":"text",
+			"id":"modling_title",
+            "label":"Tab Title",
+            "default":"Modling"
+			},
+			{
+				"type":"collection",
+                "id":"modling_collection",
+                "label":"Collection"
+			},
+			{
+			"type":"richtext",
+            "id":"modling_desc",
+            "label":"Description"
+			},
+			{
+			"type":"text",
+			"id":"adhesives_title",
+            "label":" Tab Title",
+            "default":" Adhesives"
+			},
+			{
+				"type":"collection",
+                "id":"adhesives_collection",
+                "label":"Collection"
+			},
+			{
+			"type":"richtext",
+            "id":"adhesives_desc",
+            "label":"Description"
+			},
+			{
+			"type":"text",
+			"id":"underlay_title",
+            "label":" Tab Title",
+            "default":"Underlay"
+			},
+			{
+            "type":"collection",
+            "id":"underlay_collection",
+			"label":"Collection"
+			},
+			{
+			"type":"richtext",
+            "id":"underlay_desc",
+            "label":"Description"
+			}
+          ]
+      }
+]
+    
+  }
+{% endschema %}
+
+
+
+
+<!-- GPO installed -->

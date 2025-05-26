@@ -1,0 +1,67 @@
+{% if section.settings.enable_section %}
+    <section class="about-section">
+        <div class="container">
+            {% comment %}
+            <div class="title_div">
+                <p class="tag_line">{{ section.settings.tag_line }}</p>
+                <h3>{{ section.settings.title }}</h3>
+            </div>
+            {% endcomment %}
+            <div class="col-xl-10 col-lg-11 m-auto">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="about_logo">
+                        {% include 'responsive-image' with
+                            image: section.settings.about_logo,
+                            image.alt:  shop.name,
+                            max_width: 300,
+                            max_height: 300
+                        %}
+                    </div>
+                    <div class="about-content">
+                        {{ section.settings.content_about }}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about_img_div">
+                        {% include 'responsive-image' with
+                            image: section.settings.about_img,
+                            image.alt:  shop.name,
+                            max_width: 500,
+                            max_height: 1000
+                        %}
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+{% endif %}
+{% schema %}
+  {
+    "name": "About Us",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable_section",
+            "label": "Enable Section?"
+        },
+         {
+            "type": "image_picker",
+            "id": "about_logo",
+            "label": "Logo"
+        },
+       {
+            "type": "richtext",
+            "id": "content_about",
+            "label": "Content"
+        },
+        {
+            "type": "image_picker",
+            "id": "about_img",
+            "label": "Image"
+        }
+        
+    ]
+  }
+{% endschema %}

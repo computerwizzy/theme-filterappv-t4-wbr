@@ -1,0 +1,93 @@
+{% if section.settings.enable_section %}
+<section class="banner_slider_section">
+    <div class="banner-slider">
+        {% for block in section.blocks %}
+        <div class="slider_main_div">
+{% include 'responsive-image-banner' with
+                image: block.settings.slider_img,
+                image.alt:  block.settings.slide_main_text,
+                image_class: "desk_banner",
+                max_width: 2000,
+                max_height: 2000
+            %}
+            {% include 'responsive-image' with
+                image: block.settings.mob_slider_img,
+                image.alt:  block.settings.slide_main_text,
+                image_class: "mob_banner",
+                max_width: 700,
+                max_height: 700
+            %}
+            <div class="container">
+                <div class="slide_content_div">
+                    <p class="tag_line">{{ block.settings.tag_line }}</p>
+                    <h2>{{ block.settings.slide_main_text }} </h2>
+                    <p>{{ block.settings.slide_content }}</p>
+                    <a href="{{ block.settings.btn_url }}" class="btn_banner">{{ block.settings.btn_txt }}</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+{% schema %}
+  {
+    "name": "Banner Slider",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable_section",
+            "label": "Enable Section?"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "slider_banner",
+            "name": "Banner Slide",
+            "settings":[
+                {
+                    "type": "image_picker",
+                    "id": "slider_img",
+                    "label": "Banner Image"
+                },
+                {
+                    "type": "image_picker",
+                    "id": "mob_slider_img",
+                    "label": "Mobile Banner Image"
+                },
+                {
+                    "type": "text",
+                    "id": "tag_line",
+                    "label": "Tag Text"
+                },
+                {
+                    "type": "text",
+                    "id": "slide_main_text",
+                    "label": "Heading"
+                },
+                {
+                    "type": "textarea",
+                    "id": "slide_content",
+                    "label": "Slide Content"
+                },
+                {
+                    "type": "text",
+                    "id": "btn_txt",
+                    "label": "Button Text"
+                },
+                {
+                    "type": "url",
+                    "id": "btn_url",
+                    "label": "Button Url"
+                }
+            ]
+        }
+    ],
+    "presets": [
+      {
+        "name": "Index Slider",
+        "category": "Index"
+      }
+    ]
+  }
+{% endschema %}

@@ -1,0 +1,281 @@
+{% comment %} <a href="/" class="navbar-brand mr-7 d-none d-md-block" name="{{ shop.name | escape }}"
+    title="{{ shop.name | escape }}" aria-label="{{ shop.name | escape }}">
+    {% if settings.main_svg_logo != blank %}
+    <img src="{{ settings.main_svg_logo }}" class="img-fluid" alt="{{ shop.name | escape }}"
+        style="width: {{ logo_width }}px" />
+    {% elsif logo contains 'no-image' %}
+    <span class="h5 text-primary"><i class="icon ion-pound text-primary"></i> {{ shop.name | escape }}</span>
+    {% else %}
+    <img src="{{ logo }}" alt="{{ shop.name | escape }}" class="img-fluid" style="width: {{ logo_width }}px">
+    {% endif %}
+</a> {% endcomment %}
+
+<style>
+/* Fix dropdown menu visibility issues - minimal styling */
+.submenu_ul {
+    position: absolute !important;
+    z-index: 999999 !important;
+    display: none !important;
+    top: 100% !important;
+    left: 0 !important;
+}
+
+.ul-menu li:hover > .submenu_ul {
+    display: block !important;
+    z-index: 999999 !important;
+}
+
+.megamenu {
+    position: absolute !important;
+    z-index: 999999 !important;
+    display: none !important;
+    width: 100% !important;
+    left: 0 !important;
+    top: 100% !important;
+}
+
+.megamenu_li:hover > .megamenu {
+    display: block !important;
+    z-index: 999999 !important;
+}
+
+/* Ensure parent li has position relative */
+.ul-menu li {
+    position: relative !important;
+}
+
+/* Fix for sticky header interference */
+.site-header.is-sticky .submenu_ul,
+.site-header.is-sticky .megamenu {
+    position: fixed !important;
+    z-index: 999999 !important;
+}
+</style>
+
+<nav class="main-header position-relative">
+    <div class="container desktop-menu">
+        <div class="row align-items-center position-static">
+            <div class="col-3 pr-0 d-xl-none d-lg-none">
+                <button class="toggle-btn"><i class="fa fa-bars"></i></button>
+            </div>
+            <div class="col-lg-2 col-md-6 col-sm-6 col-6">
+                <div class="img-div">
+                    <a href="{{ shop.url }}"><img class="logo-img" src="{{logo}}" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-8 position-static text-right d-xl-block d-lg-block d-none ">
+                <div class=" main-menu_head">
+                    <ul class="ul-menu pl-0 mb-0">
+                        {% for link in linklists[section.settings.main_linklist].links %}
+                      
+                        {% if forloop.index == 0 %}
+                            <li class="megamenu_li"><a href="{{ link.url }}" > {{ link.title }}  &nbsp;{% if link.links != blank %}<i class="fa fa-angle-down" aria-hidden="true"></i> {% endif %}</a>
+                                <div class="megamenu shadow">
+                                    <div class="container">
+                                        <div class="row mt-3">
+                                            {% for block in section.blocks %}
+                                                    {% if block.settings.prodct_1 != blank %}
+                                                        {% assign product_1 = all_products[block.settings.prodct_1] %}
+                                                    {% endif %}
+                                                    {% if block.settings.prodct_2 != blank %}
+                                                        {% assign product_2 = all_products[block.settings.prodct_2] %}
+                                                    {% endif %}
+                                                    {% if block.settings.prodct_3 != blank %}
+                                                        {% assign product_3 = all_products[block.settings.prodct_3] %}
+                                                    {% endif %}
+                                                    {% if block.settings.prodct_4 != blank %}
+                                                        {% assign product_4 = all_products[block.settings.prodct_4] %}
+                                                    {% endif %}
+                                                    {% if block.settings.prodct_5 != blank %}
+                                                        {% assign product_5 = all_products[block.settings.prodct_5] %}
+                                                    {% endif %}
+                                                {% if product_1 != blank %}
+                                                <div class="col">
+                                                        <div class="prod_box">        
+                                                            <a href="{{product_1.url}}">                                              
+                                                                <div class="prod_img">
+                                                                    {% include 'responsive-image' with
+                                                                        image: product_1.featured_image,
+                                                                        image.alt:  product_1.title,
+                                                                        max_width: 400,
+                                                                        max_height: 400
+                                                                    %}
+                                                                </div>
+                                                                </a>
+                                                            <a href="{{product_1.url}}" class="mega-link">{{product_1.title}}</a>
+                                                        </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if product_2 != blank %}
+                                                <div class="col">
+                                                        <div class="prod_box">
+                                                            <a href="{{product_2.url}}">                                       
+                                                                <div class="prod_img">
+                                                                    {% include 'responsive-image' with
+                                                                        image: product_2.featured_image,
+                                                                        image.alt:  product_2.title,
+                                                                        max_width: 400,
+                                                                        max_height: 400
+                                                                    %}
+                                                                </div>
+                                                            </a>
+                                                            <a href="{{product_2.url}}" class="mega-link">{{product_2.title}}</a>
+                                                        </div> 
+                                                </div>
+                                                {% endif %}
+                                                {% if product_3 != blank %}
+                                                <div class="col">
+                                                        <div class="prod_box">
+                                                            <a href="{{product_3.url}}">                                       
+                                                            <div class="prod_img">
+                                                                {% include 'responsive-image' with
+                                                                    image: product_3.featured_image,
+                                                                    image.alt:  product_3.title,
+                                                                    max_width: 400,
+                                                                    max_height: 400
+                                                                %}
+                                                            </div>
+                                                            </a>
+                                                                    <a href="{{product_3.url}}" class="mega-link">{{product_3.title}}</a>                              
+                                                        </div>
+                                                </div>
+                                                {% endif %}
+                                                {% if product_4 != blank %}
+                                                <div class="col">
+                                                        <div class="prod_box">
+                                                            
+                                                            <a href="{{product_4.url}}">                                       
+                                                            <div class="prod_img">
+                                                                {% include 'responsive-image' with
+                                                                    image: product_4.featured_image,
+                                                                    image.alt:  product_4.title,
+                                                                    max_width: 400,
+                                                                    max_height: 400
+                                                                %}
+                                                            </div>
+                                                            </a>
+                                                                    <a href="{{product_4.url}}" class="mega-link">{{product_4.title}}</a>
+                                                    
+                                                        </div> 
+                                                </div>
+                                                {% endif %}
+                                                {% if product_5 != blank %}
+                                                <div class="col">
+                                                        <div class="prod_box">
+                                                            
+                                                            <a href="{{product_5.url}}">                                       
+                                                            <div class="prod_img">
+                                                                {% include 'responsive-image' with
+                                                                    image: product_5.featured_image,
+                                                                    image.alt:  product_5.title,
+                                                                    max_width: 400,
+                                                                    max_height: 400
+                                                                %}
+                                                            </div>
+                                                            </a>
+                                                            <a href="{{product_5.url}}" class="mega-link">{{product_5.title}}</a>
+                                                        </div> 
+                                                </div>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                        <div class="row my-4"> 
+                                            <!-- <div class="col-md-12">
+                                            <a href="/collections/all/" class="shop-all button-all text-center m-auto">Shop All</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li> -->
+                        {% else %}
+                        <li><a href="{{ link.url }}"> {{ link.title }}  {% if link.links != blank %}&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i> {% endif %}</a>
+                                {% if link.links != blank %}
+                                    <ul class="submenu_ul">
+                                        {% for child_link in link.links %}  
+                                            <li class="subchild"><a href="{{ child_link.url }}">{{ child_link.title}} {% if child_link.links != blank %}&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i> {% endif %}</a></li>
+                                            {% if child_link.links != blank %}
+                                                <ul class="petachild_ul">
+                                                    {% for peta_child in child_link.links %}
+                                                    <li> <a href="{{peta_child.url}}">{{peta_child.title}}</a></li>        
+                                                    {% endfor %}
+                                                </ul>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-sm-3 col-3 text-right pl-0 ">
+                <div class="right-menu">
+                    <ul class="ul-right-menu list-unstyled mb-0">
+                        <li><a href="/search"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                        <li><a href="/account"><i class="fa fa-user-o" aria-hidden="true"></i></a></li>
+                        <li><a href="/cart" data-target-element="offcanvas-right" data-offcanvas-src="#offcanvas-right" class="c-header__link c-header__link--cart js-cartCanvas"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mobile-menu">
+        <div class="mobile-menu-head">
+            <p class="mb-0 close-btn">&times;</p>
+        </div>
+        <div class="mobile-menu-div">
+            <ul class="list-unstyled mb-0 mobile-ul">
+                {% for link in linklists[section.settings.mobile_linklist].links %}
+                <li><a class="text-uppercase" href="{{ link.url }}">{{ link.title }}  {% if link.links != blank %}&nbsp;<i class="fa fa-angle-down float-right" aria-hidden="true"></i> {% endif %}</a>
+                    {% if link.links != blank %}
+                        <ul class="submenu_ul">
+                            {% for child_link in link.links %}  
+                                <li><a href="{{ child_link.url }}">{{ child_link.title}}{% if child_link.links != blank %}&nbsp;<i class="fa fa-angle-down float-right" aria-hidden="true"></i> {% endif %}</a></li>
+                                {% if child_link.links != blank %}
+                                    <ul class="petamenu_ul">
+                                        {% for petachild in child_link.links %}
+                                        <li><a href="{{petachild.url}}">{{petachild.title}}</a></li>
+                                        {% endfor %}
+                                    </ul>                               
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+<script>
+$(document).ready(function(){
+    // Fix dropdown scroll issues
+    $(window).off('scroll.dropdown');
+    
+    // Ensure dropdowns stay visible during scroll
+    var dropdownTimer;
+    $('.ul-menu li').hover(
+        function() {
+            clearTimeout(dropdownTimer);
+            $(this).find('.submenu_ul, .megamenu').show().css('z-index', '999999');
+        },
+        function() {
+            var dropdown = $(this).find('.submenu_ul, .megamenu');
+            dropdownTimer = setTimeout(function() {
+                dropdown.hide();
+            }, 100);
+        }
+    );
+    
+    // Override scroll behavior that might hide dropdowns
+    $(window).on('scroll', function() {
+        if ($('.submenu_ul:hover, .megamenu:hover, .ul-menu li:hover').length > 0) {
+            return false;
+        }
+    });
+});
+</script>
+                    
+</nav>

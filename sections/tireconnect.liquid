@@ -1,0 +1,50 @@
+{% schema %}
+{
+  "name": "Tire Connect Section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "label": "Enable Section",
+      "id": "enable_sec",
+      "default": true
+    },
+    {
+      "type": "select",
+      "label": "Layout",
+      "id": "layout",
+      "options": [
+        {
+          "value": "full-width",
+          "label": "Full Width"
+        },
+        {
+          "value": "boxed",
+          "label": "Boxed"
+        }
+      ],
+      "default": "full-width"
+    }
+  ]
+}
+{% endschema %}
+
+{% if section.settings.enable_sec %}
+  <div class="{{ section.settings.layout }}">
+    {% include 'tireconnect' %}
+    <div id="tireconnect"></div>
+    <script>
+      var tcScript = document.createElement('script');
+      tcScript.src = 'https://app.tireconnect.ca/js/widget.js';
+      tcScript.async = true;
+
+      tcScript.onload = function () {
+        TCWidget.init({
+          apikey: 'fc638829d9e8dc8325eaf1119172b252',
+          container: 'tireconnect'
+        });
+      };
+
+      document.body.appendChild(tcScript);
+    </script>
+  </div>
+{% endif %}

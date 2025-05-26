@@ -1,0 +1,69 @@
+{% if section.settings.enable_section %}
+<section class="about-review-section lazyload" data-bgset="{% include 'responsive-bg-image', image: section.settings.bg_img %}">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center ">
+                <img class="quotes_image" src="{{ section.settings.quote_img | img_url:'original' }}" alt=""> 
+            </div>
+            <div class="col-lg-8 m-auto">
+                <div class="review_slider">
+                    {% for block in section.blocks %}
+                    <div class="review_box">
+                        <p class="review_content">{{ block.settings.review_txt }}</p>
+                        <h5 class="author_name">{{ block.settings.author_name }}</h5>
+                        <p class="author_ocception">{{ block.settings.occaption_name }}</p>
+                    <div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+{% schema %}
+  {
+    "name": "About Review",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable_section",
+            "label": "Enable Section?"
+        },
+        {
+			"type": "image_picker",
+			"id": "bg_img",
+			"label": "Banner Image"
+		},
+        {
+        
+            "type": "image_picker",
+            "id": "quote_img",
+            "label": "Quote Image"
+        }
+    ],
+    "blocks": [
+        {
+            "type": "review_slider",
+            "name": "Review Slide ",
+            "limit": 4,
+            "settings":[
+                {
+                    "type": "textarea",
+                    "id": "review_txt",
+                    "label": "Review Text"
+                },
+                {
+                    "type": "text",
+                    "id": "author_name",
+                    "label": "Author Name"
+                },
+                {
+                    "type": "text",
+                    "id": "occaption_name",
+                    "label": "Occaption Text"
+                }
+            ]
+        }
+    ]
+  }
+{% endschema %}

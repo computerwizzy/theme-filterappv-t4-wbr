@@ -1,0 +1,359 @@
+{% if section.settings.enable_section %}
+<section class="quiz-section">
+{% include 'quiz' %}
+</section>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Quiz Section",
+    "settings": [
+        {
+            "type": "checkbox",
+            "id": "enable_section",
+            "label": "Enable Section?"
+        },
+        {
+            "type": "text",
+            "id": "tag_line",
+            "label": "Tag Line"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Title"
+        },
+        {
+            "type": "header",
+            "content": "Quiz"
+        },	
+		{
+        "id": "f_title",
+        "type": "text",
+        "label": "1st Title"
+        },
+        {
+        "type":"header",
+        "content":"Tire"
+        },
+		{
+		"type":"text",
+		"id":"question-2-tire",
+		"label":"Question 2 Tire Title",
+		"default":"Select Tire Diameter"
+		},
+		{
+		"type":"text",
+		"id":"question-3-tire",
+		"label":"Question 3 Tire Title",
+		"default":"Select Tire Height"
+		},
+		{
+		"type":"text",
+		"id":"question-4-tire",
+		"label":"Question 4 Tire Diameter",
+		"default":"Select Tire Width"
+		},
+		{
+		"type":"text",
+		"id":"question-5-tire",
+		"label":"Question 5 Tire Brand",
+		"default":"Select Tire Brand"
+		},
+		
+	{
+        "type":"header",
+        "content":"Wheel"
+        },
+		{
+		"type":"text",
+		"id":"question-2-wheel",
+		"label":"Question 2 Wheel Title",
+		"default":"Select Wheel Diameter"
+		},
+		{
+		"type":"text",
+		"id":"question-3-wheel",
+		"label":"Question 3 Wheel Title",
+		"default":"Select Wheel Width"
+		},
+		{
+		"type":"text",
+		"id":"question-4-wheel",
+		"label":"Question 4 Wheel Title",
+		"default":"Select Wheel Offset "
+		},
+		{
+        "type":"header",
+        "content":"Package"
+        },
+		{
+		"type":"text",
+		"id":"question-2-package",
+		"label":"Question 2 Package Title",
+		"default":"Select Height"
+		},
+		{
+		"type":"text",
+		"id":"question-3-package",
+		"label":"Question 3 Package Title",
+		"default":"Select Width"
+		},
+		{
+		"type":"text",
+		"id":"question-4-package",
+		"label":"Question 4 Package Title",
+		"default":"Select Diameter"
+		},
+
+		{
+		"type":"text",
+		"id":"question-5-package",
+		"label":"Question 5 Package Title",
+		"default":"Select Brand"
+		},
+		{
+		"type":"text",
+		"id":"question-6-package",
+		"label":"Question 6 Package Title",
+		"default":"Select Year"
+		},
+		{
+		"type":"text",
+		"id":"question-7-package",
+		"label":"Question 7 Package Title",
+		"default":"Select Model"
+		},
+        {
+        "type":"text",
+        "id":"question-8-package",
+        "label":"Question 8 Package Title",
+        "default":"Select Suspension"
+        },
+        {
+          "type":"checkbox",
+          "id":"enable_btn",
+          "label":"Enable Button"
+        },
+        {
+          "type":"url",
+          "id":"button_url",
+          "label":"Button Url"
+        },
+        {
+          "type":"text",
+          "label":"Button label",
+          "id":"button_label"
+        }
+	],
+ "blocks": [
+    {
+      "type": "brad",
+      "name": "Quiz Wheel Brand",
+      "settings": [
+        {
+          "id": "brand_img",
+          "type": "image_picker",
+       	  "label": "Image"
+        },
+        {
+          "id": "brand",
+          "type": "text",
+          "label": "Brand"
+        },
+		{
+          "id": "tag_brand",
+          "type": "text",
+          "label": "Tag"
+        }
+      ]
+    },{
+      "type": "brand-tire",
+      "name": "Quiz Tire Brand",
+      "settings": [
+        {
+          "id": "brand_img",
+          "type": "image_picker",
+       	  "label": "Image"
+        },
+        {
+          "id": "brand",
+          "type": "text",
+          "label": "Brand"
+        },
+		{
+          "id": "tag_brand",
+          "type": "text",
+          "label": "Tag"
+        }
+      ]
+    },
+	  {
+      "type": "year",
+      "name": "Quiz Year",
+      "settings": [
+        {
+          "id": "year_img",
+          "type": "image_picker",
+       	  "label": "Image"
+        },
+		{
+          "id": "year",
+          "type": "text",
+          "label": "year"
+        },
+		{
+          "id": "tag_year",
+          "type": "text",
+          "label": "Tag year"
+        },
+        {
+          "id": "type",
+          "type": "text",
+          "label": "Brand"
+        }
+      ]
+    },
+	{
+      "type": "model",
+      "name": "Quiz Model",
+      "settings": [
+        {
+          "id": "model_img",
+          "type": "image_picker",
+       	  "label": "Image"
+        },
+		{
+          "id": "model",
+          "type": "text",
+          "label": "Model"
+        },
+		{
+          "id": "tag_model",
+          "type": "text",
+          "label": "Tag model"
+        },
+        {
+          "id": "type",
+          "type": "text",
+          "label": "Brand"
+        }
+      ]
+    },
+	{
+      "type": "ring",
+      "name": "Quiz Suspension",
+	  "limit": 6,
+      "settings": [
+        {
+          "id": "ring_img",
+          "type": "image_picker",
+       	  "label": "Image"
+        },
+		{
+          "id": "ring",
+          "type": "text",
+          "label": "Model"
+        },
+		{
+          "id": "tag_ring",
+          "type": "text",
+          "label": "Tag Name"
+        }
+      ]
+    },
+	{
+    "type":"item_type",
+    "name":"Item Type",
+	"limit":3,
+    "settings":[
+        {
+          "id": "item_img",
+          "type": "image_picker",
+       	  "label": "Image"
+        },
+		{
+          "id": "item_type",
+          "type": "text",
+          "label": "Title"
+        },
+		{
+          "id": "tag_item_type",
+          "type": "text",
+          "label": "Tag Name"
+        }
+]
+	},
+{
+    "type":"height",
+    "name":"Height",
+    "settings":[
+		{
+          "id": "item_height",
+          "type": "text",
+          "label": "Title"
+        },
+		{
+          "id": "tag_item_height",
+          "type": "text",
+          "label": "Tag Name"
+        }
+]
+	},
+{
+    "type":"width",
+    "name":"Width",
+    "settings":[
+		{
+          "id": "item_width",
+          "type": "text",
+          "label": "Title"
+        },
+		{
+          "id": "tag_item_width",
+          "type": "text",
+          "label": "Tag Name"
+        }
+	]
+	},
+	{
+    "type":"diameter",
+    "name":"Diameter",
+    "settings":[
+		{
+          "id": "item_diameter",
+          "type": "text",
+          "label": "Title"
+        },
+		{
+          "id": "tag_item_diameter",
+          "type": "text",
+          "label": "Tag Name"
+        }
+	]
+	},
+{
+    "type":"bolt_pattern",
+    "name":"Bolt Pattern",
+    "settings":[
+		{
+          "id": "item_bolt_pattern",
+          "type": "text",
+          "label": "Title"
+        },
+		{
+          "id": "tag_bolt_pattern",
+          "type": "text",
+          "label": "Tag Name"
+        }
+]
+	}
+  ],
+  "presets": [
+    {
+      "name": "Call to Action Blocks",
+      "category": "CTA button"
+	}
+]
+  }
+{% endschema %}

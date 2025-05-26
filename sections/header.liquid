@@ -1,0 +1,827 @@
+{% assign template_type = section.settings.template_type %}
+{% assign homepage_transparent_header = section.settings.homepage_transparent_header %}
+{% assign logo = settings.main_logo | img_url: '150x' %}
+{% assign logo_light = settings.main_logo_light | img_url: '150x' %}
+{% assign logo_width = settings.logo_max_width %}
+
+<!-- Structured Data for SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "{{ shop.name | escape }}",
+  "url": "{{ shop.url }}",
+  "logo": "{{ logo | prepend: 'https:' }}"
+}
+</script>
+
+{% if section.settings.topbar_enabled %}
+  <div class="topbar d-block" data-top-bar style="background-color: {{ section.settings.topbar_bg_color }}">
+    <div class="container-fluid">
+      <div class="row">
+        <div
+          class="col-12 annucement-bar py-2 text-center"
+          style="font-size: {{ section.settings.topbar_font_size}}px !important; color: {{ section.settings.topbar_text_color }} !important;"
+        >
+          <p class="mb-0">{{ section.settings.topbar_text }}</p>
+          {% if section.settings.topbar_closable %}
+            <button class="topbar-close" aria-label="Close announcement">&times;</button>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% if section.settings.topbarad_enabled %}
+  <div class="topbar d-block" data-top-bar-ad style="background-color: {{ section.settings.topbarad_bg_color }}">
+    <div class="container-fluid">
+      <div class="row">
+        <div
+          class="col-12 annucement-bar-ad py-2 text-center"
+          style="font-size: {{ section.settings.topbarad_font_size}}px !important; color: {{ section.settings.topbarad_text_color }} !important;"
+        >
+          <p class="mb-0">{{ section.settings.topbarad_text }}</p>
+          {% if section.settings.topbarad_closable %}
+            <button class="topbar-close" aria-label="Close advertisement">&times;</button>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+<header
+  class="site-header header {% if homepage_transparent_header %}header-transparent{% endif %} {% if section.settings.sticky_header %}sticky-header{% endif %}"
+  data-site-header
+  data-section-id="{{ section.id }}"
+  data-transparent-header="{{ homepage_transparent_header }}"
+  style="background-color: {{ section.settings.header_bg_color }}; color: {{ section.settings.header_text_color }};"
+  role="banner"
+>
+  
+  {% include 'navbar-default' %}
+
+  {% if page.handle == 'forgiato-flow-terra' %}
+    {% if settings.enable_timer %}
+      <div class="timer_wrapper" role="timer" aria-live="polite">
+        <div class="container">
+          <p class="title_wrapper">{{ settings.timer_title }}</p>
+          <div id="countdown" aria-label="Countdown timer">
+            <div>
+              <div><span id="days" class="days" aria-label="Days remaining"></span></div>
+              <div><span id="hours" class="hours" aria-label="Hours remaining"></span></div>
+              <div><span id="minutes" class="minutes" aria-label="Minutes remaining"></span></div>
+              <div><span id="seconds" class="seconds" aria-label="Seconds remaining"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  {% endif %}
+
+  <script>
+    $(document).ready(function(){
+      // Performance: Use requestAnimationFrame for smooth animations
+      let animationId;
+      
+      function makeTimer() {
+        const endTime = new Date("{{settings.timer_date}} 00:01:00 GMT+01:00");
+        const endTimestamp = Date.parse(endTime) / 1000;
+        const now = Date.parse(new Date()) / 1000;
+        const timeLeft = endTimestamp - now;
+
+        if (timeLeft <= 0) {
+          $(".timer_wrapper").fadeOut();
+          if (animationId) cancelAnimationFrame(animationId);
+          return;
+        }
+
+        const days = Math.floor(timeLeft / 86400);
+        const hours = Math.floor((timeLeft - (days * 86400)) / 3600);
+        const minutes = Math.floor((timeLeft - (days * 86400) - (hours * 3600)) / 60);
+        const seconds = Math.floor((timeLeft - (days * 86400) - (hours * 3600) - (minutes * 60)));
+
+        const formattedHours = hours.toString().padStart(2, '0');
+        const formattedMinutes = minutes.toString().padStart(2, '0');
+        const formattedSeconds = seconds.toString().padStart(2, '0');
+
+        $("#days").html(days + "<span>Days</span>");
+        $("#hours").html(formattedHours + "<span>Hours</span>");
+        $("#minutes").html(formattedMinutes + "<span>Minutes</span>");
+        $("#seconds").html(formattedSeconds + "<span>Seconds</span>");
+      }
+
+      // Use setInterval for timer updates
+      const timerInterval = setInterval(makeTimer, 1000);
+      makeTimer(); // Run immediately
+
+      // Cleanup on page unload
+      $(window).on('beforeunload', function() {
+        clearInterval(timerInterval);
+      });
+
+      // Topbar close functionality
+      $('.topbar-close').on('click', function() {
+        $(this).closest('.topbar').slideUp(300);
+        // Store preference in sessionStorage
+        sessionStorage.setItem('topbar_closed', 'true');
+      });
+
+      // Check if topbar was previously closed
+      if (sessionStorage.getItem('topbar_closed') === 'true') {
+        $('.topbar').hide();
+      }
+    });
+  </script>
+</header>
+
+<style>
+/* Performance: Use CSS transforms instead of position changes */
+.site-header {
+  {% if section.settings.header_height %}
+    min-height: {{ section.settings.header_height }}px;
+  {% endif %}
+  {% if section.settings.header_padding_top %}
+    padding-top: {{ section.settings.header_padding_top }}px;
+  {% endif %}
+  {% if section.settings.header_padding_bottom %}
+    padding-bottom: {{ section.settings.header_padding_bottom }}px;
+  {% endif %}
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* Improved sticky header with smooth animation */
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.sticky-header.scrolled {
+  transform: translateY(0);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+  background-color: {{ section.settings.header_bg_color }}{% if section.settings.header_transparency %}{{ section.settings.header_transparency }}{% else %}e6{% endif %};
+}
+
+/* Enhanced menu styling with better hover effects */
+.ul-menu li a {
+  {% if section.settings.menu_font_size %}
+    font-size: {{ section.settings.menu_font_size }}px;
+  {% endif %}
+  {% if section.settings.menu_text_color %}
+    color: {{ section.settings.menu_text_color }};
+  {% endif %}
+  {% if section.settings.menu_font_weight %}
+    font-weight: {{ section.settings.menu_font_weight }};
+  {% endif %}
+  transition: all 0.3s ease;
+  position: relative;
+  text-decoration: none;
+}
+
+.ul-menu li a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: {{ section.settings.menu_hover_color | default: '#ff0000' }};
+  transition: width 0.3s ease;
+}
+
+.ul-menu li a:hover::after {
+  width: 100%;
+}
+
+.ul-menu li a:hover {
+  {% if section.settings.menu_hover_color %}
+    color: {{ section.settings.menu_hover_color }};
+  {% endif %}
+  transform: translateY(-1px);
+}
+
+/* Enhanced dropdown with better animations */
+.submenu_ul {
+  {% if section.settings.dropdown_bg_color %}
+    background-color: {{ section.settings.dropdown_bg_color }};
+  {% endif %}
+  {% if section.settings.dropdown_border_color %}
+    border: 1px solid {{ section.settings.dropdown_border_color }};
+  {% endif %}
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.ul-menu li:hover .submenu_ul {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.submenu_ul li a {
+  {% if section.settings.dropdown_text_color %}
+    color: {{ section.settings.dropdown_text_color }};
+  {% endif %}
+  {% if section.settings.dropdown_font_size %}
+    font-size: {{ section.settings.dropdown_font_size }}px;
+  {% endif %}
+  padding: 12px 20px;
+  display: block;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  margin: 4px;
+}
+
+.submenu_ul li a:hover {
+  {% if section.settings.dropdown_hover_color %}
+    color: {{ section.settings.dropdown_hover_color }};
+  {% endif %}
+  {% if section.settings.dropdown_hover_bg %}
+    background-color: {{ section.settings.dropdown_hover_bg }};
+  {% endif %}
+  transform: translateX(5px);
+}
+
+/* Logo styling with hover effect */
+.logo-img {
+  {% if section.settings.logo_max_width %}
+    max-width: {{ section.settings.logo_max_width }}px;
+  {% endif %}
+  transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+  transform: scale(1.05);
+}
+
+/* Topbar close button styling */
+.topbar-close {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.topbar-close:hover {
+  background-color: rgba(255,255,255,0.1);
+}
+
+/* Mobile-first responsive improvements */
+@media (max-width: 768px) {
+  .site-header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .ul-menu li a {
+    font-size: 14px;
+  }
+  
+  .logo-img {
+    max-width: 120px;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .site-header,
+  .ul-menu li a,
+  .submenu_ul,
+  .logo-img {
+    transition: none;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  {% unless section.settings.header_bg_color %}
+  .site-header {
+    background-color: #1a1a1a;
+    color: #ffffff;
+  }
+  {% endunless %}
+}
+
+/* Performance: GPU acceleration for animations */
+.ul-menu li a,
+.submenu_ul,
+.logo-img {
+  will-change: transform;
+}
+
+/* Focus states for accessibility */
+.ul-menu li a:focus,
+.topbar-close:focus {
+  outline: 2px solid {{ section.settings.menu_hover_color | default: '#ff0000' }};
+  outline-offset: 2px;
+}
+</style>
+
+{% schema %}
+{
+"name": "Header",
+"settings": [
+{
+"type": "header",
+"content": "🎨 Template Settings"
+},
+{
+"type": "select",
+"id": "template_type",
+"label": "Header Layout",
+"options": [
+  {
+    "value": "default",
+    "label": "Default"
+  },
+  {
+    "value": "centered",
+    "label": "Centered"
+  },
+  {
+    "value": "minimal",
+    "label": "Minimal"
+  }
+],
+"default": "default",
+"info": "Choose your header layout style"
+},
+{
+"type": "checkbox",
+"id": "homepage_transparent_header",
+"label": "Transparent Header on Homepage",
+"default": false,
+"info": "Makes header transparent on homepage only"
+},
+{
+"type": "checkbox",
+"id": "sticky_header",
+"label": "Sticky Header",
+"default": true,
+"info": "Header stays at top when scrolling"
+},
+{
+"type": "header",
+"content": "🎨 Header Styling"
+},
+{
+"type": "color",
+"id": "header_bg_color",
+"label": "Background Color",
+"default": "#ffffff"
+},
+{
+"type": "color",
+"id": "header_text_color",
+"label": "Text Color",
+"default": "#000000"
+},
+{
+"type": "select",
+"id": "header_transparency",
+"label": "Background Transparency",
+"options": [
+  { "value": "", "label": "Solid (100%)" },
+  { "value": "f2", "label": "95%" },
+  { "value": "e6", "label": "90%" },
+  { "value": "d9", "label": "85%" },
+  { "value": "cc", "label": "80%" },
+  { "value": "bf", "label": "75%" }
+],
+"default": "",
+"info": "Transparency level for sticky header"
+},
+{
+"type": "range",
+"id": "header_height",
+"label": "Header Height",
+"min": 60,
+"max": 200,
+"step": 5,
+"unit": "px",
+"default": 80
+},
+{
+"type": "range",
+"id": "header_padding_top",
+"label": "Top Padding",
+"min": 0,
+"max": 50,
+"step": 5,
+"unit": "px",
+"default": 15
+},
+{
+"type": "range",
+"id": "header_padding_bottom",
+"label": "Bottom Padding",
+"min": 0,
+"max": 50,
+"step": 5,
+"unit": "px",
+"default": 15
+},
+{
+"type": "header",
+"content": "🖼️ Logo Settings"
+},
+{
+"type": "range",
+"id": "logo_max_width",
+"label": "Logo Width",
+"min": 50,
+"max": 300,
+"step": 10,
+"unit": "px",
+"default": 150,
+"info": "Maximum logo width in pixels"
+},
+{
+"type": "header",
+"content": "📱 Navigation Menu"
+},
+{
+"type": "link_list",
+"id": "main_linklist",
+"label": "Desktop Menu",
+"default": "main-menu",
+"info": "Select menu for desktop navigation"
+},
+{
+"type": "link_list",
+"id": "mobile_linklist",
+"label": "Mobile Menu",
+"default": "main-menu",
+"info": "Select menu for mobile navigation"
+},
+{
+"type": "range",
+"id": "menu_font_size",
+"label": "Menu Font Size",
+"min": 12,
+"max": 24,
+"step": 1,
+"unit": "px",
+"default": 16
+},
+{
+"type": "select",
+"id": "menu_font_weight",
+"label": "Menu Font Weight",
+"options": [
+  { "value": "300", "label": "Light" },
+  { "value": "400", "label": "Normal" },
+  { "value": "500", "label": "Medium" },
+  { "value": "600", "label": "Semi Bold" },
+  { "value": "700", "label": "Bold" }
+],
+"default": "400"
+},
+{
+"type": "color",
+"id": "menu_text_color",
+"label": "Menu Text Color",
+"default": "#000000"
+},
+{
+"type": "color",
+"id": "menu_hover_color",
+"label": "Menu Hover Color",
+"default": "#ff0000"
+},
+{
+"type": "header",
+"content": "📋 Dropdown Menu"
+},
+{
+"type": "color",
+"id": "dropdown_bg_color",
+"label": "Dropdown Background",
+"default": "#ffffff"
+},
+{
+"type": "color",
+"id": "dropdown_border_color",
+"label": "Dropdown Border",
+"default": "#e0e0e0"
+},
+{
+"type": "color",
+"id": "dropdown_text_color",
+"label": "Dropdown Text Color",
+"default": "#000000"
+},
+{
+"type": "color",
+"id": "dropdown_hover_color",
+"label": "Dropdown Hover Text",
+"default": "#ff0000"
+},
+{
+"type": "color",
+"id": "dropdown_hover_bg",
+"label": "Dropdown Hover Background",
+"default": "#f5f5f5"
+},
+{
+"type": "range",
+"id": "dropdown_font_size",
+"label": "Dropdown Font Size",
+"min": 10,
+"max": 18,
+"step": 1,
+"unit": "px",
+"default": 14
+},
+{
+"type": "header",
+"content": "📢 Top Announcement Bar"
+},
+{
+"type": "checkbox",
+"id": "topbar_enabled",
+"label": "Enable Top Bar",
+"default": false
+},
+{
+"type": "checkbox",
+"id": "topbar_closable",
+"label": "Allow Users to Close",
+"default": true,
+"info": "Adds a close button to the announcement bar"
+},
+{
+"type": "html",
+"id": "topbar_text",
+"label": "Announcement Message",
+"info": "HTML allowed for links and formatting"
+},
+{
+"type": "color",
+"id": "topbar_bg_color",
+"label": "Background Color",
+"default": "#000000"
+},
+{
+"type": "color",
+"id": "topbar_text_color",
+"label": "Text Color",
+"default": "#ffffff"
+},
+{
+"type": "range",
+"id": "topbar_height",
+"label": "Minimum Height",
+"min": 20,
+"max": 100,
+"step": 5,
+"unit": "px",
+"default": 40
+},
+{
+"type": "range",
+"id": "topbar_font_size",
+"min": 10,
+"max": 20,
+"step": 1,
+"unit": "px",
+"label": "Font Size",
+"default": 14
+},
+{
+"type": "header",
+"content": "🎯 Advertisement Bar"
+},
+{
+"type": "checkbox",
+"id": "topbarad_enabled",
+"label": "Enable Advertisement Bar",
+"default": false
+},
+{
+"type": "checkbox",
+"id": "topbarad_closable",
+"label": "Allow Users to Close",
+"default": true
+},
+{
+"type": "html",
+"id": "topbarad_text",
+"label": "Advertisement Content",
+"info": "HTML allowed for rich content"
+},
+{
+"type": "color",
+"id": "topbarad_bg_color",
+"label": "Background Color",
+"default": "#ff0000"
+},
+{
+"type": "color",
+"id": "topbarad_text_color",
+"label": "Text Color",
+"default": "#ffffff"
+},
+{
+"type": "range",
+"id": "topbarad_height",
+"label": "Height",
+"min": 20,
+"max": 100,
+"step": 5,
+"unit": "px",
+"default": 40
+},
+{
+"type": "range",
+"id": "topbarad_font_size",
+"min": 10,
+"max": 20,
+"step": 1,
+"unit": "px",
+"label": "Font Size",
+"default": 14
+},
+{
+"type": "header",
+"content": "🎪 Megamenu"
+},
+{
+"type": "text",
+"id": "megamenu_txt",
+"label": "Megamenu Trigger",
+"info": "Enter the exact menu item name that should show the megamenu",
+"placeholder": "e.g., Shop, Products, Categories"
+}
+],
+"blocks":[
+  {
+      "type": "megamnu_for",
+      "name": "🛍️ Featured Products",
+      "limit": 5,
+      "settings":[
+          {
+              "type": "product",
+              "id": "prodct_1",
+              "label": "Featured Product 1"
+          },
+          {
+              "type": "product",
+              "id": "prodct_2",
+              "label": "Featured Product 2"
+          },
+          {
+              "type": "product",
+              "id": "prodct_3",
+              "label": "Featured Product 3"
+          },
+          {
+              "type": "product",
+              "id": "prodct_4",
+              "label": "Featured Product 4"
+          },
+          {
+              "type": "product",
+              "id": "prodct_5",
+              "label": "Featured Product 5"
+          }
+      ]
+  },
+  {
+      "type": "megamenu_content",
+      "name": "📝 Custom Content",
+      "settings": [
+          {
+              "type": "text",
+              "id": "title",
+              "label": "Section Title",
+              "default": "Featured"
+          },
+          {
+              "type": "richtext",
+              "id": "content",
+              "label": "Custom Content",
+              "info": "Add custom text, links, or HTML"
+          },
+          {
+              "type": "url",
+              "id": "cta_link",
+              "label": "Call-to-Action Link"
+          },
+          {
+              "type": "text",
+              "id": "cta_text",
+              "label": "Call-to-Action Text",
+              "default": "Shop Now"
+          }
+      ]
+  }
+],
+"presets": [
+  {
+    "name": "Header",
+    "category": "Header"
+  }
+]
+}
+{% endschema %}
+
+{% javascript %}
+// Enhanced dropdown functionality with better performance
+document.addEventListener('DOMContentLoaded', function() {
+  // Improved sticky header with scroll throttling
+  let ticking = false;
+  let lastScrollY = 0;
+  
+  function updateStickyHeader() {
+    const header = document.querySelector('.sticky-header');
+    if (!header) return;
+    
+    const currentScrollY = window.scrollY;
+    
+    if (currentScrollY > 100) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+    
+    lastScrollY = currentScrollY;
+    ticking = false;
+  }
+  
+  function requestTick() {
+    if (!ticking) {
+      requestAnimationFrame(updateStickyHeader);
+      ticking = true;
+    }
+  }
+  
+  window.addEventListener('scroll', requestTick, { passive: true });
+  
+  // Enhanced dropdown behavior
+  const dropdowns = document.querySelectorAll('.ul-menu li');
+  let activeDropdown = null;
+  
+  dropdowns.forEach(dropdown => {
+    const submenu = dropdown.querySelector('.submenu_ul');
+    if (!submenu) return;
+    
+    let hoverTimeout;
+    
+    dropdown.addEventListener('mouseenter', () => {
+      clearTimeout(hoverTimeout);
+      if (activeDropdown && activeDropdown !== dropdown) {
+        const activeSubmenu = activeDropdown.querySelector('.submenu_ul');
+        if (activeSubmenu) {
+          activeSubmenu.style.opacity = '0';
+          activeSubmenu.style.visibility = 'hidden';
+        }
+      }
+      activeDropdown = dropdown;
+      submenu.style.opacity = '1';
+      submenu.style.visibility = 'visible';
+    });
+    
+    dropdown.addEventListener('mouseleave', () => {
+      hoverTimeout = setTimeout(() => {
+        submenu.style.opacity = '0';
+        submenu.style.visibility = 'hidden';
+        if (activeDropdown === dropdown) {
+          activeDropdown = null;
+        }
+      }, 150);
+    });
+  });
+  
+  // Keyboard navigation support
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && activeDropdown) {
+      const submenu = activeDropdown.querySelector('.submenu_ul');
+      if (submenu) {
+        submenu.style.opacity = '0';
+        submenu.style.visibility = 'hidden';
+      }
+      activeDropdown = null;
+    }
+  });
+});
+{% endjavascript %}

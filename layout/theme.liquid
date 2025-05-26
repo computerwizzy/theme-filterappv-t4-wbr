@@ -3,8 +3,29 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data: 'unsafe-inline' 'unsafe-eval'; img-src 'self' https: data: blob: cdn.shopify.com *.cloudfront.net; script-src 'self' 'unsafe-inline' 'unsafe-eval' cdn.shopify.com *.jquery.com cdnjs.cloudflare.com *.google-analytics.com *.googleapis.com *.facebook.net *.cloudflare.com; style-src 'self' 'unsafe-inline' fonts.googleapis.com cdn.shopify.com *.cloudfront.net; font-src 'self' fonts.gstatic.com data: *.cloudfront.net; connect-src 'self' *.shopify.com *.google-analytics.com *.facebook.com wss://*.shopify.com; frame-src 'self' https: accounts.google.com *.facebook.com *.youtube.com;">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta http-equiv="Permissions-Policy" content="interest-cohort=(),microphone=(),camera=(),geolocation=()">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
     <meta name="theme-color" content="{{ settings.color_accent | default: '#000000' }}">
+    <!-- Image optimization hints -->
+    <meta name="image-rendering" content="optimizeQuality">
+    
+    <!-- Resource hints for better performance -->
+    <link rel="preconnect" href="{{ shop.secure_url }}" crossorigin>
+    <link rel="dns-prefetch" href="{{ shop.secure_url }}">
+    {% if template == 'product' %}
+      <link rel="prerender" href="{{ product.selected_or_first_available_variant.url }}">
+    {% endif %}
+    {% if template == 'collection' and collection.next_product %}
+      <link rel="prefetch" href="{{ collection.next_product.url }}">
+    {% endif %}
     
     <!-- Preconnect to external domains for better performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
@@ -41,7 +62,31 @@
     {%- if page_description -%}
       <meta name="description" content="{{ page_description | escape }}">
     {%- endif -%}
+
+    <!-- Enhanced Social Media Meta Tags -->
+    <meta property="og:site_name" content="{{ shop.name }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:title" content="{{ page_title }}">
+    {%- if page_description -%}
+      <meta property="og:description" content="{{ page_description | escape }}">
+    {%- endif -%}
+    {%- if template == 'product' and product.featured_image -%}
+      <meta property="og:image" content="{{ product.featured_image | img_url: 'large' }}">
+      <meta property="og:image:secure_url" content="{{ product.featured_image | img_url: 'large' | replace: 'http://', 'https://' }}">
+      <meta property="og:image:width" content="600">
+      <meta property="og:image:height" content="600">
+    {%- endif -%}
     
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page_title }}">
+    {%- if page_description -%}
+      <meta name="twitter:description" content="{{ page_description | escape }}">
+    {%- endif -%}
+    {%- if template == 'product' and product.featured_image -%}
+      <meta name="twitter:image" content="{{ product.featured_image | img_url: 'large' }}">
+    {%- endif -%}
+
     <!-- Enhanced SEO meta tags -->
     {% if template.name == 'product' %}
       <meta property="product:price:amount" content="{{ product.price | money_without_currency }}">
@@ -109,13 +154,127 @@
       @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
     
-    <!-- Preload critical fonts -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"></noscript>
+    <!-- Optimized font loading strategy -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" media="print" onload="this.media='all'">
+    <!-- Load non-critical fonts asynchronously -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family:Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+    </noscript>
     
-    <!-- Load non-critical CSS asynchronously -->
-    <link rel="preload" href="{{ 'style.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- Enhanced resource loading strategy -->
+    <link rel="preload" href="{{ 'style.css' | asset_url }}" as="style" onload="this.onload=null;this.rel='stylesheet';performance.mark('mainCssLoaded')">
     <noscript><link rel="stylesheet" href="{{ 'style.css' | asset_url }}"></noscript>
+    
+    <!-- Resource hints for dynamic imports -->
+    <link rel="modulepreload" href="{{ 'layout.theme.js' | asset_url }}">
+    {% if template.name == 'product' %}
+      <link rel="modulepreload" href="{{ 'product-template.js' | asset_url }}">
+    {% endif %}
+    
+    <!-- Priority Hints -->
+    <meta http-equiv="Priority-Hints" content="on">
+    
+    <!-- Lazy loading configuration with priority hints -->
+    <script>
+      // Enhanced lazy loading configuration with error handling and performance optimization
+      document.addEventListener('DOMContentLoaded', function() {
+        const lazyElements = document.querySelectorAll('[loading="lazy"], [data-lazy="true"]');
+        const imageObserver = 'loading' in HTMLImageElement.prototype;
+        const ioSupported = 'IntersectionObserver' in window;
+        
+        function loadElement(element) {
+          try {
+            if (element.tagName.toLowerCase() === 'img') {
+              if (element.dataset.src) {
+                element.src = element.dataset.src;
+              }
+              if (element.dataset.srcset) {
+                element.srcset = element.dataset.srcset;
+              }
+              element.setAttribute('decoding', 'async');
+            } else if (element.tagName.toLowerCase() === 'iframe') {
+              if (element.dataset.src) {
+                element.src = element.dataset.src;
+              }
+            }
+            
+            // Handle background images
+            if (element.dataset.background) {
+              element.style.backgroundImage = `url('${element.dataset.background}')`;
+            }
+            
+            element.classList.add('loaded');
+            element.dispatchEvent(new CustomEvent('lazyloaded'));
+          } catch (error) {
+            console.warn('Error loading lazy element:', error);
+            // Retry once after a short delay
+            setTimeout(() => {
+              try {
+                loadElement(element);
+              } catch (retryError) {
+                console.error('Failed to load element after retry:', retryError);
+              }
+            }, 1000);
+          }
+        }
+
+        if (imageObserver) {
+          // Native lazy loading with fallback
+          lazyElements.forEach(element => {
+            element.setAttribute('loading', 'lazy');
+            if (element.tagName.toLowerCase() === 'img') {
+              // Preload critical images
+              if (element.hasAttribute('data-critical')) {
+                element.removeAttribute('loading');
+                loadElement(element);
+              }
+            }
+          });
+        } else if (ioSupported) {
+          // Intersection Observer fallback with enhanced options
+          const lazyLoader = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                const element = entry.target;
+                loadElement(element);
+                observer.unobserve(element);
+              }
+            });
+          }, {
+            root: null,
+            rootMargin: '50px 0px', // Start loading slightly before visible
+            threshold: 0.1 // Load when even slightly visible
+          });
+
+          lazyElements.forEach(element => {
+            if (element.hasAttribute('data-critical')) {
+              loadElement(element);
+            } else {
+              lazyLoader.observe(element);
+            }
+          });
+        } else {
+          // Ultimate fallback for older browsers
+          lazyElements.forEach(loadElement);
+        }
+        
+        // Cleanup unused data attributes
+        setTimeout(() => {
+          lazyElements.forEach(element => {
+            if (element.classList.contains('loaded')) {
+              ['src', 'srcset', 'background'].forEach(attr => {
+                if (element.dataset[attr]) {
+                  delete element.dataset[attr];
+                }
+              });
+            }
+          });
+        }, 5000);
+      });
+    </script>
     
     <!-- Conditional CSS loading -->
     {% if template.name == 'product' %}
@@ -206,12 +365,48 @@
         }
       };
       
-      // Performance monitoring
+      // Enhanced Performance monitoring
       if ('performance' in window) {
         window.theme.performance = {
-          navigationStart: performance.timing.navigationStart,
-          loadEventEnd: performance.timing.loadEventEnd
+          navigationStart: performance.timeOrigin,
+          metrics: {},
+          measure: function(label, startMark, endMark) {
+            performance.measure(label, startMark, endMark);
+            const entries = performance.getEntriesByName(label);
+            this.metrics[label] = entries[entries.length - 1].duration;
+          }
         };
+        
+        // Core Web Vitals monitoring
+        if ('PerformanceObserver' in window) {
+          // LCP monitoring
+          new PerformanceObserver((entryList) => {
+            const entries = entryList.getEntries();
+            const lastEntry = entries[entries.length - 1];
+            window.theme.performance.metrics.LCP = lastEntry.renderTime || lastEntry.loadTime;
+          }).observe({entryTypes: ['largest-contentful-paint']});
+
+          // FID monitoring
+          new PerformanceObserver((entryList) => {
+            const entries = entryList.getEntries();
+            const firstEntry = entries[0];
+            window.theme.performance.metrics.FID = firstEntry.processingStart - firstEntry.startTime;
+          }).observe({entryTypes: ['first-input']});
+
+          // CLS monitoring
+          let clsValue = 0;
+          new PerformanceObserver((entryList) => {
+            for (const entry of entryList.getEntries()) {
+              if (!entry.hadRecentInput) {
+                clsValue += entry.value;
+                window.theme.performance.metrics.CLS = clsValue;
+              }
+            }
+          }).observe({entryTypes: ['layout-shift']});
+        }
+
+        // Mark key points for performance measurement
+        performance.mark('themeJsStart');
       }
       
       // Feature detection
@@ -238,9 +433,10 @@
       
       // Load jQuery with CDN fallback
       if (!window.jQuery) {
-        loadScript('https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js', function() {
+        loadScript('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js', function() {
           if (!window.jQuery) {
-            loadScript('{{ "jquery-2.2.4.min.js" | asset_url }}');
+            console.warn('CDN jQuery failed to load, trying local fallback');
+            loadScript('{{ "jquery-3.7.0.min.js" | asset_url }}');
           }
         });
       }
@@ -277,18 +473,43 @@
 
     {% render 'rapid-search-settings' %}
     
-    <!-- Service Worker for enhanced performance (optional) -->
+    <!-- Enhanced Service Worker implementation -->
     {% if settings.enable_service_worker %}
     <script>
       if ('serviceWorker' in navigator) {
+        // Defer service worker registration after load
         window.addEventListener('load', function() {
-          navigator.serviceWorker.register('/sw.js')
-            .then(function(registration) {
-              console.log('SW registered: ', registration);
-            })
-            .catch(function(registrationError) {
-              console.log('SW registration failed: ', registrationError);
+          // Register service worker with a scope
+          navigator.serviceWorker.register('/sw.js', {
+            scope: '/',
+            updateViaCache: 'none'
+          }).then(function(registration) {
+            console.log('SW registered - Scope:', registration.scope);
+            
+            // Check for updates
+            registration.addEventListener('updatefound', function() {
+              const newWorker = registration.installing;
+              newWorker.addEventListener('statechange', function() {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  // New content is available, notify user
+                  if (window.confirm('New content is available! Reload to update?')) {
+                    window.location.reload();
+                  }
+                }
+              });
             });
+          }).catch(function(error) {
+            console.error('SW registration failed:', error);
+          });
+
+          // Handle service worker updates
+          let refreshing = false;
+          navigator.serviceWorker.addEventListener('controllerchange', function() {
+            if (!refreshing) {
+              refreshing = true;
+              window.location.reload();
+            }
+          });
         });
       }
     </script>
@@ -324,6 +545,30 @@
 
       <!-- Main content with better semantic structure -->
       <main role="main" id="MainContent" class="main-content" itemscope itemtype="https://schema.org/WebPageElement">
+        <!-- Emergency content fallback -->
+        <div id="emergency-content" style="display: none;">
+          <div class="container text-center py-5">
+            <h1>{{ shop.name }}</h1>
+            <p>We're currently updating our website. Please try refreshing the page.</p>
+            {% if template == 'product' %}
+              <div class="product-emergency-data" hidden
+                   data-product-title="{{ product.title | escape }}"
+                   data-product-price="{{ product.price | money }}"
+                   data-product-url="{{ product.url }}">
+              </div>
+            {% endif %}
+          </div>
+        </div>
+        
+        <script>
+          // Emergency content handling
+          window.addEventListener('error', function(e) {
+            if (e.target.tagName === 'SECTION' || e.target.closest('section')) {
+              const emergency = document.getElementById('emergency-content');
+              if (emergency) emergency.style.display = 'block';
+            }
+          }, true);
+        </script>
         
         <!-- Enhanced homepage section loading -->
         {% if template == 'index' %}
@@ -507,23 +752,93 @@
     
     <!-- Enhanced error handling -->
     <script>
-      // Global error handling
-      window.addEventListener('error', function(e) {
-        console.error('JavaScript error:', e.error);
-        // Optional: Send error to analytics
-        if (typeof gtag !== 'undefined') {
-          gtag('event', 'exception', {
-            description: e.error.toString(),
-            fatal: false
-          });
+      (function() {
+        // Enhanced error categorization and handling
+        const errorTypes = {
+          NETWORK: 'network_error',
+          SCRIPT: 'script_error',
+          RESOURCE: 'resource_error',
+          RUNTIME: 'runtime_error'
+        };
+
+        function categorizeError(error) {
+          if (error instanceof TypeError) return errorTypes.RUNTIME;
+          if (error instanceof ReferenceError) return errorTypes.SCRIPT;
+          if (error instanceof URIError) return errorTypes.RESOURCE;
+          if (error.message && error.message.includes('network')) return errorTypes.NETWORK;
+          return 'unknown_error';
         }
-      });
-      
-      // Unhandled Promise rejection handling
-      window.addEventListener('unhandledrejection', function(e) {
-        console.error('Unhandled promise rejection:', e.reason);
-        e.preventDefault();
-      });
+
+        // Global error handling with retry mechanism
+        window.addEventListener('error', function(e) {
+          const errorType = categorizeError(e.error);
+          console.error(`JavaScript ${errorType}:`, {
+            message: e.error.message,
+            stack: e.error.stack,
+            type: errorType
+          });
+
+          // Enhanced analytics reporting
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'exception', {
+              description: e.error.toString(),
+              fatal: false,
+              error_type: errorType
+            });
+          }
+
+          // Automatic retry for network errors
+          if (errorType === errorTypes.NETWORK && e.target && e.target.src) {
+            const retriesKey = `retry_${e.target.src}`;
+            const retries = parseInt(sessionStorage.getItem(retriesKey) || '0');
+            if (retries < 3) {
+              sessionStorage.setItem(retriesKey, (retries + 1).toString());
+              setTimeout(() => {
+                e.target.src = e.target.src + '?retry=' + Date.now();
+              }, 1000 * Math.pow(2, retries)); // Exponential backoff
+            }
+          }
+        });
+        
+        // Enhanced Promise rejection handling
+        window.addEventListener('unhandledrejection', function(e) {
+          const error = e.reason;
+          const errorType = categorizeError(error);
+          
+          console.error(`Unhandled promise rejection (${errorType}):`, {
+            message: error.message,
+            stack: error.stack,
+            type: errorType
+          });
+
+          if (typeof gtag !== 'undefined') {
+            gtag('event', 'exception', {
+              description: 'Promise Rejection: ' + error.toString(),
+              fatal: false,
+              error_type: 'promise_' + errorType
+            });
+          }
+
+          e.preventDefault();
+        });
+
+        // Performance error monitoring
+        if ('performance' in window) {
+          const observer = new PerformanceObserver((list) => {
+            for (const entry of list.getEntries()) {
+              if (entry.duration > 1000) { // Long task detection
+                console.warn('Long task detected:', {
+                  name: entry.name,
+                  duration: entry.duration,
+                  startTime: entry.startTime
+                });
+              }
+            }
+          });
+          
+          observer.observe({ entryTypes: ['longtask', 'resource'] });
+        }
+      })();
     </script>
     
   </body>

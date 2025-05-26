@@ -1,38 +1,62 @@
-{% if template == 'index' %}
-<div class="container">
-  <div class="row">
-    <div class="col-sm-12 text-center">
-      <br><h5>Make Your Selection</h5>
-    </div>
-  </div>
-</div>
+{% comment %}
+  Improved custom-card.liquid snippet for homepage selection cards.
+  Enhancements: Accessibility, semantic HTML, maintainability.
+{% endcomment %}
 
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-sm-12 col-md-4 my-2">
-      <div class="card elegant-card">
-        <div class="d-flex justify-content-center align-items-center card-img-container" style="border: 1px solid black; padding: 5px;">
-          <a href="https://wheelsbelowretailonline.com/visualizer-2/">
-            <img class="card-img-top"  src="https://cdn.shopify.com/s/files/1/0065/0048/3116/files/apple-touch-icon.png?v=1695165117?v=1694972930" alt="Selection icon">
-          </a>
-        </div>
-        <div class="card-body text-center">
-          <a href="/pages/wheels-tires-fitment" class="btn btn-danger">SHOP WHEEL</a>
-        </div>
+{% if template == 'index' %}
+  <div class="custom-card-container container">
+    <div class="row">
+      <div class="col-12 text-center mt-4 mb-3">
+        <h5 class="custom-card-title">Make Your Selection</h5>
       </div>
     </div>
-    <div class="col-sm-12 col-md-4 my-2">
-      <div class="card elegant-card">
-        <div class="d-flex justify-content-center align-items-center card-img-container" style="border: 1px solid black; padding: 5px;">
-          <a href="https://wheelsbelowretailonline.com/visualizer-2/">
-            <img class="card-img-top" src="https://cdn.shopify.com/s/files/1/0065/0048/3116/files/tires_4c109f7c-a40e-495b-8120-5853beb172db.png?v=1695175766" alt="Selection icon" style="width: 180px; max-height: 180px;">
-          </a>
+    <div class="row justify-content-center">
+      <!-- Card: Shop Wheel -->
+      <div class="col-12 col-md-4 my-2">
+        <div class="custom-card card elegant-card h-100">
+          <div 
+            class="custom-card-img-container d-flex justify-content-center align-items-center" 
+            style="border: 1px solid #222; padding: 5px;"
+          >
+            <a href="https://wheelsbelowretailonline.com/visualizer-2/" aria-label="Go to wheel visualizer tool">
+              <img 
+                class="card-img-top"
+                src="https://cdn.shopify.com/s/files/1/0065/0048/3116/files/apple-touch-icon.png?v=1695165117"
+                alt="Wheel Visualizer Icon"
+                width="120"
+                height="120"
+                loading="lazy"
+              >
+            </a>
+          </div>
+          <div class="card-body text-center">
+            <a href="/pages/wheels-tires-fitment" class="btn btn-danger custom-card-btn" aria-label="Shop Wheel">SHOP WHEEL</a>
+          </div>
         </div>
-        <div class="card-body text-center">
-          <a href="/pages/tires-brand" class="btn btn-danger">SHOP TIRES</a>
+      </div>
+      <!-- Card: Shop Tires -->
+      <div class="col-12 col-md-4 my-2">
+        <div class="custom-card card elegant-card h-100">
+          <div 
+            class="custom-card-img-container d-flex justify-content-center align-items-center" 
+            style="border: 1px solid #222; padding: 5px;"
+          >
+            <a href="https://wheelsbelowretailonline.com/visualizer-2/" aria-label="Go to tire visualizer tool">
+              <img 
+                class="card-img-top"
+                src="https://cdn.shopify.com/s/files/1/0065/0048/3116/files/tires_4c109f7c-a40e-495b-8120-5853beb172db.png?v=1695175766"
+                alt="Tire Visualizer Icon"
+                width="120"
+                height="120"
+                loading="lazy"
+              >
+            </a>
+          </div>
+          <div class="card-body text-center">
+            <a href="/pages/tires-brand" class="btn btn-danger custom-card-btn" aria-label="Shop Tires">SHOP TIRES</a>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 {% endif %}

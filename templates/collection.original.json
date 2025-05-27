@@ -1,14 +1,23 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "rapid_search": {
       "type": "placeholder-app-section",
       "settings": {
-        "original_type": "rapid-search-collection-template",
-        "comment": "This section should handle its dependencies like 'rapid-search-foc-wrapper-condition' and conditional rendering based on focIsEnabled."
+        "original_type": "rapid-search-collection-template"
       }
     },
-    "connection": { 
-      "type": "connection-section" 
+    "connection": {
+      "type": "connection-section",
+      "settings": {}
     }
   },
   "order": [

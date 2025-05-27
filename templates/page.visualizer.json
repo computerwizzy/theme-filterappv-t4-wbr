@@ -1,7 +1,22 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "visualizer_content": { "type": "visualizer" },
-    "custom_html": { "type": "section-custom-html" }
+    "visualizer_content": {
+      "type": "visualizer",
+      "settings": {}
+    },
+    "custom_html": {
+      "type": "section-custom-html",
+      "settings": {}
+    }
   },
   "order": [
     "visualizer_content",

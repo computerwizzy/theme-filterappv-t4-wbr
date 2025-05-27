@@ -2223,46 +2223,6 @@
           "link_url": "shopify://blogs/news"
         }
       },
-      "conection-section": {
-        "type": "conection-section",
-        "blocks": {
-          "1590380487572": {
-            "type": "Conection",
-            "settings": {
-              "icon_img": "shopify://shop_images/9b545ce1.png",
-              "title": "Help Center",
-              "main_text": "Ask Questions & Get Instant Answers",
-              "text_url": "shopify://pages/contact-us"
-            }
-          },
-          "1590380534766": {
-            "type": "Conection",
-            "settings": {
-              "icon_img": "shopify://shop_images/907bef71.png",
-              "title": "My Account",
-              "main_text": "Manage Your Information & Settings",
-              "text_url": "/account/login"
-            }
-          },
-          "1590380567548": {
-            "type": "Conection",
-            "settings": {
-              "icon_img": "shopify://shop_images/1a6c1b5a.png",
-              "title": "Track My Order",
-              "main_text": "Check Your Order Status at any time",
-              "text_url": "/pages/track-my-order"
-            }
-          }
-        },
-        "block_order": [
-          "1590380487572",
-          "1590380534766",
-          "1590380567548"
-        ],
-        "settings": {
-          "enable_section": false
-        }
-      },
       "result_collection": {
         "type": "result_collection",
         "blocks": {
@@ -7187,28 +7147,6 @@
       "related-product": {
         "type": "related-product",
         "settings": {}
-      },
-      "custome-banner": {
-        "type": "custome-banner",
-        "blocks": {
-          "bec3f7c0-c245-441e-a731-ce117b7a9501": {
-            "type": "side_block",
-            "settings": {
-              "bg_img": "shopify://shop_images/Wheel_3_Landscape_FINAL.jpg",
-              "title": "tiler",
-              "btn_text": "buy",
-              "btn_url": "shopify://pages/about-us"
-            }
-          }
-        },
-        "block_order": [
-          "bec3f7c0-c245-441e-a731-ce117b7a9501"
-        ],
-        "settings": {
-          "enable_section": false,
-          "head_video": "",
-          "video_url": ""
-        }
       },
       "shop-featured-productA": {
         "type": "shop-featured-productA",

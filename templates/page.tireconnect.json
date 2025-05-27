@@ -1,9 +1,30 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "main_app_section": { "type": "tireconnect" },
-    "custom_html": { "type": "section-custom-html" },
-    "for_making": { "type": "for-making-section" },
-    "videos": { "type": "product-videos" }
+    "main_app_section": {
+      "type": "tireconnect",
+      "settings": {}
+    },
+    "custom_html": {
+      "type": "section-custom-html",
+      "settings": {}
+    },
+    "for_making": {
+      "type": "for-making-section",
+      "settings": {}
+    },
+    "videos": {
+      "type": "product-videos",
+      "settings": {}
+    }
   },
   "order": [
     "main_app_section",

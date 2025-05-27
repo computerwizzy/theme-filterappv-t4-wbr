@@ -1,19 +1,80 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "banner": {
-      "type": "banner-collection"
+      "type": "banner-collection",
+      "settings": {
+        "enable_banner": false
+      }
     },
     "main_content": {
-      "type": "collection-shop-section"
+      "type": "collection-shop-section",
+      "settings": {
+        "show_item_widget": true,
+        "show_items_label": "Show Items :",
+        "show_diameter_widget": true,
+        "diameter_label": "DIAMETER",
+        "show_height_widget": true,
+        "height_label": "Height",
+        "show_width_widget": true,
+        "width_label": "WIDTH",
+        "show_offset_widget": true,
+        "offset_label": "Offset",
+        "show_type_widget": true,
+        "type_label": "TYPE",
+        "show_tire_size_widget": true,
+        "tire_size_label": "TIRE SIZE",
+        "show_load_range_widget": true,
+        "load_range_label": "LOAD RANGE",
+        "show_load_index_widget": true,
+        "load_index_label": "LOAD INDEX",
+        "show_bolt_pattern_widget": true,
+        "bolt_pattern_label": "Bolt Pattern",
+        "show_material_widget": true,
+        "material_label": "Material",
+        "show_finish_widget": true,
+        "finish_label": "Finish",
+        "show_brand_widget": true,
+        "brand_label": "BRAND",
+        "show_modal_widget": true,
+        "modal_label": "MODEL",
+        "show_price_widget": true,
+        "price_label": "Price",
+        "show_stock_widget": true,
+        "availablity": "Available",
+        "show_keyword_widget": true,
+        "keyword_label": "KEYWORD"
+      }
     },
     "rapid_search": {
-      "type": "placeholder-app-section", "settings": { "original_type": "rapid-search-collection-template" }
+      "type": "placeholder-app-section",
+      "settings": {
+        "original_type": "rapid-search-collection-template"
+      }
     },
     "blog_slider": {
-      "type": "blog-slider-section"
+      "type": "blog-slider-section",
+      "settings": {
+        "enable_section": false,
+        "title": "",
+        "content_txt": "",
+        "link_title": "",
+        "link_url": ""
+      }
     },
     "connection": {
-      "type": "connection-section" 
+      "type": "connection-section",
+      "settings": {
+        "enable_section": false
+      }
     }
   },
   "order": [

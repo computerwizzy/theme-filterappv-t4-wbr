@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "banner": {
+      "type": "blogs-banner"
+    },
+    "main": {
+      "type": "article-section"
+    }
+  },
+  "order": [
+    "banner",
+    "main"
+  ]
+}

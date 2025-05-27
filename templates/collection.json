@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "banner": {
+      "type": "banner-collection"
+    },
+    "main_content": {
+      "type": "collection-shop-section"
+    },
+    "rapid_search": {
+      "type": "rapid-search-collection-template"
+    },
+    "blog_slider": {
+      "type": "blog-slider-section"
+    },
+    "connection": {
+      "type": "conection-section" 
+    }
+  },
+  "order": [
+    "banner",
+    "main_content",
+    "rapid_search",
+    "blog_slider",
+    "connection"
+  ]
+}

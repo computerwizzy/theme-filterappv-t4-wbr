@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "banner": { "type": "banner-deal-3" },
+    "product_deal": { "type": "product-deal-page-3" },
+    "why_choose_us": { "type": "why-choose-us" }
+  },
+  "order": [
+    "banner",
+    "product_deal",
+    "why_choose_us"
+  ]
+}

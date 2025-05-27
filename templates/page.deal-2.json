@@ -1,0 +1,10 @@
+{
+  "sections": {
+    "banner": { "type": "banner-deal-2" },
+    "product_deal": { "type": "product-deal-page-2" }
+  },
+  "order": [
+    "banner",
+    "product_deal"
+  ]
+}

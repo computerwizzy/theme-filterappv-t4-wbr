@@ -1,0 +1,20 @@
+{
+  "sections": {
+    "banner": { "type": "banner-about" },
+    "about_section": { "type": "about-section" },
+    "benefits": { "type": "about-benefits" },
+    "succeed": { "type": "we-succeed" },
+    "reviews": { "type": "review-about" },
+    "mission": { "type": "our-mission" },
+    "follow": { "type": "follow-us" }
+  },
+  "order": [
+    "banner",
+    "about_section",
+    "benefits",
+    "succeed",
+    "reviews",
+    "mission",
+    "follow"
+  ]
+}

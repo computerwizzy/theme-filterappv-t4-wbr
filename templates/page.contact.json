@@ -1,0 +1,10 @@
+{
+  "sections": {
+    "contact_form": { "type": "contact-us" },
+    "map": { "type": "contact-us-map" }
+  },
+  "order": [
+    "contact_form",
+    "map"
+  ]
+}

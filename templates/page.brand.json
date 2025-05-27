@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "visualizer": { 
+      "type": "visualizer"
+    },
+    "banner": { "type": "banner-section" },
+    "featured_brands": { "type": "featured-brands-page" },
+    "for_making": { "type": "for-making-section" }
+  },
+  "order": [
+    "visualizer",
+    "banner",
+    "featured_brands",
+    "for_making"
+  ]
+}

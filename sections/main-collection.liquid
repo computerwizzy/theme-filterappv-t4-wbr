@@ -1,0 +1,26 @@
+{% comment %}
+  Main collection section wrapper for OS 2.0.
+  The actual collection content (product grid, filters) is primarily driven by 
+  sections like 'collection-shop-section' or app-specific sections 
+  like 'rapid-search-collection-template', as configured in templates/collection.json.
+
+  The Rapid Search app snippets from the original templates/collection.liquid:
+  - {% include 'rapid-search-foc-wrapper-condition' %}
+  - {% if focIsEnabled == true %} ... {% section 'rapid-search-collection-template' %} ... {% endif %}
+  - {% render 'rapid-search-results-template-v2' %}
+  - {% render 'rapid-search-results-template' %}
+  This logic should ideally be encapsulated within the 'rapid-search-collection-template' 
+  section itself if that section is active, or managed by the Rapid Search app 
+  using App Blocks or App Embeds in an OS 2.0 compatible theme.
+{% endcomment %}
+
+<div class="collection-page-os2-wrapper">
+  {% comment %} 
+    This div is a general wrapper. Specific layout and content will be determined 
+    by the sections added via the theme editor into the 'order' array of 
+    templates/collection.json, or by the sections defined above.
+    For example, if 'rapid-search-collection-template' is used, it will render
+    the collection with the app's filtering capabilities. If 'collection-shop-section'
+    is used, it will render the default theme's collection layout.
+  {% endcomment %}
+</div>

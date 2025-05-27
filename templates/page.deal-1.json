@@ -1,7 +1,45 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "banner": { "type": "banner-deal" },
-    "product_deal": { "type": "product-deal-page" }
+    "banner": {
+      "type": "banner-deal",
+      "settings": {
+        "enable_sec": false,
+        "title_txt": "",
+        "sub_title": ""
+      }
+    },
+    "product_deal": {
+      "type": "product-deal-page",
+      "blocks": {
+        "product_deal_awpVRK": {
+          "type": "product-deal",
+          "settings": {
+            "title_txt": "50% OFF",
+            "img_box": "shopify://shop_images/s-l1600_79c22061-cfd7-46a4-a0e3-9312b4ff616b.webp",
+            "content_txt": "Take IT While they last",
+            "url_link": "shopify://pages/deal-1"
+          }
+        }
+      },
+      "block_order": [
+        "product_deal_awpVRK"
+      ],
+      "settings": {
+        "enable_sec": false,
+        "content_txt": "",
+        "title_txt": "",
+        "btn_link": ""
+      }
+    }
   },
   "order": [
     "banner",

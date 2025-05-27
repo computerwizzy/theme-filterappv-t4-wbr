@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "banner": { "type": "banner-collection" },
+    "shop_content": { "type": "collection-shop-section" },
+    "blog_slider": { "type": "blog-slider-section" },
+    "connection": { "type": "connection-section" }
+  },
+  "order": [
+    "banner",
+    "shop_content",
+    "blog_slider",
+    "connection"
+  ]
+}

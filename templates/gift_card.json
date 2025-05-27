@@ -1,11 +1,11 @@
 {
   "sections": {
     "main": {
-      "type": "main-page-list-collections",
-      "settings": {}
+      "type": "main-gift-card"
     }
   },
   "order": [
     "main"
-  ]
+  ],
+  "layout": "gift_card"
 }

@@ -1,0 +1,85 @@
+<div class="container my-4 order-history">
+  <div class="row py-2">
+    <div class="col-12">
+      <h3 class="text-center mb-3">Order History</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3 col-md-12">
+      <div class="list-group mb-3  sticky-top">
+        <a href="/account" name="Order History" title="Order History" rel="nofollow" aria-label="Order History"
+          class="list-group-item p-md-2 text-dark"><i class="fa fa-calendar mr-2"> </i> Order History</a>
+        <a href="/account/addresses" name="Your Addresses" title="Your Addresses" rel="nofollow"
+          aria-label="Your Addresses" class="list-group-item p-md-2 text-dark"><i class="fa fa-file mr-2"> </i> Your
+          Addresses</a>
+        <a href="/account/logout" name="Log out" title="Log out" rel="nofollow" aria-label="Log out"
+          class="list-group-item p-md-2 text-dark"><i class="fa fa-lock mr-2 "> </i> Log out</a>
+      </div>
+    </div>
+    <div class="col-lg-9 col-md-12">
+      {% paginate customer.orders by 20 %}
+      <div class="row border-bottom my-2 mx-2">
+
+        <!-- dummy table -->
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <tr>
+              <th scope="col">{{ 'customer.orders.order_number' | t }}</th>
+              <th scope="col">{{ 'customer.orders.date' | t }}</th>
+              <th scope="col">{{ 'customer.orders.payment_status' | t }}</th>
+              <th scope="col">{{ 'customer.orders.fulfillment_status' | t }}</th>
+              <th scope="col">{{ 'customer.orders.total' | t }}</th>
+            </tr>
+            <tr>
+              <td scope="col">{{ order.name | link_to: order.customer_url }}<a href="#">#121</a></td>
+              <td> {{ order.created_at | date: format: 'month_day_year' }}12/06/19</td>
+              <td> {{ order.financial_status_label }}Authorized</td>
+              <td> {{ order.fulfillment_status_label }}fulfilled</td>
+              <td> {{ order.total_price | money }}$122.31</td>
+            </tr>
+            <tr>
+              <td scope="col">{{ order.name | link_to: order.customer_url }}<a href="#">#121</a></td>
+              <td> {{ order.created_at | date: format: 'month_day_year' }}12/06/19</td>
+              <td> {{ order.financial_status_label }}Authorized</td>
+              <td> {{ order.fulfillment_status_label }}fulfilled</td>
+              <td> {{ order.total_price | money }}$122.31</td>
+            </tr>
+          </table>
+        </div>
+        <!-- dummy table end -->
+
+        {% if customer.orders.size != 0 %}
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">{{ 'customer.orders.order_number' | t }}</th>
+                <th scope="col">{{ 'customer.orders.date' | t }}</th>
+                <th scope="col">{{ 'customer.orders.payment_status' | t }}</th>
+                <th scope="col">{{ 'customer.orders.fulfillment_status' | t }}</th>
+                <th scope="col">{{ 'customer.orders.total' | t }}</th>
+              </tr>
+              {% for order in customer.orders %}
+              <tr>
+                <td scope="col">{{ order.name | link_to: order.customer_url }}<a href="#">#121</a></td>
+                <td> {{ order.created_at | date: format: 'month_day_year' }}12/06/19</td>
+                <td> {{ order.financial_status_label }}Authorized</td>
+                <td> {{ order.fulfillment_status_label }}fulfilled</td>
+                <td> {{ order.total_price | money }}$122.31</td>
+              </tr>
+              {% endfor %}
+            </thead>
+          </table>
+        </div>
+        {% else %}
+        <div class="alert text-dark col-12">
+          {{ 'customer.orders.none' | t }}
+        </div>
+        {% endif %}
+        {% if paginate.pages > 1 %}
+        {% include 'pagination' %}
+        {% endif %}
+        {% endpaginate %}
+      </div>
+    </div>
+  </div>

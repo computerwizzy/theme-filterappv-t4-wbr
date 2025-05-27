@@ -10,47 +10,7 @@
     {% endif %}
 </a> {% endcomment %}
 
-<style>
-/* Fix dropdown menu visibility issues - minimal styling */
-.submenu_ul {
-    position: absolute !important;
-    z-index: 999999 !important;
-    display: none !important;
-    top: 100% !important;
-    left: 0 !important;
-}
 
-.ul-menu li:hover > .submenu_ul {
-    display: block !important;
-    z-index: 999999 !important;
-}
-
-.megamenu {
-    position: absolute !important;
-    z-index: 999999 !important;
-    display: none !important;
-    width: 100% !important;
-    left: 0 !important;
-    top: 100% !important;
-}
-
-.megamenu_li:hover > .megamenu {
-    display: block !important;
-    z-index: 999999 !important;
-}
-
-/* Ensure parent li has position relative */
-.ul-menu li {
-    position: relative !important;
-}
-
-/* Fix for sticky header interference */
-.site-header.is-sticky .submenu_ul,
-.site-header.is-sticky .megamenu {
-    position: fixed !important;
-    z-index: 999999 !important;
-}
-</style>
 
 <nav class="main-header position-relative">
     <div class="container desktop-menu">
@@ -249,33 +209,5 @@
         </div>
     </div>
 
-<script>
-$(document).ready(function(){
-    // Fix dropdown scroll issues
-    $(window).off('scroll.dropdown');
-    
-    // Ensure dropdowns stay visible during scroll
-    var dropdownTimer;
-    $('.ul-menu li').hover(
-        function() {
-            clearTimeout(dropdownTimer);
-            $(this).find('.submenu_ul, .megamenu').show().css('z-index', '999999');
-        },
-        function() {
-            var dropdown = $(this).find('.submenu_ul, .megamenu');
-            dropdownTimer = setTimeout(function() {
-                dropdown.hide();
-            }, 100);
-        }
-    );
-    
-    // Override scroll behavior that might hide dropdowns
-    $(window).on('scroll', function() {
-        if ($('.submenu_ul:hover, .megamenu:hover, .ul-menu li:hover').length > 0) {
-            return false;
-        }
-    });
-});
-</script>
                     
 </nav>

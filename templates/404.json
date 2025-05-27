@@ -1,8 +1,7 @@
 {
   "sections": {
     "main": {
-      "type": "main-page-rapid-search-results",
-      "settings": {}
+      "type": "not-found"
     }
   },
   "order": [

@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "rapid_search": {
+      "type": "placeholder-app-section",
+      "settings": {
+        "original_type": "rapid-search-collection-template",
+        "comment": "This section should handle its dependencies like 'rapid-search-foc-wrapper-condition' and conditional rendering based on focIsEnabled."
+      }
+    },
+    "connection": { 
+      "type": "connection-section" 
+    }
+  },
+  "order": [
+    "rapid_search",
+    "connection"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "rapid_search": {
+      "type": "placeholder-app-section",
+      "settings": {
+        "original_type": "rapid-search-collection-template",
+        "comment": "This section should handle its dependencies and conditional rendering. The original template had an extra conditional wrapper around 'conection-section' when focIsEnabled was true."
+      }
+    },
+    "connection": { 
+      "type": "connection-section" 
+    }
+  },
+  "order": [
+    "rapid_search",
+    "connection"
+  ]
+}

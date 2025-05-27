@@ -1,0 +1,63 @@
+<div class=" container">
+  <div class="row py-5">
+    <div class="col-xl-5 col-lg-5 col-md-7 col-12 m-auto">
+      <div class="text-center acc">
+        <div class="lgn">
+          {% form 'customer_login' %}
+          <h1 class="py-4">{{ 'customer.login.title' | t }}</h1>
+          {{ form.errors | default_errors }}
+          <div class="form-group">
+            <input type="email" class="form-control" name="customer[email]" id="CustomerEmail"
+              class="{% if form.errors contains 'email' %}input-error{% endif %}"
+              placeholder="{{ 'customer.login.email' | t }}" spellcheck="false" autocomplete="off" autocapitalize="off"
+              autofocus>
+
+            <input type="password" class="form-control" name="customer[password]" id="CustomerPassword"
+              class="{% if form.errors contains 'password' %}input-error{% endif %}"
+              placeholder="{{ 'customer.login.password' | t }}">
+            <p>
+              <input type="submit" class="button-all banner-btn m-auto" value="{{ 'customer.login.sign_in' | t }}">
+            </p>
+            <p>
+              {% if form.password_needed %}
+              <a href="#recover" id="forget" data-recover-toggle>{{ 'customer.login.forgot_password' | t }}</a>
+              {% endif %}
+            </p>
+            <p>
+              <a href="/account/register">
+                {{ 'layout.customer.create_account' | t }}
+              </a>
+            </p>
+          </div>
+          {% endform %}
+        </div>
+        <div class="form-group">
+          <div id="recover" style="display:none;" class="py-5" data-recover-form>
+            <h1 class="py-4">{{ 'customer.recover_password.title' | t }}</h1>
+            <p class="py-1">{{ 'customer.recover_password.subtext' | t }}</p>
+
+            {% form 'recover_customer_password' %}
+            {{ form.errors | default_errors }}
+
+            {% if form.posted_successfully? %}
+            <span class="hide" data-form-state></span>
+            {% endif %}
+
+            <input type="email" name="email" class="form-control" id="RecoverEmail"
+              placeholder="{{ 'customer.recover_password.email' | t }}" spellcheck="false" autocomplete="off"
+              autocapitalize="off">
+            <p>
+              <input type="submit" class="button-all banner-btn customer_login m-auto" value="{{ 'customer.recover_password.submit' | t }}">
+            </p>
+            <p>
+              <button type="reset" data-recover-toggle class="m-auto cnl">
+                {{ 'customer.recover_password.cancel' | t }}
+              </button>
+            </p>
+            {% endform %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

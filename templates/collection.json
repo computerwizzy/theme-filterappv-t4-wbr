@@ -7,13 +7,13 @@
       "type": "collection-shop-section"
     },
     "rapid_search": {
-      "type": "rapid-search-collection-template"
+      "type": "placeholder-app-section", "settings": { "original_type": "rapid-search-collection-template" }
     },
     "blog_slider": {
       "type": "blog-slider-section"
     },
     "connection": {
-      "type": "conection-section" 
+      "type": "connection-section" 
     }
   },
   "order": [

@@ -1,10 +1,10 @@
 {
   "sections": {
     "banner": { "type": "banner-section" },
-    "collection_list": { "type": "collection-list" }
+    "main_content": { "type": "tires-brands-page" }
   },
   "order": [
     "banner",
-    "collection_list"
+    "main_content"
   ]
 }

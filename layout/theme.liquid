@@ -248,7 +248,6 @@
     
     {% include 'script-tags', layout: 'theme' %}
     {% include 'affirm' %}
-    {% render 'mailchimp' %}
 
     <!-- Enhanced analytics and tracking -->
     {% capture cfh %}{{ content_for_header }}{% endcapture %}
@@ -525,6 +524,6 @@
         e.preventDefault();
       });
     </script>
-    
+    <script src="{{ 'navbar-enhancements.js' | asset_url }}" defer></script>
   </body>
 </html>

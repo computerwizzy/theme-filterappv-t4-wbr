@@ -1,0 +1,10 @@
+{
+  "sections": {
+    "visualizer_content": { "type": "visualizer" },
+    "custom_html": { "type": "section-custom-html" }
+  },
+  "order": [
+    "visualizer_content",
+    "custom_html"
+  ]
+}

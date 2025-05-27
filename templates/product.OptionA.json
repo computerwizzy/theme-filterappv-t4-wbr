@@ -1,0 +1,19 @@
+{
+  "sections": {
+    "main": {
+      "type": "Product-OptionA",
+      "settings": {
+        "comment": "This section should contain the main product display, the GSC_HIDDEN_PRODUCT guard clause, and the JSON-LD script."
+      }
+    },
+    "custom_html": { "type": "section-custom-html" },
+    "icons": { "type": "icon-with-text" },
+    "featured_product": { "type": "shop-featured-productA" }
+  },
+  "order": [
+    "main",
+    "custom_html",
+    "icons",
+    "featured_product"
+  ]
+}

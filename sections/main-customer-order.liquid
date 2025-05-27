@@ -1,0 +1,161 @@
+{% comment %}
+The data-label attributes on <td> elements are mobile-friendly
+  helpers used for responsive-table labels
+  {% endcomment %}
+  <div class="container my-4 order-history">
+    <div class="row py-2">
+      <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="card-title">
+              <h5 class="d-inline-block">{{ 'customer.order.billing_address' | t }}</h5>
+            </div>
+            <div class="card-text">
+              <p>{{ 'customer.order.payment_status' | t }}: {{ order.financial_status_label }}</p>
+              <p>{{ order.billing_address | format_address }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="card-title">
+              <h5 class="d-inline-block">{{ 'customer.order.shipping_address' | t }}</h5>
+            </div>
+            <div class="card-text">
+              <p>{{ 'customer.order.fulfillment_status' | t }}: {{ order.fulfillment_status_label }}</p>
+              <p>{{ order.shipping_address | format_address }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row py-2 align-items-center">
+      <div class="col-lg-3 col-md-3 col-sm-6 col-12 text-lg-left text-md-center  text-sm-center text-center">
+        <a href="/account" class="btn btn-outline-dark rounded-pill  mb-4">
+          <i class="fa fa-arrow-left mr-lg-2 mr-0"></i>
+          Account index
+        </a>
+      </div>
+      <div class="col-lg-9 col-md-9 col-sm-6 col-12 text-lg-center text-md-center text-sm-center text-center">
+        <h2 class="my-1">{{ 'customer.account.title' | t }}</h2>
+        <h2 class="my-1">{{ 'customer.order.title' | t: name: order.name }}</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-3 col-md-12">
+        <div class="list-group mb-3  sticky-top">
+          <a href="/account" name="Order History" title="Order History" rel="nofollow" aria-label="Order History"
+            class="list-group-item p-md-2"><i class="fa fa-calendar mr-2"></i> Order History</a>
+          <a href="/account/addresses" name="Your Addresses" title="Your Addresses" rel="nofollow"
+            aria-label="Your Addresses" class="list-group-item p-md-2"><i class="fa fa-file mr-2"> </i> Your
+            Addresses</a>
+          <a href="/account/logout" name="Log out" title="Log out" rel="nofollow" aria-label="Log out"
+            class="list-group-item p-md-2"><i class="fa fa-lock mr-2 "> </i> Log out</a>
+        </div>
+      </div>
+      <div class="col-lg-9 col-md-12">
+        <div class="table-responsive">
+          <table class="table table-hover">
+              <thead>
+                    <tr>
+                        <th scope="col">{{ 'customer.order.product' | t }}</th>
+                        <th scope="col">{{ 'customer.order.sku' | t }}</th>
+                        <th scope="col">{{ 'customer.order.price' | t }}</th>
+                        <th scope="col">{{ 'customer.order.quantity' | t }}</th>
+                        <th scope="col">{{ 'customer.order.total' | t }}</th>
+                    </tr>
+                    {% for line_item in order.line_items %}
+                    <tr>
+                        <td>
+                            {{ line_item.title | link_to: line_item.product.url }}
+                              {% if line_item.fulfillment %}
+                              <dl>
+                                <dt>{{ 'customer.order.fulfilled_at' | t }}</dt>
+                                <dd>{{ line_item.fulfillment.created_at | date: format: 'month_day_year' }}</dd>
+
+                                {% if line_item.fulfillment.tracking_url %}
+                                <dt>{{ 'customer.order.tracking_url' | t }}</dt>
+                                <dd>
+                                  <a href="{{ line_item.fulfillment.tracking_url }}">
+                                    {{ 'customer.order.track_shipment' | t }}
+                                  </a>
+                                </dd>
+                                {% endif %}
+
+                                <dt>{{ 'customer.order.tracking_company' | t }}</dt>
+                                <dd>{{ line_item.fulfillment.tracking_company }}</dd>
+
+                                {% if line_item.fulfillment.tracking_number %}
+                                <dt>{{ 'customer.order.tracking_number' | t }}</dt>
+                                <dd>{{ line_item.fulfillment.tracking_number }}</dd>
+                                {% endif %}
+                              </dl>
+                              {% endif %}
+                        </td>
+                        <td>
+                            {{ line_item.sku }}
+                        </td>
+                        <td>
+                            {{ line_item.total_price }}
+                        </td>
+                        <td> 
+                          {{ line_item.quantity }}
+                        </td>
+                        <td>
+                            {{ line_item.quantity | times: line_item.price | money }}
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+              </thead>
+          </table>
+        </div>
+        <div class="row my-2 border-bottom">
+          <div class="col-lg-6 col-md-6 col-sm-6 text-lg-right text-center">
+            {{ 'customer.order.subtotal' | t }}
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 text-lg-right text-center">
+            {{ order.line_items_subtotal_price | money }}
+          </div>
+        </div>
+        {% for discount in order.discounts %}
+        <div class="row my-2 border-bottom">
+          <div class="col-lg-6 col-md-6 col-sm-6 text-lg-right text-center">
+            {{ discount.code }} {{ 'customer.order.discount' | t }}
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 text-lg-right text-center">
+            {{ discount.savings | money }}
+          </div>
+        </div>
+        {% endfor %}
+        {% for shipping_method in order.shipping_methods %}
+        <div class="row my-2 border-bottom">
+          <div class="col-lg-6 col-md-6 col-sm-6 text-lg-right text-center">
+            {{ 'customer.order.shipping' | t }} ({{ shipping_method.title }})
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 text-lg-right text-center">
+            {{ shipping_method.price | money }}
+          </div>
+        </div>
+        {% endfor %}
+        {% for tax_line in order.tax_lines %}
+        <div class="row my-2 border-bottom">
+          <div class="col-lg-6 col-md-6 col-sm-6 text-lg-right text-center">
+            {{ 'customer.order.tax' | t }} ({{ tax_line.title }} {{ tax_line.rate | times: 100 }}%)
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 text-lg-right text-center">
+            {{ tax_line.price | money }}
+          </div>
+        </div>
+        {%endfor%}
+        <div class="row my-2 border-bottom">
+          <div class="col-lg-6 col-md-6 col-sm-6 text-lg-right text-center">
+            {{ 'customer.order.total' | t }}
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-6 text-lg-right text-center">
+            {{ order.total_price | money }} {{ order.currency }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

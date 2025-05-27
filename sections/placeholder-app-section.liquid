@@ -1,0 +1,36 @@
+{% comment %}
+  This is a placeholder for a missing app-related section.
+  The original section type ('{{ section.settings.original_type | default: "unknown" }}') was not found during OS 2.0 conversion.
+  Functionality related to this section will be absent until the
+  correct app section is restored or the app is reconfigured.
+{% endcomment %}
+<div style="padding: 20px; text-align: center; border: 1px dashed #ccc; margin: 20px 0;">
+  <p><strong>Placeholder for Missing App Section</strong></p>
+  <p>Original section type: <em>{{ section.settings.original_type | default: "Not specified" }}</em></p>
+  <p>This content is shown because the section file for '{{ section.settings.original_type | default: "unknown" }}' could not be found.</p>
+</div>
+
+{% schema %}
+{
+  "name": "Placeholder App Section",
+  "tag": "section",
+  "class": "placeholder-app-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "original_type",
+      "label": "Original Missing Section Type",
+      "default": "N/A",
+      "info": "This records the type name of the section that was originally intended here but could not be found."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Placeholder App Section",
+      "settings": {
+        "original_type": "example-missing-type"
+      }
+    }
+  ]
+}
+{% endschema %}

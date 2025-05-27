@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main_app_section": { "type": "tireconnect" },
+    "custom_html": { "type": "section-custom-html" },
+    "for_making": { "type": "for-making-section" },
+    "videos": { "type": "product-videos" }
+  },
+  "order": [
+    "main_app_section",
+    "custom_html",
+    "for_making",
+    "videos"
+  ]
+}

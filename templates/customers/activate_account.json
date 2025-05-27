@@ -1,11 +1,12 @@
 {
   "sections": {
     "main": {
-      "type": "main-page-rapid-search-results",
+      "type": "main-customer-activate-account",
       "settings": {}
     }
   },
   "order": [
     "main"
-  ]
+  ],
+  "layout": "customer"
 }

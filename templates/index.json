@@ -1,61 +1,11 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
       "type": "main-index",
       "settings": {}
-    },
-    "quiz_section_exTCxJ": {
-      "type": "quiz-section",
-      "blocks": {
-        "brand_tire_LYpQEz": {
-          "type": "brand-tire",
-          "settings": {
-            "brand_img": "shopify://shop_images/wheel-balance-e1663689428688.png",
-            "brand": "test",
-            "tag_brand": "test"
-          }
-        }
-      },
-      "block_order": [
-        "brand_tire_LYpQEz"
-      ],
-      "name": "Call to Action Blocks",
-      "settings": {
-        "enable_section": false,
-        "tag_line": "",
-        "title": "",
-        "f_title": "",
-        "question-2-tire": "Select Tire Diameter",
-        "question-3-tire": "Select Tire Height",
-        "question-4-tire": "Select Tire Width",
-        "question-5-tire": "Select Tire Brand",
-        "question-2-wheel": "Select Wheel Diameter",
-        "question-3-wheel": "Select Wheel Width",
-        "question-4-wheel": "Select Wheel Offset",
-        "question-2-package": "Select Height",
-        "question-3-package": "Select Width",
-        "question-4-package": "Select Diameter",
-        "question-5-package": "Select Brand",
-        "question-6-package": "Select Year",
-        "question-7-package": "Select Model",
-        "question-8-package": "Select Suspension",
-        "enable_btn": false,
-        "button_url": "",
-        "button_label": ""
-      }
     }
   },
   "order": [
-    "main",
-    "quiz_section_exTCxJ"
+    "main"
   ]
 }

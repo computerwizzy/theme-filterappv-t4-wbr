@@ -1,0 +1,10 @@
+{
+  "sections": {
+    "banner": { "type": "banner-section" },
+    "collection_list": { "type": "collection-list" }
+  },
+  "order": [
+    "banner",
+    "collection_list"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "sections": {
+    "bundle": { "type": "bundle-product" },
+    "connection": { "type": "conection-section" }
+  },
+  "order": [
+    "bundle",
+    "connection"
+  ]
+}

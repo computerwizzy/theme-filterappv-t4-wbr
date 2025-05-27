@@ -1,0 +1,10 @@
+{
+  "sections": {
+    "banner": { "type": "banner-privacy" },
+    "main_content": { "type": "privacy-policy" }
+  },
+  "order": [
+    "banner",
+    "main_content"
+  ]
+}

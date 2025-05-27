@@ -1,0 +1,16 @@
+{
+  "sections": {
+    "main": { "type": "main-page-gallery" },
+    "custom_html": { "type": "section-custom-html" },
+    "icons": { "type": "icon-with-text" },
+    "videos": { "type": "product-videos" },
+    "featured_product": { "type": "shop-featured-product" }
+  },
+  "order": [
+    "main",
+    "custom_html",
+    "icons",
+    "videos",
+    "featured_product"
+  ]
+}

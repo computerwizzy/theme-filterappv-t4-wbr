@@ -12,9 +12,45 @@
     "main": {
       "type": "main-index",
       "settings": {}
+    },
+    "17484064344d9f2f16": {
+      "type": "apps",
+      "blocks": {
+        "metafields_guru_date_DGxgEY": {
+          "type": "shopify://apps/metafields-guru/blocks/date/79c9df68-85d5-4857-a386-0d96fc22b663",
+          "settings": {
+            "title": "Date",
+            "mn": "metafields_guru",
+            "mk": "date",
+            "from_shop": false,
+            "format": "date",
+            "design": "ul",
+            "text_style": "default",
+            "color": "",
+            "bg": "",
+            "icon_size": 24,
+            "gap": 4,
+            "plv": 0,
+            "plh": 0,
+            "corner_radius": 0,
+            "border_size": 0,
+            "border_style": "solid",
+            "pf": "",
+            "sf": "",
+            "pt": 0,
+            "pb": 0,
+            "cc": ""
+          }
+        }
+      },
+      "block_order": [
+        "metafields_guru_date_DGxgEY"
+      ],
+      "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "17484064344d9f2f16"
   ]
 }
